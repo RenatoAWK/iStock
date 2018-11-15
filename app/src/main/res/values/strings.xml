@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">iStock</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="criar_conta">Criar Conta</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
+    <string name="entre_aqui">Entre aqui</string>
+    <string name="logotipo">logotipo</string>
 </resources>
