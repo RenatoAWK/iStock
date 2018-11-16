@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CadastroActivity" />
-        <activity android:name=".EsqueciActivity"></activity>
+        <activity android:name=".EsqueciActivity" />
+        <activity android:name=".TelaInicialActivity"></activity>
     </application>
 
 </manifest>

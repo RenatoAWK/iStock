@@ -28,5 +28,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EsqueciActivity.class);
         startActivity(intent);
     }
+
+    public void entrarInicio(View view) {
+        Intent intent = new Intent(this, TelaInicialActivity.class);
+        finish();
+        startActivity(intent);
+    }
     //
 }
