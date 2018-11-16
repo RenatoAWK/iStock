@@ -6,22 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-
-public class CadastroActivity extends AppCompatActivity {
+public class EsqueciActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_esqueci);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-
     }
 
-    //teste de design
-    public void cadastrar(View view) {
+    //Teste design
+    public void confirmarEsqueci(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         finish();
         startActivity(intent);

@@ -23,5 +23,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CadastroActivity.class);
         startActivity(intent);
     }
+
+    public void esqueciSenha(View view) {
+        Intent intent = new Intent(this, EsqueciActivity.class);
+        startActivity(intent);
+    }
     //
 }
