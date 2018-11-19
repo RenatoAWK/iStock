@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">iStock</string>
+    <string name="entrar">Entrar</string>
+    <string name="criar_conta">Criar Conta</string>
+    <string name="esqueceu_sua_senha">Esqueceu sua senha?</string>
+    <string name="entre_aqui">Entre aqui</string>
+    <string name="logotipo">logotipo</string>
+    <string name="confirmar_senha">Confirmar senha</string>
+    <string name="email">Email</string>
+    <string name="senha">Senha</string>
+    <string name="nome_completo">Nome completo</string>
+    <string name="nome_da_empresa">Nome da empresa</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="cadastro_de_empresa">Cadastro De Empresa</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="instrucoes_esqueci">Enviaremos instruções para que você possa recuperar sua senha.</string>
+    <string name="esqueci_a_senha">Esqueci A Senha</string>
 </resources>
