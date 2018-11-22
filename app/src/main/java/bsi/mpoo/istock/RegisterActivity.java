@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.net.Uri;
@@ -14,57 +13,51 @@ import android.net.Uri;
 import bsi.mpoo.istock.data.StockContract.UserEntry;
 
 
-public class CadastroActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
-    private EditText mNameEditText;
-
+    private EditText mNomeEditText;
     private EditText mEmailEditText;
-
     private EditText mPasswordEditText;
-
     private EditText mPasswordConfirmationEditText;
-
     private EditText mCompanyEditText;
-
-    private Button mRegisterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_register);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mEmailEditText = (EditText) findViewById(R.id.editEmailCadastro);
-        mPasswordEditText = (EditText) findViewById(R.id.editSenhaCadastro);
-        mPasswordConfirmationEditText = (EditText) findViewById(R.id.editSenhaConfirmarCadastro);
-        mNameEditText = (EditText) findViewById(R.id.editNomeCadastro);
-        mCompanyEditText = (EditText) findViewById(R.id.editNomeEmpresaCadastro);
-        mRegisterButton = (Button) (Button) findViewById(R.id.buttonCadastrarCadastro);
-
-        mRegisterButton.setOnClickListener(Register);
+        mEmailEditText = findViewById(R.id.editEmailCadastro);
+        mPasswordEditText = findViewById(R.id.editSenhaCadastro);
+        mPasswordConfirmationEditText = findViewById(R.id.editSenhaConfirmarCadastro);
+        mNomeEditText = findViewById(R.id.editNomeCadastro);
+        mCompanyEditText = findViewById(R.id.editNomeEmpresaCadastro);
 
     }
 
-    View.OnClickListener Register = new View.OnClickListener() {
-        public void onClick(View v) {
-            cadastrar();
-        }
-    };
 
-    //teste de design
-    public void cadastrar() {
 
-        String name = mNameEditText.getText().toString();
+
+    public void register(View view) {
+
+        // Isso deve ter uma validao + não está adicionando o nome ao cadastro
+        String name = mNomeEditText.getText().toString();
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
         String passwordConfirmation = mPasswordConfirmationEditText.getText().toString();
         String company = mCompanyEditText.getText().toString();
 
-        if(password != passwordConfirmation){
+        if(!password.equals(passwordConfirmation)){
             Toast.makeText(this, "Senha não confirmada.",Toast.LENGTH_LONG).show();
         } else {
+
+            // Tá dando erro mesmo um usuário válido
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+            ////////////////////////////////////////
+            ////////////////////////////////////////
             try{
                 ContentValues values = new ContentValues();
                 values.put(UserEntry.TABLE_NAME, email);

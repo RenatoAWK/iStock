@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10sp"
-    tools:context=".CadastroActivity">
+    tools:context=".RegisterActivity">
 
     <Button
         android:id="@+id/buttonCadastrarCadastro"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:background="@color/colorPrimary"
-        android:onClick="cadastrar"
+        android:onClick="register"
         android:text="@string/cadastrar"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

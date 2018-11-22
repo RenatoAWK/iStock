@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.database.Cursor;
 import android.widget.Toast;
@@ -15,10 +14,7 @@ import bsi.mpoo.istock.data.StockContract.UserEntry;
 public class MainActivity extends AppCompatActivity {
 
     private EditText mEmailEditText;
-
     private EditText mPasswordEditText;
-
-    private Button mLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,21 +24,14 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mEmailEditText = (EditText) findViewById(R.id.editEmail);
-        mPasswordEditText = (EditText) findViewById(R.id.editSenha);
-        mLoginButton = (Button) findViewById(R.id.buttonEntrar);
+        mEmailEditText = findViewById(R.id.editEmail);
+        mPasswordEditText = findViewById(R.id.editPassword);
 
-        mLoginButton.setOnClickListener(Login);
     }
 
-    View.OnClickListener Login = new View.OnClickListener() {
-        public void onClick(View v) {
-            login();
-        }
-    };
+    public void login(View view){
 
-    private void login(){
-
+        // Isso precisa ir para a parte de validação
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
@@ -58,13 +47,28 @@ public class MainActivity extends AppCompatActivity {
 
         String[] selectionArgs = new String[] {email, password};
 
+        // Não tá disparando o erro abaixo
+        ///////////////////////////////////////
+        ///////////////////////////////////////
+        ///////////////////////////////////////
+
         try{
             Cursor cursor = getContentResolver().query(UserEntry.CONTENT_URI, projection, selection, selectionArgs, "ASC");
-            Intent intent = new Intent(this, TelaInicialActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
+            finish();
             startActivity(intent);
         } catch (IllegalArgumentException e){
             Toast.makeText(MainActivity.this, "Usuário não cadastrado.",Toast.LENGTH_LONG).show();
         }
     }
 
+    public void CreateAccount(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void forgotPassword(View view) {
+        Intent intent = new Intent(this, ForgotActivity.class);
+        startActivity(intent);
+    }
 }
