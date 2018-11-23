@@ -18,8 +18,8 @@ public class ForgotActivity extends AppCompatActivity {
     }
 
     //Teste design
-    public void confirmarEsqueci(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+    public void confirmForgot(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
         finish();
         startActivity(intent);
     }

@@ -8,14 +8,14 @@
     tools:context=".ForgotActivity">
 
     <Button
-        android:id="@+id/buttonConfirmarEsqueci"
+        android:id="@+id/buttonConfirmForgot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:background="@color/colorPrimary"
-        android:onClick="confirmarEsqueci"
+        android:onClick="confirmForgot"
         android:text="@string/confirmar"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextForgot"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -32,13 +32,13 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/buttonConfirmarEsqueci"
+        app:layout_constraintBottom_toTopOf="@+id/buttonConfirmForgot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewTextEsqueci"
+        android:id="@+id/textViewTextForgot"
         android:layout_width="270dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
@@ -47,12 +47,12 @@
         android:text="@string/instrucoes_esqueci"
         android:textAlignment="center"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/editTextForgot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textViewTitleEsqueci"
+        android:id="@+id/textViewTitleForgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -62,13 +62,13 @@
         android:text="@string/esqueci_a_senha"
         android:textColor="@android:color/black"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewTextEsqueci"
+        app:layout_constraintBottom_toTopOf="@+id/textViewTextForgot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEsqueci" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewForgot" />
 
     <ImageView
-        android:id="@+id/imageViewEsqueci"
+        android:id="@+id/imageViewForgot"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginTop="32dp"

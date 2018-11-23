@@ -65,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
                 values.put(UserEntry.TABLE_NAME, company);
 
                 Uri uri = getContentResolver().insert(UserEntry.CONTENT_URI, values);
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
             } catch(IllegalArgumentException e){
                 Toast.makeText(this, "Não é possível inserir usuário.",Toast.LENGTH_LONG).show();

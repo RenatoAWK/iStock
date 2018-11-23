@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import bsi.mpoo.istock.data.StockContract.UserEntry;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
             startActivity(intent);
         } catch (IllegalArgumentException e){
-            Toast.makeText(MainActivity.this, "Usuário não cadastrado.",Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "Usuário não cadastrado.",Toast.LENGTH_LONG).show();
         }
     }
 
