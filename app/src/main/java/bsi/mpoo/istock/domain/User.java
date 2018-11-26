@@ -2,6 +2,7 @@ package bsi.mpoo.istock.domain;
 
 public class User {
     private long id;
+    private String name;
     private String email;
     private String password;
     private String type;
@@ -14,6 +15,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
