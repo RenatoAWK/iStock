@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.net.Uri;
 
-import bsi.mpoo.istock.data.StockContract.UserEntry;
-
 
 public class RegisterActivity extends AppCompatActivity {
 

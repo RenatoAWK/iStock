@@ -9,8 +9,6 @@ import android.widget.EditText;
 import android.database.Cursor;
 import android.widget.Toast;
 
-import bsi.mpoo.istock.data.StockContract.UserEntry;
-
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmailEditText;
