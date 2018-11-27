@@ -1,26 +1,22 @@
 package bsi.mpoo.istock.gui;
 
-import android.content.ContentValues;
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.net.Uri;
 
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.gui.LoginActivity;
+import bsi.mpoo.istock.services.Validations;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText mNomeEditText;
-    private EditText mEmailEditText;
-    private EditText mPasswordEditText;
-    private EditText mPasswordConfirmationEditText;
-    private EditText mCompanyEditText;
+    private EditText NameEditText;
+    private EditText EmailEditText;
+    private EditText PasswordEditText;
+    private EditText PasswordConfirmationEditText;
+    private EditText CompanyEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +26,11 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mEmailEditText = findViewById(R.id.editEmailCadastro);
-        mPasswordEditText = findViewById(R.id.editSenhaCadastro);
-        mPasswordConfirmationEditText = findViewById(R.id.editSenhaConfirmarCadastro);
-        mNomeEditText = findViewById(R.id.editNomeCadastro);
-        mCompanyEditText = findViewById(R.id.editNomeEmpresaCadastro);
+        EmailEditText = findViewById(R.id.editEmailCadastro);
+        PasswordEditText = findViewById(R.id.editSenhaCadastro);
+        PasswordConfirmationEditText = findViewById(R.id.editSenhaConfirmarCadastro);
+        NameEditText = findViewById(R.id.editNomeCadastro);
+        CompanyEditText = findViewById(R.id.editNomeEmpresaCadastro);
 
     }
 
@@ -43,34 +39,93 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void register(View view) {
 
-        // Isso deve ter uma validao + não está adicionando o nome ao cadastro
-        String name = mNomeEditText.getText().toString();
-        String email = mEmailEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
-        String passwordConfirmation = mPasswordConfirmationEditText.getText().toString();
-        String company = mCompanyEditText.getText().toString();
+        Validations validations = new Validations();
 
-        if(!password.equals(passwordConfirmation)){
-            Toast.makeText(this, "Senha não confirmada.",Toast.LENGTH_LONG).show();
-        } else {
+        boolean valid = true;
 
-            // Tá dando erro mesmo um usuário válido
-            ////////////////////////////////////////
-            ////////////////////////////////////////
-            ////////////////////////////////////////
-            ////////////////////////////////////////
-            try{
-                ContentValues values = new ContentValues();
-                values.put(UserEntry.TABLE_NAME, email);
-                values.put(UserEntry.TABLE_NAME, password);
-                values.put(UserEntry.TABLE_NAME, company);
-
-                Uri uri = getContentResolver().insert(UserEntry.CONTENT_URI, values);
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-            } catch(IllegalArgumentException e){
-                Toast.makeText(this, "Não é possível inserir usuário.",Toast.LENGTH_LONG).show();
-            }
+        if (!validations.editValidate(CompanyEditText)){
+            CompanyEditText.requestFocus();
+            CompanyEditText.setError(getString(R.string.requiredField));
+            valid = false;
         }
+
+        if (!validations.editValidate(NameEditText)){
+            NameEditText.requestFocus();
+            NameEditText.setError(getString(R.string.requiredField));
+        }
+
+        if (!validations.editValidate(EmailEditText)){
+            EmailEditText.requestFocus();
+            EmailEditText.setError(getString(R.string.requiredField));
+            valid = false;
+        }
+
+        if (!validations.editValidate(PasswordEditText)){
+            PasswordEditText.requestFocus();
+            PasswordEditText.setError(getString(R.string.requiredField));
+            valid = false;
+        }
+
+        if (!validations.editValidate(PasswordConfirmationEditText)){
+            PasswordConfirmationEditText.requestFocus();
+            PasswordConfirmationEditText.setError(getString(R.string.requiredField));
+            valid = false;
+        }
+
+        if (!valid){
+            return;
+        }
+
+        if (!validations.companyName(CompanyEditText.getText().toString())){
+            CompanyEditText.requestFocus();
+            CompanyEditText.setError(getString(R.string.invalid_Name));
+            valid = false;
+        }
+
+        if (!validations.name(NameEditText.getText().toString())){
+            NameEditText.requestFocus();
+            NameEditText.setError(getString(R.string.invalid_Name));
+            valid = false;
+        }
+
+        if (!validations.email(EmailEditText.getText().toString())){
+            EmailEditText.requestFocus();
+            EmailEditText.setError(getString(R.string.invalid_email));
+            valid = false;
+        }
+
+        if (!validations.password(PasswordEditText.getText().toString())){
+            PasswordEditText.requestFocus();
+            PasswordEditText.setError(getString(R.string.invalid_password));
+            valid = false;
+        }
+
+        if (!validations.password(PasswordConfirmationEditText.getText().toString())){
+            PasswordConfirmationEditText.requestFocus();
+            PasswordConfirmationEditText.setError(getString(R.string.invalid_password));
+            valid = false;
+        }
+
+        if (!valid){
+            return;
+        }
+
+        if (!validations.passwordEquals(
+                PasswordEditText.getText().toString(),
+                PasswordConfirmationEditText.getText().toString())){
+
+                PasswordEditText.setError(getString(R.string.invalid_password));
+                PasswordConfirmationEditText.requestFocus();
+                PasswordConfirmationEditText.setError(getString(R.string.invalid_password));
+
+        }
+
+        if (!valid){
+            return;
+        }
+
+        ///////Checar se a conta já é cadastrada, checar se o nome da empresa já existe e dando diferente, cadastra
+
+
     }
 }

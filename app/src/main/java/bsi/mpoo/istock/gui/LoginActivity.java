@@ -6,15 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.database.Cursor;
-import android.widget.Toast;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.services.Validations;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText mEmailEditText;
-    private EditText mPasswordEditText;
+    private EditText EmailEditText;
+    private EditText PasswordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,42 +23,50 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mEmailEditText = findViewById(R.id.editEmail);
-        mPasswordEditText = findViewById(R.id.editPassword);
+        EmailEditText = findViewById(R.id.editEmail);
+        PasswordEditText = findViewById(R.id.editPassword);
 
     }
 
     public void login(View view){
 
-        // Isso precisa ir para a parte de validação
-        String email = mEmailEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
+        Validations validations = new Validations();
 
-        String[] projection = {
-                UserEntry._ID,
-                UserEntry.COLUMN_USER_EMAIL,
-                UserEntry.COLUMN_USER_PASSWORD
-        };
-
-        String selection = UserEntry.COLUMN_USER_EMAIL + "=?" +
-                " AND " +
-                UserEntry.COLUMN_USER_PASSWORD + "=?";
-
-        String[] selectionArgs = new String[] {email, password};
-
-        // Não tá disparando o erro abaixo
-        ///////////////////////////////////////
-        ///////////////////////////////////////
-        ///////////////////////////////////////
-
-        try{
-            Cursor cursor = getContentResolver().query(UserEntry.CONTENT_URI, projection, selection, selectionArgs, "ASC");
-            Intent intent = new Intent(this, HomeActivity.class);
-            finish();
-            startActivity(intent);
-        } catch (IllegalArgumentException e){
-            Toast.makeText(LoginActivity.this, "Usuário não cadastrado.",Toast.LENGTH_LONG).show();
+        boolean valid = true;
+        if (!validations.editValidate(EmailEditText)){
+            EmailEditText.requestFocus();
+            EmailEditText.setError(getString(R.string.requiredField));
+            valid = false;
         }
+        if (!validations.editValidate(PasswordEditText)){
+            PasswordEditText.requestFocus();
+            PasswordEditText.setError(getString(R.string.requiredField));
+            valid = false;
+        }
+
+        if (!valid){
+            return;
+        }
+
+        if (!validations.email(EmailEditText.getText().toString())){
+            EmailEditText.requestFocus();
+            EmailEditText.setError(getString(R.string.invalid_email));
+            valid = false;
+        }
+        if (!validations.password(PasswordEditText.getText().toString())){
+            PasswordEditText.setError(getString(R.string.invalid_password));
+        }
+
+        if (!valid){
+            return;
+        }
+
+        /*
+        se tudo deu certo, fará login aqui
+
+        */
+
+
     }
 
     public void CreateAccount(View view) {
