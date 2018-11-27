@@ -10,6 +10,8 @@ public class ContractUser {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
     public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_STATUS = "status";
+    public static final String COLUMN_COMPANY = "company";
 
     public static final String SQL_CREATE_TABLE_USER =
             "CREATE TABLE "+ContractUser.TABLE_NAME+" ("+
@@ -17,7 +19,10 @@ public class ContractUser {
                     ContractUser.COLUMN_NAME + " NOT NULL TEXT,"+
                     ContractUser.COLUMN_EMAIL + " NOT NULL TEXT,"+
                     ContractUser.COLUMN_PASSWORD + " NOT NULL TEXT,"+
-                    ContractUser.COLUMN_TYPE + " NOT NULL TEXT)";
+                    ContractUser.COLUMN_TYPE + " NOT NULL TEXT,"+
+                    ContractUser.COLUMN_STATUS + " NOT NULL TEXT,"+
+                    ContractUser.COLUMN_COMPANY + " NOT NULL TEXT)";
+
 
     public static  final String SQL_DELETE_USERS =
             "DROP TABLE IF EXISTS "+ ContractUser.TABLE_NAME;

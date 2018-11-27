@@ -1,4 +1,4 @@
-package bsi.mpoo.istock;
+package bsi.mpoo.istock.gui;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.database.Cursor;
 import android.widget.Toast;
+
+import bsi.mpoo.istock.R;
 
 public class LoginActivity extends AppCompatActivity {
 

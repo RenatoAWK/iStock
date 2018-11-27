@@ -9,6 +9,8 @@ public class User {
     private String status;
     private String company;
 
+    public User(){}
+
     public long getId() {
         return id;
     }

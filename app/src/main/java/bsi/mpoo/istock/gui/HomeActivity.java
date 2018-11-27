@@ -1,8 +1,10 @@
-package bsi.mpoo.istock;
+package bsi.mpoo.istock.gui;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import bsi.mpoo.istock.R;
 
 public class HomeActivity extends AppCompatActivity {
 

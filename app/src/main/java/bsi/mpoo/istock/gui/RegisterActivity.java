@@ -1,4 +1,4 @@
-package bsi.mpoo.istock;
+package bsi.mpoo.istock.gui;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.net.Uri;
+
+import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.gui.LoginActivity;
 
 
 public class RegisterActivity extends AppCompatActivity {
