@@ -27,10 +27,10 @@ public class UserServices {
         return true;
     }
 
-    public void registerUser(String name, String email, String password, String type, String status, String company, long administrator) {
+    public void registerUser(String name, String email, String password, String type, String status, String company, long administrator) throws Exception {
 
         if (isUserRegistred(email)){
-            // throw
+            throw new Exception("Email já cadastrado");
         }
         else {
             User user = new User();

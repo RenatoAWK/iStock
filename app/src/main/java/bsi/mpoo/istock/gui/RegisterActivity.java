@@ -1,7 +1,9 @@
 package bsi.mpoo.istock.gui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -103,13 +105,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (!validations.password(PasswordEditText.getText().toString())){
             PasswordEditText.requestFocus();
-            PasswordEditText.setError(getString(R.string.invalid_password));
+            PasswordEditText.setError(getString(R.string.invalid_password_weak));
             valid = false;
         }
 
         if (!validations.password(PasswordConfirmationEditText.getText().toString())){
             PasswordConfirmationEditText.requestFocus();
-            PasswordConfirmationEditText.setError(getString(R.string.invalid_password));
+            PasswordConfirmationEditText.setError(getString(R.string.invalid_password_weak));
             valid = false;
         }
 
@@ -141,8 +143,36 @@ public class RegisterActivity extends AppCompatActivity {
         String company = CompanyEditText.getText().toString().trim();
         long administrator = -1;
 
-        userServices.registerUser(name, email, password, type, status, company, administrator);
-            ///////Deve mostrar uma mensagem de erro, num dialog ou algum outro modo
+        try {
+            userServices.registerUser(name, email, password, type, status, company, administrator);
+        }
+        catch (Exception error){
+
+            String errorMessage;
+            if (error.getMessage().equals("Email já cadastrado")){
+                errorMessage = (getString(R.string.email_already_used));
+            }
+            else {
+                errorMessage = getString(R.string.unknow_error);
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(errorMessage);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+
+            EmailEditText.setText("");
+            PasswordEditText.setText("");
+            PasswordConfirmationEditText.setText("");
+
+            EmailEditText.requestFocus();
+
+        }
 
 
 
