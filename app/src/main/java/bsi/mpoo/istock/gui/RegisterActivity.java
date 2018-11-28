@@ -152,17 +152,13 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    finish();
+                    startActivity(intent);
                 }
             });
             builder.show();
 
-            companyEditText.setText("");
-            nameEditText.setText("");
-            emailEditText.setText("");
-            passwordEditText.setText("");
-            passwordConfirmationEditText.setText("");
-
-            companyEditText.requestFocus();
         }
         catch (Exception error){
 
