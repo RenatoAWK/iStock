@@ -31,6 +31,7 @@ public class UserDAO{
         long newRowID = db.insert(ContractUser.TABLE_NAME, null, values);
 
         user.setId(newRowID);
+        db.close();
     }
 
     public User getUserEmail(String email) {
@@ -68,45 +69,58 @@ public class UserDAO{
           searchedUser = createUser(cursor);
         }
 
+        cursor.close();
+        db.close();
         return searchedUser;
 
     }
 
     public User createUser(Cursor cursor){
 
-        int idIndex = cursor.getColumnIndexOrThrow(ContractUser._ID);
-        int nameIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_NAME);
-        int emailIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_EMAIL);
-        int passwordIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_PASSWORD);
-        int typeIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_TYPE);
-        int statusIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_STATUS);
-        int companyIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_COMPANY);
-        int administratorIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_ADMINISTRATOR);
+        if (cursor.moveToFirst()){
+            do {
+                int idIndex = cursor.getColumnIndexOrThrow(ContractUser._ID);
+                int nameIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_NAME);
+                int emailIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_EMAIL);
+                int passwordIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_PASSWORD);
+                int typeIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_TYPE);
+                int statusIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_STATUS);
+                int companyIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_COMPANY);
+                int administratorIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_ADMINISTRATOR);
 
 
-        ////
-        ////
-        /// Algo obscuro acontece aqui e gera um CursorIndexOutOfBoundsException
-        long id = cursor.getInt(idIndex);
-        String name = cursor.getString(nameIndex);
-        String email = cursor.getString(emailIndex);
-        String password = cursor.getString(passwordIndex);
-        String type = cursor.getString(typeIndex);
-        String status = cursor.getString(statusIndex);
-        String company = cursor.getString(companyIndex);
-        long administrator = cursor.getLong(administratorIndex);
+                ////
+                ////
+                /// Algo obscuro acontece aqui e gera um CursorIndexOutOfBoundsException
+                long id = cursor.getInt(idIndex);
+                String name = cursor.getString(nameIndex);
+                String email = cursor.getString(emailIndex);
+                String password = cursor.getString(passwordIndex);
+                String type = cursor.getString(typeIndex);
+                String status = cursor.getString(statusIndex);
+                String company = cursor.getString(companyIndex);
+                long administrator = cursor.getLong(administratorIndex);
 
-        User createdUser = new User();
-        createdUser.setId(id);
-        createdUser.setName(name);
-        createdUser.setEmail(email);
-        createdUser.setPassword(password);
-        createdUser.setType(type);
-        createdUser.setStatus(status);
-        createdUser.setCompany(company);
-        createdUser.setAdministrator(administrator);
+                User createdUser = new User();
+                createdUser.setId(id);
+                createdUser.setName(name);
+                createdUser.setEmail(email);
+                createdUser.setPassword(password);
+                createdUser.setType(type);
+                createdUser.setStatus(status);
+                createdUser.setCompany(company);
+                createdUser.setAdministrator(administrator);
 
-        return createdUser;
+                return createdUser;
+
+            } while (cursor.moveToNext());
+        }
+
+        return new User();
+
+
+
+
     }
 
 
