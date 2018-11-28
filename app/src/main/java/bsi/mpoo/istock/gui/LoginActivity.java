@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         Validations validations = new Validations();
 
         boolean valid = true;
+
         if (!validations.editValidate(EmailEditText)){
             EmailEditText.requestFocus();
             EmailEditText.setError(getString(R.string.requiredField));
