@@ -18,11 +18,11 @@ import bsi.mpoo.istock.services.Validations;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText NameEditText;
-    private EditText EmailEditText;
-    private EditText PasswordEditText;
-    private EditText PasswordConfirmationEditText;
-    private EditText CompanyEditText;
+    private EditText nameEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
+    private EditText passwordConfirmationEditText;
+    private EditText companyEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +36,13 @@ public class RegisterActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         String email = bundle.getString("email");
 
-        EmailEditText = findViewById(R.id.editEmailRegister);
-        PasswordEditText = findViewById(R.id.editPasswordRegister);
-        PasswordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
-        NameEditText = findViewById(R.id.editfullNameRegister);
-        CompanyEditText = findViewById(R.id.editCompanyNameRegister);
+        emailEditText = findViewById(R.id.editEmailRegister);
+        passwordEditText = findViewById(R.id.editPasswordRegister);
+        passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
+        nameEditText = findViewById(R.id.editfullNameRegister);
+        companyEditText = findViewById(R.id.editCompanyNameRegister);
 
-        EmailEditText.setText(email);
+        emailEditText.setText(email);
 
     }
 
@@ -52,32 +52,32 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean valid = true;
 
-        if (!validations.editValidate(CompanyEditText)){
-            CompanyEditText.requestFocus();
-            CompanyEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(companyEditText)){
+            companyEditText.requestFocus();
+            companyEditText.setError(getString(R.string.requiredField));
             valid = false;
         }
 
-        if (!validations.editValidate(NameEditText)){
-            NameEditText.requestFocus();
-            NameEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(nameEditText)){
+            nameEditText.requestFocus();
+            nameEditText.setError(getString(R.string.requiredField));
         }
 
-        if (!validations.editValidate(EmailEditText)){
-            EmailEditText.requestFocus();
-            EmailEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(emailEditText)){
+            emailEditText.requestFocus();
+            emailEditText.setError(getString(R.string.requiredField));
             valid = false;
         }
 
-        if (!validations.editValidate(PasswordEditText)){
-            PasswordEditText.requestFocus();
-            PasswordEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(passwordEditText)){
+            passwordEditText.requestFocus();
+            passwordEditText.setError(getString(R.string.requiredField));
             valid = false;
         }
 
-        if (!validations.editValidate(PasswordConfirmationEditText)){
-            PasswordConfirmationEditText.requestFocus();
-            PasswordConfirmationEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(passwordConfirmationEditText)){
+            passwordConfirmationEditText.requestFocus();
+            passwordConfirmationEditText.setError(getString(R.string.requiredField));
             valid = false;
         }
 
@@ -85,33 +85,33 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        if (!validations.companyName(CompanyEditText.getText().toString())){
-            CompanyEditText.requestFocus();
-            CompanyEditText.setError(getString(R.string.invalid_Name));
+        if (!validations.companyName(companyEditText.getText().toString())){
+            companyEditText.requestFocus();
+            companyEditText.setError(getString(R.string.invalid_Name));
             valid = false;
         }
 
-        if (!validations.name(NameEditText.getText().toString())){
-            NameEditText.requestFocus();
-            NameEditText.setError(getString(R.string.invalid_Name));
+        if (!validations.name(nameEditText.getText().toString())){
+            nameEditText.requestFocus();
+            nameEditText.setError(getString(R.string.invalid_Name));
             valid = false;
         }
 
-        if (!validations.email(EmailEditText.getText().toString())){
-            EmailEditText.requestFocus();
-            EmailEditText.setError(getString(R.string.invalid_email));
+        if (!validations.email(emailEditText.getText().toString())){
+            emailEditText.requestFocus();
+            emailEditText.setError(getString(R.string.invalid_email));
             valid = false;
         }
 
-        if (!validations.password(PasswordEditText.getText().toString())){
-            PasswordEditText.requestFocus();
-            PasswordEditText.setError(getString(R.string.invalid_password_weak));
+        if (!validations.password(passwordEditText.getText().toString())){
+            passwordEditText.requestFocus();
+            passwordEditText.setError(getString(R.string.invalid_password_weak));
             valid = false;
         }
 
-        if (!validations.password(PasswordConfirmationEditText.getText().toString())){
-            PasswordConfirmationEditText.requestFocus();
-            PasswordConfirmationEditText.setError(getString(R.string.invalid_password_weak));
+        if (!validations.password(passwordConfirmationEditText.getText().toString())){
+            passwordConfirmationEditText.requestFocus();
+            passwordConfirmationEditText.setError(getString(R.string.invalid_password_weak));
             valid = false;
         }
 
@@ -120,12 +120,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (!validations.passwordEquals(
-                PasswordEditText.getText().toString(),
-                PasswordConfirmationEditText.getText().toString())){
+                passwordEditText.getText().toString(),
+                passwordConfirmationEditText.getText().toString())){
 
-                PasswordEditText.setError(getString(R.string.invalid_password));
-                PasswordConfirmationEditText.requestFocus();
-                PasswordConfirmationEditText.setError(getString(R.string.invalid_password));
+                passwordEditText.setError(getString(R.string.invalid_password));
+                passwordConfirmationEditText.requestFocus();
+                passwordConfirmationEditText.setError(getString(R.string.invalid_password));
 
         }
 
@@ -135,12 +135,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         UserServices userServices = new UserServices(this);
 
-        String name = NameEditText.getText().toString();
-        String email = EmailEditText.getText().toString().trim().toUpperCase();
-        String password = PasswordEditText.getText().toString();
+        String name = nameEditText.getText().toString();
+        String email = emailEditText.getText().toString().trim().toUpperCase();
+        String password = passwordEditText.getText().toString();
         String type = UserTypes.ADMINISTRATOR.name();
         String status = UserStatus.ACTIVE.name();
-        String company = CompanyEditText.getText().toString().trim();
+        String company = companyEditText.getText().toString().trim();
         long administrator = -1;
 
         try {
@@ -166,11 +166,11 @@ public class RegisterActivity extends AppCompatActivity {
             });
             builder.show();
 
-            EmailEditText.setText("");
-            PasswordEditText.setText("");
-            PasswordConfirmationEditText.setText("");
+            emailEditText.setText("");
+            passwordEditText.setText("");
+            passwordConfirmationEditText.setText("");
 
-            EmailEditText.requestFocus();
+            emailEditText.requestFocus();
 
         }
 

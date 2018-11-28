@@ -14,8 +14,8 @@ import bsi.mpoo.istock.services.Validations;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText EmailEditText;
-    private EditText PasswordEditText;
+    private EditText emailEditText;
+    private EditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +25,10 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        EmailEditText = findViewById(R.id.editEmailLogin);
-        PasswordEditText = findViewById(R.id.editPasswordLogin);
+        emailEditText = findViewById(R.id.editEmailLogin);
+        passwordEditText = findViewById(R.id.editPasswordLogin);
+
+        emailEditText.requestFocus();
 
     }
 
@@ -36,14 +38,14 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean valid = true;
 
-        if (!validations.editValidate(EmailEditText)){
-            EmailEditText.requestFocus();
-            EmailEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(emailEditText)){
+            emailEditText.requestFocus();
+            emailEditText.setError(getString(R.string.requiredField));
             valid = false;
         }
-        if (!validations.editValidate(PasswordEditText)){
-            PasswordEditText.requestFocus();
-            PasswordEditText.setError(getString(R.string.requiredField));
+        if (!validations.editValidate(passwordEditText)){
+            passwordEditText.requestFocus();
+            passwordEditText.setError(getString(R.string.requiredField));
             valid = false;
         }
 
@@ -51,14 +53,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        if (!validations.email(EmailEditText.getText().toString())){
-            EmailEditText.requestFocus();
-            EmailEditText.setError(getString(R.string.invalid_email));
+        if (!validations.email(emailEditText.getText().toString())){
+            emailEditText.requestFocus();
+            emailEditText.setError(getString(R.string.invalid_email));
             valid = false;
-        }
-        if (!validations.password(PasswordEditText.getText().toString())){
-            PasswordEditText.requestFocus();
-            PasswordEditText.setError(getString(R.string.invalid_password));
         }
 
         if (!valid){
@@ -67,11 +65,13 @@ public class LoginActivity extends AppCompatActivity {
 
         UserServices userServices = new UserServices(getApplicationContext());
 
-        String email = EmailEditText.getText().toString().trim().toUpperCase();
-        String password = PasswordEditText.getText().toString();
+        String email = emailEditText.getText().toString().trim().toUpperCase();
+        String password = passwordEditText.getText().toString();
         User user = userServices.login(email, password);
         if (user == null){
-            // Mostrar alguma mensagem que é inválido
+            emailEditText.setError(getString(R.string.invalid_email_or_password));
+            passwordEditText.setError(getString(R.string.invalid_email_or_password));
+
         }
         else {
             Intent intent = new Intent(this, HomeActivity.class);
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
 
         Bundle bundle = new Bundle();
-        String email = EmailEditText.getText().toString();
+        String email = emailEditText.getText().toString();
         bundle.putString("email",email);
 
         intent.putExtras(bundle);

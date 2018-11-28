@@ -23,4 +23,5 @@
     <string name="email_already_used">Email já cadastrado</string>
     <string name="unknow_error">Erro desconhecido</string>
     <string name="invalid_password_weak">A senha precisa ter de 5 a 10 caracteres</string>
+    <string name="invalid_email_or_password">Email ou senha inválidos</string>
 </resources>
