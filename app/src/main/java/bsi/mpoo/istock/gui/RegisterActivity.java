@@ -145,6 +145,24 @@ public class RegisterActivity extends AppCompatActivity {
 
         try {
             userServices.registerUser(name, email, password, type, status, company, administrator);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.register_done);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+
+            companyEditText.setText("");
+            nameEditText.setText("");
+            emailEditText.setText("");
+            passwordEditText.setText("");
+            passwordConfirmationEditText.setText("");
+
+            companyEditText.requestFocus();
         }
         catch (Exception error){
 
