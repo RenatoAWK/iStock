@@ -9,6 +9,8 @@ public class User {
     private String status;
     private String company;
 
+    private long administrator;
+
     public User(){}
 
     public long getId() {
@@ -65,5 +67,13 @@ public class User {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public long getAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(long administrator) {
+        this.administrator = administrator;
     }
 }

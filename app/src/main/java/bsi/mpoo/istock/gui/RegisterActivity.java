@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.Validations;
 
 
@@ -33,9 +34,6 @@ public class RegisterActivity extends AppCompatActivity {
         CompanyEditText = findViewById(R.id.editNomeEmpresaCadastro);
 
     }
-
-
-
 
     public void register(View view) {
 
@@ -124,7 +122,19 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        ///////Checar se a conta já é cadastrada, checar se o nome da empresa já existe e dando diferente, cadastra
+        UserServices userServices = new UserServices(this);
+
+        String name = NameEditText.getText().toString();
+        String email = EmailEditText.getText().toString().trim().toUpperCase();
+        String password = PasswordEditText.getText().toString();
+        String type = "ADMIN";
+        String status = "ACTIVATED";
+        String company = CompanyEditText.getText().toString().trim();
+        long administrator = -1;
+
+        userServices.registerUser(name, email, password, type, status, company, administrator);
+            ///////Deve mostrar uma mensagem de erro, num dialog ou algum outro modo
+
 
 
     }

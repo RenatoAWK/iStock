@@ -19,4 +19,5 @@
     <string name="invalid_email">Email inválido</string>
     <string name="invalid_password">Senha inválida</string>
     <string name="invalid_Name">Nome inválido</string>
+    <string name="throw_email_already_registred">Email já cadastrado</string>
 </resources>

@@ -14,10 +14,9 @@ public class UserDAO{
         this.context = context;
     }
 
-    Database mDbHelper = new Database(context);
+    public void insertUser(User user) {
 
-    public void addUser(User user) {
-
+        Database mDbHelper = new Database(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -27,14 +26,16 @@ public class UserDAO{
         values.put(ContractUser.COLUMN_TYPE, user.getType());
         values.put(ContractUser.COLUMN_STATUS, user.getStatus());
         values.put(ContractUser.COLUMN_COMPANY, user.getCompany());
+        values.put(ContractUser.COLUMN_ADMINISTRATOR, user.getAdministrator());
 
         long newRowID = db.insert(ContractUser.TABLE_NAME, null, values);
 
         user.setId(newRowID);
     }
 
-    public User searchUser(User user) {
+    public User getUserEmail(String email) {
 
+        Database mDbHelper = new Database(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         User searchedUser = null;
@@ -46,11 +47,12 @@ public class UserDAO{
                 ContractUser.COLUMN_PASSWORD,
                 ContractUser.COLUMN_TYPE,
                 ContractUser.COLUMN_STATUS,
-                ContractUser.COLUMN_COMPANY
+                ContractUser.COLUMN_COMPANY,
+                ContractUser.COLUMN_ADMINISTRATOR
         };
 
         String selection = ContractUser.COLUMN_EMAIL+" = ?";
-        String[] selectionArgs = { user.getEmail().trim().toUpperCase()};
+        String[] selectionArgs = { email.trim().toUpperCase()};
 
         Cursor cursor = db.query(
                 ContractUser.TABLE_NAME,
@@ -68,9 +70,6 @@ public class UserDAO{
 
         return searchedUser;
 
-
-
-
     }
 
     public User createUser(Cursor cursor){
@@ -82,25 +81,32 @@ public class UserDAO{
         int typeIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_TYPE);
         int statusIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_STATUS);
         int companyIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_COMPANY);
+        int administratorIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_ADMINISTRATOR);
 
-        long id = cursor.getLong(idIndex);
+
+        ////
+        ////
+        /// Algo obscuro acontece aqui e gera um CursorIndexOutOfBoundsException
+        long id = cursor.getInt(idIndex);
         String name = cursor.getString(nameIndex);
         String email = cursor.getString(emailIndex);
         String password = cursor.getString(passwordIndex);
         String type = cursor.getString(typeIndex);
-        String status = cursor.getColumnName(statusIndex);
-        String company = cursor.getColumnName(companyIndex);
+        String status = cursor.getString(statusIndex);
+        String company = cursor.getString(companyIndex);
+        long administrator = cursor.getLong(administratorIndex);
 
-        User searchedUser = new User();
-        searchedUser.setId(id);
-        searchedUser.setName(name);
-        searchedUser.setEmail(email);
-        searchedUser.setPassword(password);
-        searchedUser.setType(type);
-        searchedUser.setStatus(status);
-        searchedUser.setCompany(company);
+        User createdUser = new User();
+        createdUser.setId(id);
+        createdUser.setName(name);
+        createdUser.setEmail(email);
+        createdUser.setPassword(password);
+        createdUser.setType(type);
+        createdUser.setStatus(status);
+        createdUser.setCompany(company);
+        createdUser.setAdministrator(administrator);
 
-        return searchedUser;
+        return createdUser;
     }
 
 

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.Validations;
 
 public class LoginActivity extends AppCompatActivity {
@@ -61,11 +63,20 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        /*
-        se tudo deu certo, fará login aqui
+        UserServices userServices = new UserServices(getApplicationContext());
 
-        */
-
+        String email = EmailEditText.getText().toString().trim().toUpperCase();
+        String password = PasswordEditText.getText().toString();
+        User user = userServices.login(email, password);
+        if (user == null){
+            // Mostrar alguma mensagem que é inválido
+        }
+        else {
+            Intent intent = new Intent(this, HomeActivity.class);
+            finish();
+            startActivity(intent);
+            // precisa levar o usuário
+        }
 
     }
 
