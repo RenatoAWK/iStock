@@ -88,10 +88,6 @@ public class UserDAO{
                 int companyIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_COMPANY);
                 int administratorIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_ADMINISTRATOR);
 
-
-                ////
-                ////
-                /// Algo obscuro acontece aqui e gera um CursorIndexOutOfBoundsException
                 long id = cursor.getInt(idIndex);
                 String name = cursor.getString(nameIndex);
                 String email = cursor.getString(emailIndex);

@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.UserStatus;
+import bsi.mpoo.istock.services.UserTypes;
 import bsi.mpoo.istock.services.Validations;
 
 
@@ -127,8 +129,8 @@ public class RegisterActivity extends AppCompatActivity {
         String name = NameEditText.getText().toString();
         String email = EmailEditText.getText().toString().trim().toUpperCase();
         String password = PasswordEditText.getText().toString();
-        String type = "ADMIN";
-        String status = "ACTIVATED";
+        String type = UserTypes.ADMINISTRATOR.name();
+        String status = UserStatus.ACTIVE.name();
         String company = CompanyEditText.getText().toString().trim();
         long administrator = -1;
 
