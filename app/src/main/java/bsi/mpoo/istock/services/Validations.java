@@ -6,11 +6,16 @@ import android.widget.EditText;
 public class Validations {
 
     public boolean companyName(String company){
-        return true;//
+        if (!company.isEmpty())
+            return true;
+        return false;
     }
 
     public boolean name(String name){
-        return true; //
+        if (!name.isEmpty() && name.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")){
+            return true;
+        }
+        return false;
     }
 
     public boolean email(String email){
@@ -21,7 +26,10 @@ public class Validations {
     }
 
     public boolean password(String password){
-        return true; //
+        if (password.length() >= 5 && password.length() <= 10){
+            return true;
+        }
+        return false;
     }
 
     public boolean passwordEquals(String password, String passwordConfirmation){
@@ -32,7 +40,7 @@ public class Validations {
     }
 
     public boolean editValidate(EditText editText){
-        if (editText != null && !editText.getText().toString().equals("")){
+        if (editText != null && !editText.getText().toString().trim().equals("")){
             return true;
         }
         return false;
