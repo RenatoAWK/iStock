@@ -29,11 +29,11 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        EmailEditText = findViewById(R.id.editEmailCadastro);
-        PasswordEditText = findViewById(R.id.editSenhaCadastro);
-        PasswordConfirmationEditText = findViewById(R.id.editSenhaConfirmarCadastro);
-        NameEditText = findViewById(R.id.editNomeCadastro);
-        CompanyEditText = findViewById(R.id.editNomeEmpresaCadastro);
+        EmailEditText = findViewById(R.id.editEmailRegister);
+        PasswordEditText = findViewById(R.id.editPasswordRegister);
+        PasswordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
+        NameEditText = findViewById(R.id.editfullNameRegister);
+        CompanyEditText = findViewById(R.id.editCompanyNameRegister);
 
     }
 

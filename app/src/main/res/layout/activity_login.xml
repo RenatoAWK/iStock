@@ -8,7 +8,7 @@
     tools:context=".gui.LoginActivity">
 
     <ImageView
-        android:id="@+id/imageViewMain"
+        android:id="@+id/imageViewLogin"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/editEmailLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -30,12 +30,12 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/editPassword"
+        app:layout_constraintBottom_toTopOf="@+id/editPasswordLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/editPasswordLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -44,12 +44,12 @@
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLoginLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/buttonLoginLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,13 +59,13 @@
         android:onClick="login"
         android:text="@string/login"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/buttonCreateAccount"
+        app:layout_constraintBottom_toTopOf="@+id/buttonCreateAccountLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonCreateAccount"
+        android:id="@+id/buttonCreateAccountLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -75,13 +75,13 @@
         android:onClick="CreateAccount"
         android:text="@string/create_account"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/textForgot"
+        app:layout_constraintBottom_toTopOf="@+id/textForgotLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textForgot"
+        android:id="@+id/textForgotLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -89,12 +89,12 @@
         android:layout_marginBottom="8dp"
         android:text="@string/forgot_text"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/textEnterHereClickable"
+        app:layout_constraintBottom_toTopOf="@+id/textEnterHereClickableLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textEnterHereClickable"
+        android:id="@+id/textEnterHereClickableLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

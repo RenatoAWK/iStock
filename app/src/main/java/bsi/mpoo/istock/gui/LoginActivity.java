@@ -25,8 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        EmailEditText = findViewById(R.id.editEmail);
-        PasswordEditText = findViewById(R.id.editPassword);
+        EmailEditText = findViewById(R.id.editEmailLogin);
+        PasswordEditText = findViewById(R.id.editPasswordLogin);
 
     }
 
