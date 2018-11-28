@@ -1,5 +1,6 @@
 package bsi.mpoo.istock.gui;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,11 +30,17 @@ public class RegisterActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String email = bundle.getString("email");
+
         EmailEditText = findViewById(R.id.editEmailRegister);
         PasswordEditText = findViewById(R.id.editPasswordRegister);
         PasswordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
         NameEditText = findViewById(R.id.editfullNameRegister);
         CompanyEditText = findViewById(R.id.editCompanyNameRegister);
+
+        EmailEditText.setText(email);
 
     }
 

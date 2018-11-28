@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             valid = false;
         }
         if (!validations.password(PasswordEditText.getText().toString())){
+            PasswordEditText.requestFocus();
             PasswordEditText.setError(getString(R.string.invalid_password));
         }
 
@@ -83,6 +84,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void CreateAccount(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
+
+        Bundle bundle = new Bundle();
+        String email = EmailEditText.getText().toString();
+        bundle.putString("email",email);
+
+        intent.putExtras(bundle);
+
         startActivity(intent);
     }
 
