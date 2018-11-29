@@ -81,16 +81,6 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (!valid){
-            return;
-        }
-
-        if (!validations.companyName(companyEditText.getText().toString())){
-            companyEditText.requestFocus();
-            companyEditText.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
         if (!validations.name(nameEditText.getText().toString())){
             nameEditText.requestFocus();
             nameEditText.setError(getString(R.string.invalid_Name));
@@ -115,17 +105,15 @@ public class RegisterActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (!valid){
-            return;
-        }
-
         if (!validations.passwordEquals(
                 passwordEditText.getText().toString(),
                 passwordConfirmationEditText.getText().toString())){
 
-                passwordEditText.setError(getString(R.string.invalid_password));
+                passwordEditText.setError(getString(R.string.invalid_password_not_equals));
                 passwordConfirmationEditText.requestFocus();
-                passwordConfirmationEditText.setError(getString(R.string.invalid_password));
+                passwordConfirmationEditText.setError(getString(R.string.invalid_password_not_equals));
+
+                valid = false;
 
         }
 

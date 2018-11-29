@@ -77,8 +77,8 @@ public class UserDAO{
 
     public User createUser(Cursor cursor){
 
-        if (cursor.moveToFirst()){
-            do {
+        if (cursor.moveToNext()){
+
                 int idIndex = cursor.getColumnIndexOrThrow(ContractUser._ID);
                 int nameIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_NAME);
                 int emailIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_EMAIL);
@@ -108,8 +108,6 @@ public class UserDAO{
                 createdUser.setAdministrator(administrator);
 
                 return createdUser;
-
-            } while (cursor.moveToNext());
         }
 
         return new User();

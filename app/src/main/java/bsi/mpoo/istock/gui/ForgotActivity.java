@@ -19,11 +19,9 @@ public class ForgotActivity extends AppCompatActivity {
         actionBar.hide();
     }
 
-    //Teste design
     public void confirmForgot(View view) {
         Intent intent = new Intent(this, LoginActivity.class);
         finish();
         startActivity(intent);
     }
-    //
 }

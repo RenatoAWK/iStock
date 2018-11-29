@@ -36,7 +36,7 @@ public class UserServices {
             User user = new User();
             user.setName(name);
             user.setEmail(email);
-            user.setPassword(Encryption.encrypt(password)); // Precisa passar pela criptografia antes
+            user.setPassword(Encryption.encrypt(password));
             user.setType(type);
             user.setStatus(status);
             user.setCompany(company);
@@ -52,7 +52,7 @@ public class UserServices {
 
         User searchedUser = userDAO.getUserEmail(email);
         if (searchedUser != null){
-            if (searchedUser.getPassword().equals(Encryption.encrypt(password))){ //Precisa passar pela criptografia
+            if (searchedUser.getPassword().equals(Encryption.encrypt(password))){
                 return searchedUser;
             }
             else {

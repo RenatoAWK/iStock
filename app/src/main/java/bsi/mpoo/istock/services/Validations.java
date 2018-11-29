@@ -5,12 +5,6 @@ import android.widget.EditText;
 
 public class Validations {
 
-    public boolean companyName(String company){
-        if (!company.isEmpty())
-            return true;
-        return false;
-    }
-
     public boolean name(String name){
         if (!name.isEmpty() && name.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")){
             return true;
