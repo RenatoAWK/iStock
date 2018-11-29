@@ -1,9 +1,7 @@
 package bsi.mpoo.istock.services;
 
 import android.content.Context;
-import android.util.Log;
 
-import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.data.UserDAO;
 import bsi.mpoo.istock.domain.User;
 
@@ -17,7 +15,7 @@ public class UserServices {
 
     }
 
-    public boolean isUserRegistred(String email){
+    public boolean isUserRegistered(String email){
 
         User searchedUser = userDAO.getUserEmail(email.toUpperCase());
 
@@ -27,9 +25,11 @@ public class UserServices {
         return true;
     }
 
-    public void registerUser(String name, String email, String password, String type, String status, String company, long administrator) throws Exception {
+    public void registerUser(String name, String email, String password, String type,
+                             String status, String company, long administrator)
+                            throws Exception {
 
-        if (isUserRegistred(email)){
+        if (isUserRegistered(email)){
             throw new Exception("Email já cadastrado");
         }
         else {
