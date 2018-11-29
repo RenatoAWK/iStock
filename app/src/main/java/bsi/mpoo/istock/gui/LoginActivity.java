@@ -75,6 +75,12 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             Intent intent = new Intent(this, HomeActivity.class);
+
+            Bundle bundle = new Bundle();
+            String name = user.getName();
+            bundle.putString("name", name);
+            intent.putExtras(bundle);
+
             finish();
 
             startActivity(intent);
