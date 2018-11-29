@@ -16,7 +16,7 @@ public class UserDAO{
 
     public void insertUser(User user) {
 
-        Database mDbHelper = new Database(context);
+        DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -36,7 +36,7 @@ public class UserDAO{
 
     public User getUserEmail(String email) {
 
-        Database mDbHelper = new Database(context);
+        DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         User searchedUser = null;

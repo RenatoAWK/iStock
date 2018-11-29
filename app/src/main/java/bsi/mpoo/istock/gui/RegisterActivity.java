@@ -151,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    
+
                     finish();
                 }
             });
