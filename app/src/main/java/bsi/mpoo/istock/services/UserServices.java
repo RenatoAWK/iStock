@@ -25,23 +25,14 @@ public class UserServices {
         return true;
     }
 
-    public void registerUser(String name, String email, String password, String type,
-                             String status, String company, long administrator)
-                            throws Exception {
+    public void registerUser(User user) throws Exception {
 
-        if (isUserRegistered(email)){
+        if (isUserRegistered(user.getEmail())){
             throw new Exception("Email já cadastrado");
         }
         else {
-            User user = new User();
-            user.setName(name);
-            user.setEmail(email);
-            user.setPassword(Encryption.encrypt(password));
-            user.setType(type);
-            user.setStatus(status);
-            user.setCompany(company);
-            user.setAdministrator(administrator);
 
+            user.setPassword(Encryption.encrypt(user.getPassword()));
             userDAO.insertUser(user);
 
         }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.UserStatus;
 import bsi.mpoo.istock.services.UserTypes;
@@ -123,16 +124,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         UserServices userServices = new UserServices(this);
 
-        String name = nameEditText.getText().toString();
-        String email = emailEditText.getText().toString().trim().toUpperCase();
-        String password = passwordEditText.getText().toString();
-        String type = UserTypes.ADMINISTRATOR.name();
-        String status = UserStatus.ACTIVE.name();
-        String company = companyEditText.getText().toString().trim();
-        long administrator = -1;
+        User newUser = new User();
+        newUser.setName(nameEditText.getText().toString());
+        newUser.setEmail(emailEditText.getText().toString().trim().toUpperCase());
+        newUser.setPassword(passwordEditText.getText().toString());
+        newUser.setType(UserTypes.ADMINISTRATOR.name());
+        newUser.setStatus(UserStatus.ACTIVE.name());
+        newUser.setCompany(companyEditText.getText().toString().trim());
+        newUser.setAdministrator(-1);
 
         try {
-            userServices.registerUser(name, email, password, type, status, company, administrator);
+            userServices.registerUser(newUser);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.register_done);
