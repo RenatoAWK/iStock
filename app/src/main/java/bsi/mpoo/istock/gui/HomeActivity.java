@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import bsi.mpoo.istock.domain.User;
 
 import bsi.mpoo.istock.R;
 
@@ -21,9 +22,9 @@ public class HomeActivity extends AppCompatActivity {
 
         hello = findViewById(R.id.textView);
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        String name = bundle.getString("name");
-        hello.setText("Bem Vindo:\n " + name);
+        User user = intent.getParcelableExtra("user");
+
+        hello.setText("Bem Vindo:\n " + user.getName());
 
     }
 }

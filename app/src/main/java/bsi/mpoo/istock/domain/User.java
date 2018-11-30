@@ -1,6 +1,9 @@
 package bsi.mpoo.istock.domain;
 
-public class User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
     private long id;
     private String name;
     private String email;
@@ -12,6 +15,46 @@ public class User {
     private long administrator;
 
     public User(){}
+
+    private User(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        email = in.readString();
+        password = in.readString();
+        type = in.readString();
+        status = in.readString();
+        company = in.readString();
+        administrator = in.readLong();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(email);
+        dest.writeString(password);
+        dest.writeString(type);
+        dest.writeString(status);
+        dest.writeString(company);
+        dest.writeLong(administrator);
+    }
 
     public long getId() {
         return id;
