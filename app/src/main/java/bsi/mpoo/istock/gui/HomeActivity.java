@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String name = bundle.getString("name");
-        hello.setText("Bem Vindo: " + name);
+        hello.setText("Bem Vindo:\n " + name);
 
     }
 }
