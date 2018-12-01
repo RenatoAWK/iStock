@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.data.Exceptions;
+import bsi.mpoo.istock.services.Exceptions;
+import bsi.mpoo.istock.services.ExceptionsEnum;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.UserStatus;
 import bsi.mpoo.istock.services.UserTypes;
 import bsi.mpoo.istock.services.Validations;
+import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -139,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.register_done);
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -149,19 +151,30 @@ public class RegisterActivity extends AppCompatActivity {
             builder.show();
 
         }
-        catch (Exception error){
-
-            String errorMessage;
-            if (error.getMessage().equals(Exceptions.EMAIL_ALREADY_REGISTERED.toString())){
-                errorMessage = (getString(R.string.email_already_registered));
-            }
-            else {
-                errorMessage = getString(R.string.unknow_error);
-            }
+        catch (EmailAlreadyRegistered error){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(errorMessage);
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            builder.setMessage(getString(R.string.email_already_registered));
+            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+
+            emailEditText.setText("");
+            passwordEditText.setText("");
+            passwordConfirmationEditText.setText("");
+
+            emailEditText.requestFocus();
+
+        }
+        catch (Exception error){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(getString(R.string.unknow_error));
+            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 

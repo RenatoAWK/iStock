@@ -26,4 +26,5 @@
     <string name="invalid_email_or_password">Email ou senha inválidos</string>
     <string name="register_done">Cadastro realizado</string>
     <string name="invalid_password_not_equals">Senhas precisam ser iguais</string>
+    <string name="okay">OK</string>
 </resources>

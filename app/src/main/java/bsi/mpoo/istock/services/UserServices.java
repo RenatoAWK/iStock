@@ -2,9 +2,9 @@ package bsi.mpoo.istock.services;
 
 import android.content.Context;
 
-import bsi.mpoo.istock.data.Exceptions;
 import bsi.mpoo.istock.data.UserDAO;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
 public class UserServices {
 
@@ -20,7 +20,7 @@ public class UserServices {
 
         User searchedUser = userDAO.getUserEmail(email.toUpperCase());
 
-        if (searchedUser == null){
+        if (searchedUser == null) {
             return false;
         }
         return true;
@@ -29,7 +29,7 @@ public class UserServices {
     public void registerUser(User user) throws Exception {
 
         if (isUserRegistered(user.getEmail())){
-            throw new Exception(Exceptions.EMAIL_ALREADY_REGISTERED.toString());
+            throw new EmailAlreadyRegistered();
         }
         else {
 
