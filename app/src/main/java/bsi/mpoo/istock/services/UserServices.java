@@ -2,6 +2,7 @@ package bsi.mpoo.istock.services;
 
 import android.content.Context;
 
+import bsi.mpoo.istock.data.Exceptions;
 import bsi.mpoo.istock.data.UserDAO;
 import bsi.mpoo.istock.domain.User;
 
@@ -28,7 +29,7 @@ public class UserServices {
     public void registerUser(User user) throws Exception {
 
         if (isUserRegistered(user.getEmail())){
-            throw new Exception("Email já cadastrado");
+            throw new Exception(Exceptions.EMAIL_ALREADY_REGISTERED.toString());
         }
         else {
 

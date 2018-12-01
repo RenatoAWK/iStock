@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.data.Exceptions;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.UserStatus;
@@ -128,8 +129,8 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setName(nameEditText.getText().toString());
         newUser.setEmail(emailEditText.getText().toString().trim().toUpperCase());
         newUser.setPassword(passwordEditText.getText().toString());
-        newUser.setType(UserTypes.ADMINISTRATOR.name());
-        newUser.setStatus(UserStatus.ACTIVE.name());
+        newUser.setType(UserTypes.ADMINISTRATOR.getValue());
+        newUser.setStatus(UserStatus.ACTIVE.getValue());
         newUser.setCompany(companyEditText.getText().toString().trim());
         newUser.setAdministrator(-1);
 
@@ -151,8 +152,8 @@ public class RegisterActivity extends AppCompatActivity {
         catch (Exception error){
 
             String errorMessage;
-            if (error.getMessage().equals("Email já cadastrado")){
-                errorMessage = (getString(R.string.email_already_used));
+            if (error.getMessage().equals(Exceptions.EMAIL_ALREADY_REGISTERED.toString())){
+                errorMessage = (getString(R.string.email_already_registered));
             }
             else {
                 errorMessage = getString(R.string.unknow_error);

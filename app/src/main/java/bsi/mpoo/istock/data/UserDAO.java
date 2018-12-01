@@ -75,7 +75,7 @@ public class UserDAO{
 
     }
 
-    public User createUser(Cursor cursor){
+    private User createUser(Cursor cursor){
 
         cursor.moveToNext();
 
@@ -92,8 +92,8 @@ public class UserDAO{
         String name = cursor.getString(nameIndex);
         String email = cursor.getString(emailIndex);
         String password = cursor.getString(passwordIndex);
-        String type = cursor.getString(typeIndex);
-        String status = cursor.getString(statusIndex);
+        int type = cursor.getInt(typeIndex);
+        int status = cursor.getInt(statusIndex);
         String company = cursor.getString(companyIndex);
         long administrator = cursor.getLong(administratorIndex);
 

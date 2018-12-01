@@ -8,8 +8,8 @@ public class User implements Parcelable {
     private String name;
     private String email;
     private String password;
-    private String type;
-    private String status;
+    private int type;
+    private int status;
     private String company;
 
     private long administrator;
@@ -21,8 +21,8 @@ public class User implements Parcelable {
         name = in.readString();
         email = in.readString();
         password = in.readString();
-        type = in.readString();
-        status = in.readString();
+        type = in.readInt();
+        status = in.readInt();
         company = in.readString();
         administrator = in.readLong();
     }
@@ -50,8 +50,8 @@ public class User implements Parcelable {
         dest.writeString(name);
         dest.writeString(email);
         dest.writeString(password);
-        dest.writeString(type);
-        dest.writeString(status);
+        dest.writeInt(type);
+        dest.writeInt(status);
         dest.writeString(company);
         dest.writeLong(administrator);
     }
@@ -88,19 +88,19 @@ public class User implements Parcelable {
         this.password = password;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
