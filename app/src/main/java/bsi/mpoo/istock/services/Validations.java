@@ -6,7 +6,7 @@ import android.widget.EditText;
 public class Validations {
 
     public boolean name(String name){
-        if (!name.isEmpty() && name.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")){
+        if (!name.isEmpty() && name.matches("[A-zÀ-ý]+")){
             return true;
         }
         return false;
