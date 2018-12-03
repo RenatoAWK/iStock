@@ -2,7 +2,7 @@ package bsi.mpoo.istock.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.Telephony;
+
 
 public class Address implements Parcelable {
 
