@@ -106,6 +106,18 @@
                 android:hint="@string/state"
                 android:inputType="text" />
 
+            <EditText
+                android:id="@+id/editTextPhoneRegisterClient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:hint="@string/phone"
+                android:inputType="phone" />
+
             <Button
                 android:id="@+id/buttonRegisterRegisterClient"
                 android:layout_width="match_parent"

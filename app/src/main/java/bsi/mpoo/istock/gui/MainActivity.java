@@ -46,6 +46,25 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
+                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_main);
+                if (fragment instanceof HomeFragment){
+
+                } else if (fragment instanceof SalesFragment){
+
+                } else if (fragment instanceof ProductsFragment){
+
+                } else if (fragment instanceof ClientsFragment){
+
+                    Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
+                    startActivity(intent);
+
+                } else if (fragment instanceof  UsersFragment){
+
+                } else if (fragment instanceof HistoricFragment){
+
+                }
+
+
             }
         });
 
@@ -100,25 +119,32 @@ public class MainActivity extends AppCompatActivity
 
     public void displaySelectedScreen(int id){
         Fragment fragment = null;
+        FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
 
         switch (id){
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                floatingActionButton.hide();
                 break;
             case R.id.nav_sales:
                 fragment = new SalesFragment();
+                floatingActionButton.show();
                 break;
             case R.id.nav_products:
                 fragment = new ProductsFragment();
+                floatingActionButton.show();
                 break;
             case R.id.nav_clients:
                 fragment = new ClientsFragment();
+                floatingActionButton.show();
                 break;
             case R.id.nav_users:
                 fragment = new UsersFragment();
+                floatingActionButton.show();
                 break;
             case R.id.nav_historic:
                 fragment = new HistoricFragment();
+                floatingActionButton.show();
                 break;
 
             case R.id.nav_logout:
