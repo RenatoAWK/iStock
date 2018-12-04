@@ -11,10 +11,14 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(ContractUser.SQL_CREATE_TABLE_USER);
+        db.execSQL(ContractClient.SQL_CREATE_TABLE_CLIENT);
+        db.execSQL(ContractAddress.SQL_CREATE_TABLE_ADDRESS);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL(ContractUser.SQL_DELETE_USERS);
+        db.execSQL(ContractClient.SQL_DELETE_CLIENTS);
+        db.execSQL(ContractAddress.SQL_DELETE_ADDRESS);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
