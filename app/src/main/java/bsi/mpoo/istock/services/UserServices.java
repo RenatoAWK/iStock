@@ -16,7 +16,7 @@ public class UserServices {
 
     }
 
-    public boolean isUserRegistered(String email){
+    private boolean isUserRegistered(String email){
 
         User searchedUser = userDAO.getUserEmail(email.toUpperCase());
 

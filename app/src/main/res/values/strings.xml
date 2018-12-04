@@ -18,9 +18,10 @@
     <string name="requiredField">Campo obrigatório</string>
     <string name="invalid_email">Email inválido</string>
     <string name="invalid_password">Senha inválida</string>
-    <string name="invalid_Name">Nome inválido</string>
+    <string name="invalid_Name">Não é permitido símbolos nem números</string>
     <string name="company_register">Cadastro Da Empresa</string>
     <string name="email_already_registered">Email já cadastrado</string>
+    <string name="client_already_registered">Nome já está em uso</string>
     <string name="unknow_error">Erro desconhecido</string>
     <string name="invalid_password_weak">A senha precisa ter de 5 a 10 caracteres</string>
     <string name="invalid_email_or_password">Email ou senha inválidos</string>
@@ -50,7 +51,7 @@
     <string name="clients_register">Cadastro De Clientes</string>
     <string name="street">Rua</string>
     <string name="number">Número</string>
-    <string name="neighborhood">Bairro</string>
+    <string name="district">Bairro</string>
     <string name="city">Cidade</string>
     <string name="state">Estado</string>
     <string name="phone">Telefone</string>

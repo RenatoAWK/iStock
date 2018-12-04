@@ -9,7 +9,7 @@ public class Address implements Parcelable {
     private long id;
     private String street;
     private int number;
-    private String neighborhood;
+    private String district;
     private String city;
     private String state;
 
@@ -21,7 +21,7 @@ public class Address implements Parcelable {
         this.id = parcel.readLong();
         this.street = parcel.readString();
         this.number = parcel.readInt();
-        this.neighborhood = parcel.readString();
+        this.district = parcel.readString();
         this.city = parcel.readString();
         this.state = parcel.readString();
 
@@ -52,12 +52,12 @@ public class Address implements Parcelable {
         this.number = number;
     }
 
-    public String getNeighborhood() {
-        return neighborhood;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setNeighborhood(String neighborhood) {
-        this.neighborhood = neighborhood;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public String getCity() {
@@ -87,7 +87,7 @@ public class Address implements Parcelable {
         dest.writeLong(id);
         dest.writeString(street);
         dest.writeInt(number);
-        dest.writeString(neighborhood);
+        dest.writeString(district);
         dest.writeString(city);
         dest.writeString(state);
 
