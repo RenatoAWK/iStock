@@ -39,4 +39,11 @@ public class Validations {
         }
         return false;
     }
+
+    public boolean phone(String phone){
+        if (!phone.isEmpty() && phone.matches("[0-9]{12}")){
+            return true;
+        }
+        return false;
+    }
 }
