@@ -23,6 +23,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
 
         AddressDAO addressDAO = new AddressDAO(context);
         addressDAO.insertAddress(client.getAddress());
@@ -35,22 +36,24 @@ public class ClientDAO {
         db.close();
     }
 
-    public Client getClientName(String name) {
+    public Client getClientName(String name, long idAdm) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-        Client searchedclient = null;
+        Client searchedClient = null;
 
         String[] projection = {
                 BaseColumns._ID,
                 ContractClient.COLUMN_NAME,
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
+                ContractClient.COLUMN_ID_ADM
         };
 
-        String selection = ContractClient.COLUMN_NAME+" = ?";
-        String[] selectionArgs = { name.trim().toUpperCase()};
+        String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
+                ContractClient.COLUMN_ID_ADM+" =?";
+        String[] selectionArgs = { name.trim().toUpperCase(), String.valueOf(idAdm) };
 
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
@@ -63,12 +66,12 @@ public class ClientDAO {
         );
 
         if (cursor.getCount()==1){
-          searchedclient = createClient(cursor);
+          searchedClient = createClient(cursor);
         }
 
         cursor.close();
         db.close();
-        return searchedclient;
+        return searchedClient;
 
     }
 
@@ -80,17 +83,20 @@ public class ClientDAO {
         int nameIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_NAME);
         int phoneIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_PHONE);
         int idAddressIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADDRESS);
+        int idAdmIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADM);
 
 
-        long id = cursor.getInt(idIndex);
+        long id = cursor.getLong(idIndex);
         String name = cursor.getString(nameIndex);
         String phone = cursor.getString(phoneIndex);
         int idAddress = cursor.getInt(idAddressIndex);
+        long idAdm = cursor.getLong(idAdmIndex);
 
         Client createdClient = new Client();
         createdClient.setId(id);
         createdClient.setName(name);
         createdClient.setPhone(phone);
+        createdClient.setIdAdm(idAdm);
 
         AddressDAO addressDAO = new AddressDAO(context);
         Address searchedAddress = addressDAO.getAddressID(idAddress);

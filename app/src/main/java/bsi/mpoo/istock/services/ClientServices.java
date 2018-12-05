@@ -17,8 +17,8 @@ public class ClientServices {
         this.addressDAO = new AddressDAO(context);
     }
 
-    private boolean isClientRegistered(String name){
-        Client searchedClient = clientDAO.getClientName(name);
+    private boolean isClientRegistered(String name, long idAdm){
+        Client searchedClient = clientDAO.getClientName(name, idAdm);
 
         if (searchedClient == null){
             return false;
@@ -26,9 +26,9 @@ public class ClientServices {
         return true;
     }
 
-    public void registerClient(Client client) throws Exception {
+    public void registerClient(Client client, long idAdm) throws Exception {
 
-        if (isClientRegistered(client.getName().trim().toUpperCase())){
+        if (isClientRegistered(client.getName().trim().toUpperCase(), idAdm)){
             throw new ClientAlreadyRegistered();
         }
         else {

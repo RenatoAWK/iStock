@@ -27,6 +27,8 @@ import bsi.mpoo.istock.gui.fragments.UsersFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity
         TextView textViewName;
 
         Intent intent = getIntent();
-        User user = intent.getParcelableExtra("user");
+        user = intent.getParcelableExtra("user");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity
                 } else if (fragment instanceof ClientsFragment){
 
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
+                    intent.putExtra("user",user);
                     startActivity(intent);
 
                 } else if (fragment instanceof  UsersFragment){

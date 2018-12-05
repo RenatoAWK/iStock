@@ -10,15 +10,19 @@ public class ContractClient implements BaseColumns {
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_PHONE = "phone";
     public static final String COLUMN_ID_ADDRESS = "id_address";
+    public static final String COLUMN_ID_ADM = "id_administrator";
 
     public static final String SQL_CREATE_TABLE_CLIENT =
             "CREATE TABLE "+ContractClient.TABLE_NAME+" ("+
                     ContractClient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
                     ContractClient.COLUMN_NAME + " TEXT,"+
                     ContractClient.COLUMN_PHONE + " TEXT,"+
-                    ContractClient.COLUMN_ID_ADDRESS + " INTEGER ,"+
+                    ContractClient.COLUMN_ID_ADDRESS + " INTEGER,"+
+                    ContractClient.COLUMN_ID_ADM + " TEXT,"+
                     "FOREIGN KEY("+COLUMN_ID_ADDRESS+") REFERENCES "+
-                    ContractAddress.TABLE_NAME+" ("+ContractAddress._ID+")"+
+                    ContractAddress.TABLE_NAME+" ("+ContractAddress._ID+"),"+
+                    "FOREIGN KEY("+ContractClient.COLUMN_ID_ADM +") REFERENCES "+
+                    ContractUser.TABLE_NAME+" ("+ContractUser._ID+")"+
                     ")";
 
 

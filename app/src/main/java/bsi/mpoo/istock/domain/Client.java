@@ -11,6 +11,7 @@ public class Client implements Parcelable {
     private String name;
     private String phone;
     private Address address;
+    private long idAdm;
 
     public Client(){}
 
@@ -20,6 +21,7 @@ public class Client implements Parcelable {
         this.name = parcel.readString();
         this.phone = parcel.readString();
         this.address = (Address)parcel.readValue(Address.class.getClassLoader());
+        this.idAdm = parcel.readLong();
 
 
     }
@@ -56,6 +58,14 @@ public class Client implements Parcelable {
         this.address = address;
     }
 
+    public long getIdAdm() {
+        return idAdm;
+    }
+
+    public void setIdAdm(long idAdm) {
+        this.idAdm = idAdm;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -68,6 +78,7 @@ public class Client implements Parcelable {
         dest.writeString(name);
         dest.writeString(phone);
         dest.writeValue(address);
+        dest.writeLong(idAdm);
 
 
     }

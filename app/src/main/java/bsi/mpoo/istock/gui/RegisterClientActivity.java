@@ -1,6 +1,7 @@
 package bsi.mpoo.istock.gui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 import bsi.mpoo.istock.services.Validations;
@@ -26,6 +28,8 @@ public class RegisterClientActivity extends AppCompatActivity {
     EditText editTextState;
     EditText editTextPhone;
     Button buttonRegister;
+
+    User user;
 
 
     @Override
@@ -130,11 +134,16 @@ public class RegisterClientActivity extends AppCompatActivity {
             return;
         }
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        user = bundle.getParcelable("user");
+
         ClientServices clientServices = new ClientServices(getApplicationContext());
 
         Client client = new Client();
         client.setName(editTextName.getText().toString().trim().toUpperCase());
         client.setPhone(editTextPhone.getText().toString().trim());
+        client.setIdAdm(user.getId());
 
         Address address = new Address();
         address.setStreet(editTextStreet.getText().toString().trim().toUpperCase());
@@ -146,7 +155,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         client.setAddress(address);
 
         try {
-            clientServices.registerClient(client);
+            clientServices.registerClient(client, user.getId());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.register_done);
