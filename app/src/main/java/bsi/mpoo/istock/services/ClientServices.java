@@ -4,7 +4,6 @@ import android.content.Context;
 
 import bsi.mpoo.istock.data.AddressDAO;
 import bsi.mpoo.istock.data.ClientDAO;
-import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 public class ClientServices {
@@ -18,7 +17,7 @@ public class ClientServices {
     }
 
     private boolean isClientRegistered(String name, long idAdm){
-        Client searchedClient = clientDAO.getClientName(name, idAdm);
+        Client searchedClient = clientDAO.getClientByName(name, idAdm);
 
         if (searchedClient == null){
             return false;

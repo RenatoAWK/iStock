@@ -66,7 +66,8 @@ public class UserDAO{
         );
 
         if (cursor.getCount()==1){
-          searchedUser = createUser(cursor);
+            cursor.moveToNext();
+            searchedUser = createUser(cursor);
         }
 
         cursor.close();
@@ -76,8 +77,6 @@ public class UserDAO{
     }
 
     private User createUser(Cursor cursor){
-
-        cursor.moveToNext();
 
         int idIndex = cursor.getColumnIndexOrThrow(ContractUser._ID);
         int nameIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_NAME);

@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.data.ClientDAO;
+import bsi.mpoo.istock.data.Contract;
+import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.services.ClientServices;
 
 public class ClientsFragment extends Fragment {
-
-    private FloatingActionButton floatingActionButton;
 
     @Nullable
     @Override
@@ -25,7 +28,6 @@ public class ClientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         getActivity().setTitle(getString(R.string.clients));
     }

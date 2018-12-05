@@ -34,7 +34,7 @@ public class AddressDAO {
         db.close();
     }
 
-    public Address getAddressID(int id) {
+    public Address getAddressID(long id) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -64,7 +64,8 @@ public class AddressDAO {
         );
 
         if (cursor.getCount()==1){
-          searchedAddress = createAddress(cursor);
+            cursor.moveToNext();
+            searchedAddress = createAddress(cursor);
         }
 
         cursor.close();
@@ -74,8 +75,6 @@ public class AddressDAO {
     }
 
     private Address createAddress(Cursor cursor){
-
-        cursor.moveToNext();
 
         int idIndex = cursor.getColumnIndexOrThrow(ContractAddress._ID);
         int streetIndex = cursor.getColumnIndexOrThrow(ContractAddress.COLUMN_STREET);
