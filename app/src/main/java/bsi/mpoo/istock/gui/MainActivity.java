@@ -124,6 +124,9 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
 
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user",user);
+
         switch (id){
             case R.id.nav_home:
                 fragment = new HomeFragment();
@@ -138,7 +141,8 @@ public class MainActivity extends AppCompatActivity
                 floatingActionButton.show();
                 break;
             case R.id.nav_clients:
-                fragment = new ClientsFragment();
+                fragment = new ClientsFragment(); /////////// replicar nos outros
+                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_users:
