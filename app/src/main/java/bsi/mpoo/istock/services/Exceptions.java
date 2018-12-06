@@ -42,4 +42,24 @@ public class Exceptions {
             return this.idError;
         }
     }
+
+    public static class ClientNotRegistered extends Exception{
+
+        private ExceptionsEnum error;
+
+        private int idError;
+
+        public ClientNotRegistered(){
+            this.error = ExceptionsEnum.CLIENT_NOT_REGISTERED;
+            this.idError = this.error.getValue();
+        }
+
+        public String getStringError(){
+            return this.error.toString();
+        }
+
+        public int getIdError() {
+            return this.idError;
+        }
+    }
 }

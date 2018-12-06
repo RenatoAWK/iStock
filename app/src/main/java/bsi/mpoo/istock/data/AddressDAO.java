@@ -8,6 +8,7 @@ import android.provider.BaseColumns;
 
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.services.AccountStatus;
 
 public class AddressDAO {
     private Context context;
@@ -26,6 +27,7 @@ public class AddressDAO {
         values.put(ContractAddress.COLUMN_DISTRICT, address.getDistrict());
         values.put(ContractAddress.COLUMN_CITY, address.getCity());
         values.put(ContractAddress.COLUMN_STATE, address.getState());
+        values.put(ContractAddress.COLUMN_STATUS, address.getStatus());
 
 
         long newRowID = db.insert(ContractAddress.TABLE_NAME, null, values);
@@ -48,6 +50,7 @@ public class AddressDAO {
                 ContractAddress.COLUMN_DISTRICT,
                 ContractAddress.COLUMN_CITY,
                 ContractAddress.COLUMN_STATE,
+                ContractAddress.COLUMN_STATUS
         };
 
         String selection = ContractAddress._ID+" = ?";
@@ -74,6 +77,45 @@ public class AddressDAO {
 
     }
 
+    public void disableAddress(Address address){
+
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ContractAddress.COLUMN_NUMBER, address.getNumber());
+        values.put(ContractAddress.COLUMN_STREET, address.getStreet());
+        values.put(ContractAddress.COLUMN_DISTRICT, address.getDistrict());
+        values.put(ContractAddress.COLUMN_CITY, address.getCity());
+        values.put(ContractAddress.COLUMN_STATE, address.getState());
+        values.put(ContractAddress.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
+
+        String selecion = ContractAddress._ID+" = ?";
+        String[] selecionArgs = {String.valueOf(address.getId())};
+
+        db.update(ContractAddress.TABLE_NAME, values, selecion, selecionArgs);
+    }
+
+    public void updateAddress(Address address){
+
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ContractAddress.COLUMN_NUMBER, address.getNumber());
+        values.put(ContractAddress.COLUMN_STREET, address.getStreet());
+        values.put(ContractAddress.COLUMN_DISTRICT, address.getDistrict());
+        values.put(ContractAddress.COLUMN_CITY, address.getCity());
+        values.put(ContractAddress.COLUMN_STATE, address.getState());
+        values.put(ContractAddress.COLUMN_STATUS, address.getStatus());
+
+        String selecion = ContractAddress._ID+" = ?";
+        String[] selecionArgs = {String.valueOf(address.getId())};
+
+        db.update(ContractAddress.TABLE_NAME, values, selecion, selecionArgs);
+
+    }
+
     private Address createAddress(Cursor cursor){
 
         int idIndex = cursor.getColumnIndexOrThrow(ContractAddress._ID);
@@ -82,6 +124,7 @@ public class AddressDAO {
         int districtIndex = cursor.getColumnIndexOrThrow(ContractAddress.COLUMN_DISTRICT);
         int cityIndex = cursor.getColumnIndexOrThrow(ContractAddress.COLUMN_CITY);
         int stateIndex = cursor.getColumnIndexOrThrow(ContractAddress.COLUMN_STATE);
+        int statusIndex = cursor.getColumnIndexOrThrow(ContractAddress.COLUMN_STATUS);
 
         long id = cursor.getInt(idIndex);
         String street = cursor.getString(streetIndex);
@@ -89,6 +132,7 @@ public class AddressDAO {
         String district = cursor.getString(districtIndex);
         String city = cursor.getString(cityIndex);
         String state = cursor.getString(stateIndex);
+        int status = cursor.getInt(statusIndex);
 
         Address createdAddress = new Address();
         createdAddress.setId(id);
@@ -97,6 +141,7 @@ public class AddressDAO {
         createdAddress.setDistrict(district);
         createdAddress.setCity(city);
         createdAddress.setState(state);
+        createdAddress.setStatus(status);
 
         return createdAddress;
 

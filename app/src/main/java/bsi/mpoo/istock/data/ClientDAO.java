@@ -212,6 +212,50 @@ public class ClientDAO {
 
     }
 
+    public void disableClient(Client client){
+
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        AddressDAO addressDAO = new AddressDAO(context);
+        addressDAO.disableAddress(client.getAddress());
+
+        ContentValues values = new ContentValues();
+        values.put(ContractClient.COLUMN_NAME, client.getName());
+        values.put(ContractClient.COLUMN_PHONE, client.getPhone());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
+        values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
+        values.put(ContractClient.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
+
+        String selection = ContractClient._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(client.getId())};
+
+        db.update(ContractClient.TABLE_NAME, values, selection, selectionArgs);
+
+    }
+
+    public void updateClient(Client client){
+
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        AddressDAO addressDAO = new AddressDAO(context);
+        addressDAO.updateAddress(client.getAddress());
+
+        ContentValues values = new ContentValues();
+        values.put(ContractClient.COLUMN_NAME, client.getName());
+        values.put(ContractClient.COLUMN_PHONE, client.getPhone());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
+        values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
+        values.put(ContractClient.COLUMN_STATUS, client.getStatus());
+
+        String selection = ContractClient._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(client.getId())};
+
+        db.update(ContractClient.TABLE_NAME, values, selection, selectionArgs);
+
+    }
+
 
     private Client createClient(Cursor cursor){
 

@@ -12,6 +12,7 @@ public class ContractAddress implements BaseColumns {
     public static final String COLUMN_DISTRICT = "district";
     public static final String COLUMN_CITY = "city";
     public static final String COLUMN_STATE = "state";
+    public static final String COLUMN_STATUS = "status";
 
     public static final String SQL_CREATE_TABLE_ADDRESS =
             "CREATE TABLE "+ContractAddress.TABLE_NAME+" ("+
@@ -20,7 +21,8 @@ public class ContractAddress implements BaseColumns {
                     ContractAddress.COLUMN_NUMBER + " INTEGER,"+
                     ContractAddress.COLUMN_DISTRICT + " TEXT,"+
                     ContractAddress.COLUMN_CITY + " TEXT,"+
-                    ContractAddress.COLUMN_STATE + " TEXT)";
+                    ContractAddress.COLUMN_STATE + " TEXT," +
+                    ContractAddress.COLUMN_STATUS + " INTEGER)";
 
     public static  final String SQL_DELETE_ADDRESS =
             "DROP TABLE IF EXISTS "+ ContractAddress.TABLE_NAME;

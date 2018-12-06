@@ -12,6 +12,7 @@ public class Address implements Parcelable {
     private String district;
     private String city;
     private String state;
+    private int status;
 
     public Address(){}
 
@@ -24,6 +25,7 @@ public class Address implements Parcelable {
         this.district = parcel.readString();
         this.city = parcel.readString();
         this.state = parcel.readString();
+        this.status = parcel.readInt();
 
     }
 
@@ -76,6 +78,14 @@ public class Address implements Parcelable {
         this.state = state;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -90,6 +100,7 @@ public class Address implements Parcelable {
         dest.writeString(district);
         dest.writeString(city);
         dest.writeString(state);
+        dest.writeInt(status);
 
     }
 

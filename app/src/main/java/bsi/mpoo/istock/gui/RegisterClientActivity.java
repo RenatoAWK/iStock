@@ -153,6 +153,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         address.setDistrict(editTextDistrict.getText().toString().trim().toUpperCase());
         address.setCity(editTextCity.getText().toString().trim().toUpperCase());
         address.setState(editTextState.getText().toString().trim().toUpperCase());
+        address.setStatus(AccountStatus.ACTIVE.getValue());
 
         client.setAddress(address);
 
