@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,15 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
             nameItemView = itemView.findViewById(R.id.nameClientItemList);
             phoneItemView = itemView.findViewById(R.id.phoneClientItemList);
             this.adapter = adapter;
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View v){
+                    Toast.makeText(v.getContext(), "Long Click Position is " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
+                    return false;
+                }
+            });
         }
     }
 
