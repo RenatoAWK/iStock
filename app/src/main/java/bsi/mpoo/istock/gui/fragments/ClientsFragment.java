@@ -41,8 +41,8 @@ public class ClientsFragment extends Fragment {
 
         user = getArguments().getParcelable("user");
 
-        ClientDAO clientDAO = new ClientDAO(getActivity().getApplicationContext());
-        ArrayList<Client> clientList = (ArrayList<Client>) clientDAO.getClientsByAdmId(user.getId(), Contract.ASC);
+        ClientServices clientServices = new ClientServices(getActivity().getApplicationContext());
+        ArrayList<Client> clientList = clientServices.getAcitiveClientsAsc(user);
 
         recyclerView = getActivity().findViewById(R.id.recyclerview);
 
