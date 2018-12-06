@@ -11,6 +11,7 @@ import java.util.List;
 
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.services.AccountStatus;
 
 public class ClientDAO {
     private Context context;
@@ -27,6 +28,7 @@ public class ClientDAO {
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
         values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
+        values.put(ContractClient.COLUMN_STATUS, client.getStatus());
 
         AddressDAO addressDAO = new AddressDAO(context);
         addressDAO.insertAddress(client.getAddress());
@@ -51,7 +53,8 @@ public class ClientDAO {
                 ContractClient.COLUMN_NAME,
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
-                ContractClient.COLUMN_ID_ADM
+                ContractClient.COLUMN_ID_ADM,
+                ContractClient.COLUMN_STATUS
         };
 
         String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
@@ -134,6 +137,53 @@ public class ClientDAO {
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?";
         String[] selectionArgs = { String.valueOf(id) };
+
+
+        Cursor cursor = db.query(
+                ContractClient.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+
+        if (cursor.moveToNext()){
+            do {
+
+                Client client = createClient(cursor);
+                clientList.add(client);
+
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return clientList;
+
+    }
+
+    public List<Client> getActivieClientsByAdmId(long id, String order) {
+
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {
+                BaseColumns._ID,
+                ContractClient.COLUMN_NAME,
+                ContractClient.COLUMN_PHONE,
+                ContractClient.COLUMN_ID_ADDRESS,
+                ContractClient.COLUMN_ID_ADM
+        };
+
+        String sortOrder = ContractClient.COLUMN_NAME +" "+ Contract.ASC;
+        List<Client> clientList = new ArrayList<>();
+        String selection = ContractClient.COLUMN_ID_ADM+" = ?"+" AND "+
+                ContractClient.COLUMN_STATUS+" = ?";
+        String[] selectionArgs = { String.valueOf(id),
+                String.valueOf(AccountStatus.ACTIVE.getValue())};
 
 
         Cursor cursor = db.query(

@@ -10,11 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.services.Exceptions;
-import bsi.mpoo.istock.services.ExceptionsEnum;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.UserServices;
-import bsi.mpoo.istock.services.UserStatus;
+import bsi.mpoo.istock.services.AccountStatus;
 import bsi.mpoo.istock.services.UserTypes;
 import bsi.mpoo.istock.services.Validations;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
@@ -132,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setEmail(emailEditText.getText().toString().trim().toUpperCase());
         newUser.setPassword(passwordEditText.getText().toString());
         newUser.setType(UserTypes.ADMINISTRATOR.getValue());
-        newUser.setStatus(UserStatus.ACTIVE.getValue());
+        newUser.setStatus(AccountStatus.ACTIVE.getValue());
         newUser.setCompany(companyEditText.getText().toString().trim());
         newUser.setAdministrator(-1);
 

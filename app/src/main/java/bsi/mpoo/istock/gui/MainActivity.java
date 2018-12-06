@@ -130,27 +130,32 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                fragment.setArguments(bundle);
                 floatingActionButton.hide();
                 break;
             case R.id.nav_sales:
                 fragment = new SalesFragment();
+                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_products:
                 fragment = new ProductsFragment();
+                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_clients:
-                fragment = new ClientsFragment(); /////////// replicar nos outros
+                fragment = new ClientsFragment();
                 fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_users:
                 fragment = new UsersFragment();
+                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_historic:
                 fragment = new HistoricFragment();
+                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
 

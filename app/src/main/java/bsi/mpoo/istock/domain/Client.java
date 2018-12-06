@@ -12,6 +12,7 @@ public class Client implements Parcelable {
     private String phone;
     private Address address;
     private long idAdm;
+    private int status;
 
     public Client(){}
 
@@ -66,6 +67,14 @@ public class Client implements Parcelable {
         this.idAdm = idAdm;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,6 +88,7 @@ public class Client implements Parcelable {
         dest.writeString(phone);
         dest.writeValue(address);
         dest.writeLong(idAdm);
+        dest.writeInt(status);
 
 
     }

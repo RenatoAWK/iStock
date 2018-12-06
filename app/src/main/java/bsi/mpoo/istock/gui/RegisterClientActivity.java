@@ -14,6 +14,7 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.AccountStatus;
 import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 import bsi.mpoo.istock.services.Validations;
@@ -144,6 +145,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         client.setName(editTextName.getText().toString().trim().toUpperCase());
         client.setPhone(editTextPhone.getText().toString().trim());
         client.setIdAdm(user.getId());
+        client.setStatus(AccountStatus.ACTIVE.getValue());
 
         Address address = new Address();
         address.setStreet(editTextStreet.getText().toString().trim().toUpperCase());
