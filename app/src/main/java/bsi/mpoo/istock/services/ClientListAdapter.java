@@ -51,12 +51,13 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
             ClientServices clientServices = new ClientServices(context);
 
             if (item.getTitle().toString().equals("Deletar")){
-                Toast.makeText(context, "Clicou em deletar",Toast.LENGTH_LONG).show();
 
                 int position = getLayoutPosition();
                 Client client = clientList.get(position);
                 try {
                     clientServices.disableClient(client, client.getIdAdm());
+                    clientList.remove(position);
+                    adapter.notifyDataSetChanged();
 
                 }
                 catch (Exception error) {

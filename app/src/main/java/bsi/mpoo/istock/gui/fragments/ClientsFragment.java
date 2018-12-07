@@ -28,6 +28,8 @@ public class ClientsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ClientListAdapter adapter;
     private User user;
+    private ClientServices clientServices;
+    private ArrayList<Client> clientArrayList;
 
     @Nullable
     @Override
@@ -41,18 +43,23 @@ public class ClientsFragment extends Fragment {
 
         user = getArguments().getParcelable("user");
 
-        ClientServices clientServices = new ClientServices(getActivity().getApplicationContext());
-        ArrayList<Client> clientList = clientServices.getAcitiveClientsAsc(user);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        clientServices = new ClientServices(getActivity().getApplicationContext());
+        clientArrayList = clientServices.getAcitiveClientsAsc(user);
 
         recyclerView = getActivity().findViewById(R.id.recyclerview);
 
-        adapter = new ClientListAdapter(getActivity().getApplicationContext(), clientList);
+        adapter = new ClientListAdapter(getActivity().getApplicationContext(), clientArrayList);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         getActivity().setTitle(getString(R.string.clients));
-
-
     }
+
 }
