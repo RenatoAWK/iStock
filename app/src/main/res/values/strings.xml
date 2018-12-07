@@ -58,4 +58,6 @@
     <string name="phone_subtitle">Telefone: </string>
     <string name="details">Detalhes</string>
     <string name="invalid_phone">Só números são permitidos</string>
+    <string name="edit_successful">Edição realizada com sucesso</string>
+    <string name="client_not_registered">Cliente não registrado</string>
 </resources>
