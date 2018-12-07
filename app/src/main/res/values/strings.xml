@@ -56,4 +56,5 @@
     <string name="state">Estado</string>
     <string name="phone">Telefone</string>
     <string name="phone_subtitle">Telefone: </string>
+    <string name="details">Detalhes</string>
 </resources>

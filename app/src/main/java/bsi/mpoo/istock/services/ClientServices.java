@@ -64,12 +64,12 @@ public class ClientServices {
     }
 
     public ArrayList<Client> getAcitiveClientsAsc(User user){
-        return (ArrayList<Client>) clientDAO.getClientsByAdmId(user.getId(),Contract.ASC);
+        return (ArrayList<Client>) clientDAO.getActivieClientsByAdmId(user.getId(),Contract.ASC);
 
     }
 
     public ArrayList<Client> getAcitiveClientsDesc(User user){
-        return (ArrayList<Client>) clientDAO.getClientsByAdmId(user.getId(),Contract.DESC);
+        return (ArrayList<Client>) clientDAO.getActivieClientsByAdmId(user.getId(),Contract.DESC);
 
     }
 }

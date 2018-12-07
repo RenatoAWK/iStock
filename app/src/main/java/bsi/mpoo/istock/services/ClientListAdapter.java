@@ -1,9 +1,13 @@
 package bsi.mpoo.istock.services;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,36 +17,76 @@ import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.User;
 
 public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder> {
 
     private final ArrayList<Client> clientList;
     private LayoutInflater inflater;
+    private Context context;
 
     public ClientListAdapter(Context context, ArrayList<Client> clientList){
         inflater = LayoutInflater.from(context);
         this.clientList = clientList;
+        this.context = context;
     }
 
-    class ClientViewHolder extends RecyclerView.ViewHolder{
+    class ClientViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         public final TextView nameItemView;
         public final TextView phoneItemView;
         final ClientListAdapter adapter;
 
         public ClientViewHolder(View itemView, ClientListAdapter adapter ){
             super(itemView);
+            itemView.setOnCreateContextMenuListener(this);
             nameItemView = itemView.findViewById(R.id.nameClientItemList);
             phoneItemView = itemView.findViewById(R.id.phoneClientItemList);
             this.adapter = adapter;
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener(){
-                @Override
-                public boolean onLongClick(View v){
-                    Toast.makeText(v.getContext(), "Long Click Position is " + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+        }
 
-                    return false;
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+
+            ClientServices clientServices = new ClientServices(context);
+
+            if (item.getTitle().toString().equals("Deletar")){
+                Toast.makeText(context, "Clicou em deletar",Toast.LENGTH_LONG).show();
+
+                int position = getLayoutPosition();
+                Client client = clientList.get(position);
+                try {
+                    clientServices.disableClient(client, client.getIdAdm());
+
                 }
-            });
+                catch (Exception error) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage(error.getMessage());
+                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.show();
+
+                }
+
+            }
+
+            return false;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            MenuItem detailItem = menu.add("Detalhes");
+            MenuItem editItem = menu.add("Editar");
+            MenuItem deleteItem = menu.add("Deletar");
+
+            detailItem.setOnMenuItemClickListener(this);
+            editItem.setOnMenuItemClickListener(this);
+            deleteItem.setOnMenuItemClickListener(this);
+
         }
     }
 
