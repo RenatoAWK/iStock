@@ -131,6 +131,12 @@ public class RegisterClientActivity extends AppCompatActivity {
             valid = false;
         }
 
+        if (!validations.phone(editTextPhone.getText().toString())){
+            editTextPhone.requestFocus();
+            editTextPhone.setError(getString(R.string.invalid_phone));
+            valid = false;
+        }
+
         if (!valid){
             return;
         }
@@ -182,6 +188,8 @@ public class RegisterClientActivity extends AppCompatActivity {
                 }
             });
             builder.show();
+
+            editTextName.setText("");
 
         }
         catch (Exception error){

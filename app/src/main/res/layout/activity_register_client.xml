@@ -116,7 +116,7 @@
                 android:layout_marginBottom="8dp"
                 android:ems="10"
                 android:hint="@string/phone"
-                android:inputType="phone" />
+                android:inputType="number" />
 
             <Button
                 android:id="@+id/buttonRegisterRegisterClient"

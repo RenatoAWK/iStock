@@ -41,7 +41,7 @@ public class Validations {
     }
 
     public boolean phone(String phone){
-        if (!phone.isEmpty() && phone.matches("[0-9]{12}")){
+        if (!phone.isEmpty() && !phone.matches("^[0-9]")){
             return true;
         }
         return false;
