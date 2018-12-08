@@ -62,4 +62,6 @@
     <string name="client_not_registered">Cliente não registrado</string>
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
+    <string name="client">Cliente</string>
+    <string name="name">Nome</string>
 </resources>

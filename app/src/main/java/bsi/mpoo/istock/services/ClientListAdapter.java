@@ -20,6 +20,7 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
+import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.EditClientActivity;
 import bsi.mpoo.istock.gui.LoginActivity;
 
@@ -53,7 +54,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
         }
 
         @Override
-        public boolean onMenuItemClick(MenuItem item) {
+        public boolean onMenuItemClick(MenuItem item){
 
             ClientServices clientServices = new ClientServices(context);
 
@@ -84,6 +85,10 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
                 intent.putExtra("client", client);
                 context.startActivity(intent);
 
+            } else if (item.getTitle().equals(detaillOption)){
+
+                DialogDetails dialogDetails = new DialogDetails(context);
+                dialogDetails.invoke(client);
             }
 
             return false;
