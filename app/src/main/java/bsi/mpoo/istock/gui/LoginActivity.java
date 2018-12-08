@@ -42,15 +42,21 @@ public class LoginActivity extends AppCompatActivity {
 
         String email = emailEditText.getText().toString().trim().toUpperCase();
         String password = passwordEditText.getText().toString();
-        User user = userServices.login(email, password);
-        if (user == null){
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password); // no encryption here
+
+        User searchedUser = userServices.login(user);
+
+        if (searchedUser == null){
             emailEditText.setError(getString(R.string.invalid_email_or_password));
             passwordEditText.setError(getString(R.string.invalid_email_or_password));
 
         }
         else {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("user", user);
+            intent.putExtra("user", searchedUser);
 
             finish();
             startActivity(intent);

@@ -3,7 +3,6 @@ package bsi.mpoo.istock.services;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bsi.mpoo.istock.data.ClientDAO;
 import bsi.mpoo.istock.data.Contract;
@@ -19,8 +18,9 @@ public class ClientServices {
         this.clientDAO = new ClientDAO(context);
     }
 
-    private boolean isClientRegistered(String name, long idAdm){
-        Client searchedClient = clientDAO.getClientByName(name, idAdm);
+    private boolean isClientRegistered(Client client){
+
+        Client searchedClient = clientDAO.getClientByName(client);
 
         if (searchedClient == null){
             return false;
@@ -28,9 +28,9 @@ public class ClientServices {
         return true;
     }
 
-    public void registerClient(Client client, long idAdm) throws Exception {
+    public void registerClient(Client client) throws Exception {
 
-        if (isClientRegistered(client.getName().trim().toUpperCase(), idAdm)){
+        if (isClientRegistered(client)){
             throw new ClientAlreadyRegistered();
         }
         else {
@@ -39,21 +39,21 @@ public class ClientServices {
 
     }
 
-    public void updateClient(Client client, long idAdm) throws Exception{
+    public void updateClient(Client client) throws Exception{
+            try {
+                clientDAO.updateClient(client);
+            }catch (Exception error){
+                throw new ClientNotRegistered();
+            }
 
-        if (isClientRegistered(client.getName().trim().toUpperCase(), idAdm)){
-            clientDAO.updateClient(client);
-        }
-        else {
-            throw  new ClientNotRegistered();
-        }
+
 
 
     }
 
-    public void disableClient(Client client, long idAdm) throws Exception{
+    public void disableClient(Client client) throws Exception{
 
-        if (isClientRegistered(client.getName().trim().toUpperCase(), idAdm)){
+        if (isClientRegistered(client)){
             clientDAO.disableClient(client);
         }
         else {
@@ -64,12 +64,12 @@ public class ClientServices {
     }
 
     public ArrayList<Client> getAcitiveClientsAsc(User user){
-        return (ArrayList<Client>) clientDAO.getActivieClientsByAdmId(user.getId(),Contract.ASC);
+        return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(user,Contract.ASC);
 
     }
 
     public ArrayList<Client> getAcitiveClientsDesc(User user){
-        return (ArrayList<Client>) clientDAO.getActivieClientsByAdmId(user.getId(),Contract.DESC);
+        return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(user,Contract.DESC);
 
     }
 }

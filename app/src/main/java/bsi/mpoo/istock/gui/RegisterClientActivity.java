@@ -1,9 +1,7 @@
 package bsi.mpoo.istock.gui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -65,24 +63,25 @@ public class RegisterClientActivity extends AppCompatActivity {
 
         ClientServices clientServices = new ClientServices(getApplicationContext());
 
-        Client client = new Client();
-        client.setName(nameEditText.getText().toString().trim().toUpperCase());
-        client.setPhone(phoneEditText.getText().toString().trim());
-        client.setIdAdm(user.getId());
-        client.setStatus(AccountStatus.ACTIVE.getValue());
+        Client newClient = new Client();
+        newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
+        newClient.setPhone(phoneEditText.getText().toString().trim());
+        newClient.setStatus(AccountStatus.ACTIVE.getValue());
+        newClient.setAdministrator(user);
 
-        Address address = new Address();
-        address.setStreet(streetEditText.getText().toString().trim().toUpperCase());
-        address.setNumber(Integer.parseInt(numberEditText.getText().toString()));
-        address.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
-        address.setCity(cityEditText.getText().toString().trim().toUpperCase());
-        address.setState(stateEditText.getText().toString().trim().toUpperCase());
-        address.setStatus(AccountStatus.ACTIVE.getValue());
+        Address newAddress = new Address();
+        newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
+        newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));
+        newAddress.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
+        newAddress.setCity(cityEditText.getText().toString().trim().toUpperCase());
+        newAddress.setState(stateEditText.getText().toString().trim().toUpperCase());
+        newAddress.setStatus(AccountStatus.ACTIVE.getValue());
 
-        client.setAddress(address);
+        newClient.setAddress(newAddress);
+
 
         try {
-            clientServices.registerClient(client, user.getId());
+            clientServices.registerClient(newClient);
 
             String message = getString(R.string.register_done);
 

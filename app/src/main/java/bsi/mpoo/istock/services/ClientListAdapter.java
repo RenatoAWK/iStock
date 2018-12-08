@@ -1,9 +1,9 @@
 package bsi.mpoo.istock.services;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -13,25 +13,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.EditClientActivity;
+import bsi.mpoo.istock.gui.LoginActivity;
 
 public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder> {
 
     private final ArrayList<Client> clientList;
     private LayoutInflater inflater;
     private Context context;
+    private User user;
 
-    public ClientListAdapter(Context context, ArrayList<Client> clientList){
+    public ClientListAdapter(Context context, ArrayList<Client> clientList, User user){
         inflater = LayoutInflater.from(context);
         this.clientList = clientList;
+        this.user = user;
         this.context = context;
+
     }
 
     class ClientViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
@@ -53,28 +57,28 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
             ClientServices clientServices = new ClientServices(context);
 
+            int position = getLayoutPosition();
+            Client client = clientList.get(position);
+
             if (item.getTitle().toString().equals("Deletar")){
 
-                int position = getLayoutPosition();
-                Client client = clientList.get(position);
+
                 try {
-                    clientServices.disableClient(client, client.getIdAdm());
+                    clientServices.disableClient(client);
                     clientList.remove(position);
                     adapter.notifyDataSetChanged();
 
                 }
                 catch (Exception error) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage(error.getMessage());
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    });
-                    builder.show();
+                    new AlertDialogGenerator((Activity) context, error.getMessage(),false).invoke();
 
                 }
+
+            } else if (item.getTitle().equals("Editar")){
+                Intent intent = new Intent(context, EditClientActivity.class);
+                intent.putExtra("client", client);
+                context.startActivity(intent);
 
             }
 

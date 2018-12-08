@@ -1,10 +1,8 @@
 package bsi.mpoo.istock.gui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +38,10 @@ public class EditClientActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        this.client = bundle.getParcelable("client");
+
 
         nameEditText = findViewById(R.id.editTextNameEditClient);
         streetEditText = findViewById(R.id.editTextStreetEditClient);
@@ -52,7 +54,7 @@ public class EditClientActivity extends AppCompatActivity {
 
         nameEditText.setText(client.getName());
         streetEditText.setText(client.getAddress().getStreet());
-        numberEditText.setText(client.getAddress().getNumber());
+        numberEditText.setText(String.valueOf(client.getAddress().getNumber()));
         districtEditText.setText(client.getAddress().getDistrict());
         cityEditText.setText(client.getAddress().getCity());
         stateEditText.setText(client.getAddress().getState());
@@ -66,30 +68,29 @@ public class EditClientActivity extends AppCompatActivity {
 
         if (!isAllFieldsValid(validations)) return;
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        client = bundle.getParcelable("client");
-
         ClientServices clientServices = new ClientServices(getApplicationContext());
 
-        Client client = new Client();
-        client.setName(nameEditText.getText().toString().trim().toUpperCase());
-        client.setPhone(phoneEditText.getText().toString().trim());
-        client.setStatus(AccountStatus.ACTIVE.getValue());
+        Client newClient = new Client();
+        newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
+        newClient.setPhone(phoneEditText.getText().toString().trim());
+        newClient.setStatus(AccountStatus.ACTIVE.getValue());
 
-        Address address = new Address();
-        address.setStreet(streetEditText.getText().toString().trim().toUpperCase());
-        address.setNumber(Integer.parseInt(numberEditText.getText().toString()));
-        address.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
-        address.setCity(cityEditText.getText().toString().trim().toUpperCase());
-        address.setState(stateEditText.getText().toString().trim().toUpperCase());
-        address.setStatus(AccountStatus.ACTIVE.getValue());
+        Address newAddress = new Address();
+        newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
+        newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));
+        newAddress.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
+        newAddress.setCity(cityEditText.getText().toString().trim().toUpperCase());
+        newAddress.setState(stateEditText.getText().toString().trim().toUpperCase());
+        newAddress.setStatus(AccountStatus.ACTIVE.getValue());
+        newAddress.setId(client.getAddress().getId());
 
-        client.setAddress(address);
+        newClient.setAddress(newAddress);
+        newClient.setAdministrator(client.getAdministrator());
+        newClient.setId(client.getId());
 
         try {
 
-            clientServices.updateClient(client, client.getIdAdm());
+            clientServices.updateClient(newClient);
 
             String message = getString(R.string.edit_successful);
 

@@ -16,15 +16,15 @@ public class User implements Parcelable {
 
     public User(){}
 
-    private User(Parcel in) {
-        id = in.readLong();
-        name = in.readString();
-        email = in.readString();
-        password = in.readString();
-        type = in.readInt();
-        status = in.readInt();
-        company = in.readString();
-        administrator = in.readLong();
+    private User(Parcel parcel) {
+        id = parcel.readLong();
+        name = parcel.readString();
+        email = parcel.readString();
+        password = parcel.readString();
+        type = parcel.readInt();
+        status = parcel.readInt();
+        company = parcel.readString();
+        administrator = parcel.readLong();
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

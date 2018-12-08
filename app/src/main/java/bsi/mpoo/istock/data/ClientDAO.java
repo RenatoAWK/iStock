@@ -11,6 +11,7 @@ import java.util.List;
 
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.AccountStatus;
 
 public class ClientDAO {
@@ -27,7 +28,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
-        values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_STATUS, client.getStatus());
 
         AddressDAO addressDAO = new AddressDAO(context);
@@ -41,7 +42,7 @@ public class ClientDAO {
         db.close();
     }
 
-    public Client getClientByName(String name, long idAdm) {
+    public Client getClientByName(Client client) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -54,12 +55,14 @@ public class ClientDAO {
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
                 ContractClient.COLUMN_ID_ADM,
-                ContractClient.COLUMN_STATUS
+                ContractClient.COLUMN_STATUS,
+                ContractClient.COLUMN_ID_ADM
         };
 
         String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
                 ContractClient.COLUMN_ID_ADM+" =?";
-        String[] selectionArgs = { name.trim().toUpperCase(), String.valueOf(idAdm) };
+        String[] selectionArgs = { client.getName().trim().toUpperCase(),
+                String.valueOf(client.getAdministrator().getId()) };
 
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
@@ -82,7 +85,7 @@ public class ClientDAO {
 
     }
 
-    public Client getClientById(long id) {
+    public Client getClientById(Client client) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -98,7 +101,7 @@ public class ClientDAO {
         };
 
         String selection = ContractClient._ID+" = ?";
-        String[] selectionArgs = { String.valueOf(id) };
+        String[] selectionArgs = { String.valueOf(client.getId()) };
 
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
@@ -120,7 +123,7 @@ public class ClientDAO {
 
     }
 
-    public List<Client> getClientsByAdmId(long id, String order) {
+    public List<Client> getListClientsByAdmId(User user, String order) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -136,7 +139,7 @@ public class ClientDAO {
         String sortOrder = ContractClient.COLUMN_NAME +" "+ Contract.ASC;
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?";
-        String[] selectionArgs = { String.valueOf(id) };
+        String[] selectionArgs = { String.valueOf(user.getId()) };
 
 
         Cursor cursor = db.query(
@@ -165,7 +168,7 @@ public class ClientDAO {
 
     }
 
-    public List<Client> getActivieClientsByAdmId(long id, String order) {
+    public List<Client> getActiveClientsByAdmId(User user, String order) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -182,7 +185,7 @@ public class ClientDAO {
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractClient.COLUMN_STATUS+" = ?";
-        String[] selectionArgs = { String.valueOf(id),
+        String[] selectionArgs = { String.valueOf(user.getId()),
                 String.valueOf(AccountStatus.ACTIVE.getValue())};
 
 
@@ -223,7 +226,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
-        values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
         values.put(ContractClient.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
 
@@ -245,7 +248,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
-        values.put(ContractClient.COLUMN_ID_ADM, client.getIdAdm());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
         values.put(ContractClient.COLUMN_STATUS, client.getStatus());
 
@@ -263,25 +266,33 @@ public class ClientDAO {
         int nameIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_NAME);
         int phoneIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_PHONE);
         int idAddressIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADDRESS);
-        int idAdmIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADM);
+        int admIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADM);
 
 
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(nameIndex);
         String phone = cursor.getString(phoneIndex);
         int idAddress = cursor.getInt(idAddressIndex);
-        long idAdm = cursor.getLong(idAdmIndex);
+        long idAdm = cursor.getLong(admIndex);
 
         Client createdClient = new Client();
         createdClient.setId(id);
         createdClient.setName(name);
         createdClient.setPhone(phone);
-        createdClient.setIdAdm(idAdm);
 
         AddressDAO addressDAO = new AddressDAO(context);
-        Address searchedAddress = addressDAO.getAddressID(idAddress);
+        Address address = new Address();
+        address.setId(idAddress);
+        Address searchedAddress = addressDAO.getAddressByID(address);
 
         createdClient.setAddress(searchedAddress);
+
+        UserDAO userDAO = new UserDAO(context);
+        User user = new User();
+        user.setId(idAdm);
+        User searchedUser = userDAO.getUserById(user);
+
+        createdClient.setAdministrator(searchedUser);
 
         return createdClient;
 

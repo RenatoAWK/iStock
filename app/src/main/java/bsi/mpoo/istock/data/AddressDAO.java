@@ -36,7 +36,7 @@ public class AddressDAO {
         db.close();
     }
 
-    public Address getAddressID(long id) {
+    public Address getAddressByID(Address address) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -54,7 +54,7 @@ public class AddressDAO {
         };
 
         String selection = ContractAddress._ID+" = ?";
-        String[] selectionArgs = { String.valueOf(id) };
+        String[] selectionArgs = { String.valueOf(address.getId()) };
 
         Cursor cursor = db.query(
                 ContractAddress.TABLE_NAME,

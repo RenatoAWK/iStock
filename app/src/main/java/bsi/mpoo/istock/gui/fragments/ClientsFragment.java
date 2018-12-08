@@ -1,5 +1,6 @@
 package bsi.mpoo.istock.gui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ public class ClientsFragment extends Fragment {
     private User user;
     private ClientServices clientServices;
     private ArrayList<Client> clientArrayList;
+    private Context context;
 
     @Nullable
     @Override
@@ -54,7 +56,7 @@ public class ClientsFragment extends Fragment {
 
         recyclerView = getActivity().findViewById(R.id.recyclerview);
 
-        adapter = new ClientListAdapter(getActivity().getApplicationContext(), clientArrayList);
+        adapter = new ClientListAdapter(context, clientArrayList, user);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -62,4 +64,9 @@ public class ClientsFragment extends Fragment {
         getActivity().setTitle(getString(R.string.clients));
     }
 
+    @Override
+    public void onAttach(Context context) {
+        this.context = context;
+        super.onAttach(context);
+    }
 }

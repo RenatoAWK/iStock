@@ -16,9 +16,9 @@ public class UserServices {
 
     }
 
-    private boolean isUserRegistered(String email){
+    private boolean isUserRegistered(User user){
 
-        User searchedUser = userDAO.getUserEmail(email.toUpperCase());
+        User searchedUser = userDAO.getUserbyEmail(user);
 
         if (searchedUser == null) {
             return false;
@@ -28,7 +28,7 @@ public class UserServices {
 
     public void registerUser(User user) throws Exception {
 
-        if (isUserRegistered(user.getEmail())){
+        if (isUserRegistered(user)){
             throw new EmailAlreadyRegistered();
         }
         else {
@@ -40,15 +40,12 @@ public class UserServices {
 
     }
 
-    public User login(String email, String password){
+    public User login(User user){
 
-        User searchedUser = userDAO.getUserEmail(email);
+        User searchedUser = userDAO.getUserbyEmail(user);
         if (searchedUser != null){
-            if (searchedUser.getPassword().equals(Encryption.encrypt(password))){
+            if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
                 return searchedUser;
-            }
-            else {
-                searchedUser = null;
             }
         }
         return searchedUser;

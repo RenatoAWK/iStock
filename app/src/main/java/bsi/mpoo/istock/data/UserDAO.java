@@ -34,7 +34,7 @@ public class UserDAO{
         db.close();
     }
 
-    public User getUserEmail(String email) {
+    public User getUserbyEmail(User user) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -53,7 +53,49 @@ public class UserDAO{
         };
 
         String selection = ContractUser.COLUMN_EMAIL+" = ?";
-        String[] selectionArgs = { email.trim().toUpperCase()};
+        String[] selectionArgs = { user.getEmail().trim().toUpperCase()};
+
+        Cursor cursor = db.query(
+                ContractUser.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.getCount()==1){
+            cursor.moveToNext();
+            searchedUser = createUser(cursor);
+        }
+
+        cursor.close();
+        db.close();
+        return searchedUser;
+
+    }
+
+    public User getUserById(User user) {
+
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        User searchedUser = null;
+
+        String[] projection = {
+                BaseColumns._ID,
+                ContractUser.COLUMN_NAME,
+                ContractUser.COLUMN_EMAIL,
+                ContractUser.COLUMN_PASSWORD,
+                ContractUser.COLUMN_TYPE,
+                ContractUser.COLUMN_STATUS,
+                ContractUser.COLUMN_COMPANY,
+                ContractUser.COLUMN_ADMINISTRATOR
+        };
+
+        String selection = ContractUser._ID+" = ?";
+        String[] selectionArgs = { String.valueOf(user.getId())};
 
         Cursor cursor = db.query(
                 ContractUser.TABLE_NAME,
