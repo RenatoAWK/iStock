@@ -60,7 +60,11 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
             int position = getLayoutPosition();
             Client client = clientList.get(position);
 
-            if (item.getTitle().toString().equals("Deletar")){
+            final String detaillOption = context.getApplicationContext().getString(R.string.details);
+            final String deleteOption = context.getApplicationContext().getString(R.string.delete);
+            final String editOption = context.getApplicationContext().getString(R.string.edit);
+
+            if (item.getTitle().toString().equals(deleteOption)){
 
 
                 try {
@@ -75,7 +79,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
                 }
 
-            } else if (item.getTitle().equals("Editar")){
+            } else if (item.getTitle().equals(editOption)){
                 Intent intent = new Intent(context, EditClientActivity.class);
                 intent.putExtra("client", client);
                 context.startActivity(intent);
@@ -87,9 +91,9 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem detailItem = menu.add("Detalhes");
-            MenuItem editItem = menu.add("Editar");
-            MenuItem deleteItem = menu.add("Deletar");
+            MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
+            MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
+            MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
 
             detailItem.setOnMenuItemClickListener(this);
             editItem.setOnMenuItemClickListener(this);

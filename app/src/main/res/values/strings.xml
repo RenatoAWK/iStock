@@ -60,4 +60,6 @@
     <string name="invalid_phone">Somente números são permitidos</string>
     <string name="edit_successful">Edição realizada com sucesso</string>
     <string name="client_not_registered">Cliente não registrado</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
 </resources>
