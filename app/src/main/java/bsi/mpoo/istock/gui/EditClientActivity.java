@@ -13,23 +13,21 @@ import android.widget.EditText;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
-import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.AccountStatus;
 import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Exceptions.ClientNotRegistered;
-import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 import bsi.mpoo.istock.services.Validations;
 
 public class EditClientActivity extends AppCompatActivity {
 
-    EditText editTextName;
-    EditText editTextStreet;
-    EditText editTextNumber;
-    EditText editTextDistrict;
-    EditText editTextCity;
-    EditText editTextState;
-    EditText editTextPhone;
-    Button buttonRegister;
+    EditText nameEditText;
+    EditText streetEditText;
+    EditText numberEditText;
+    EditText districtEditText;
+    EditText cityEditText;
+    EditText stateEditText;
+    EditText phoneEditText;
+    Button registerButton;
 
     Client client;
 
@@ -43,112 +41,30 @@ public class EditClientActivity extends AppCompatActivity {
         actionBar.hide();
 
 
-        editTextName = findViewById(R.id.editTextNameEditClient);
-        editTextStreet = findViewById(R.id.editTextStreetEditClient);
-        editTextNumber = findViewById(R.id.editTextNumberEditClient);
-        editTextDistrict = findViewById(R.id.editTextDistrictEditClient);
-        editTextCity = findViewById(R.id.editTextCityEditClient);
-        editTextState = findViewById(R.id.editTextStateEditClient);
-        editTextPhone = findViewById(R.id.editTextPhoneEditClient);
-        buttonRegister = findViewById(R.id.buttonRegisterEditClient);
+        nameEditText = findViewById(R.id.editTextNameEditClient);
+        streetEditText = findViewById(R.id.editTextStreetEditClient);
+        numberEditText = findViewById(R.id.editTextNumberEditClient);
+        districtEditText = findViewById(R.id.editTextDistrictEditClient);
+        cityEditText = findViewById(R.id.editTextCityEditClient);
+        stateEditText = findViewById(R.id.editTextStateEditClient);
+        phoneEditText = findViewById(R.id.editTextPhoneEditClient);
+        registerButton = findViewById(R.id.buttonRegisterEditClient);
 
-        editTextName.setText(client.getName());
-        editTextStreet.setText(client.getAddress().getStreet());
-        editTextNumber.setText(client.getAddress().getNumber());
-        editTextDistrict.setText(client.getAddress().getDistrict());
-        editTextCity.setText(client.getAddress().getCity());
-        editTextState.setText(client.getAddress().getState());
-        editTextPhone.setText(client.getPhone());
+        nameEditText.setText(client.getName());
+        streetEditText.setText(client.getAddress().getStreet());
+        numberEditText.setText(client.getAddress().getNumber());
+        districtEditText.setText(client.getAddress().getDistrict());
+        cityEditText.setText(client.getAddress().getCity());
+        stateEditText.setText(client.getAddress().getState());
+        phoneEditText.setText(client.getPhone());
 
     }
 
     public void edit(View view) {
 
-        Validations validations = new Validations();
+        Validations validations = new Validations(getApplicationContext());
 
-        boolean valid = true;
-
-        if (!validations.editValidate(editTextName)){
-            editTextName.requestFocus();
-            editTextName.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(editTextStreet)){
-            editTextStreet.requestFocus();
-            editTextStreet.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(editTextNumber)){
-            editTextNumber.requestFocus();
-            editTextNumber.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(editTextDistrict)){
-            editTextDistrict.requestFocus();
-            editTextDistrict.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(editTextCity)){
-            editTextCity.requestFocus();
-            editTextCity.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(editTextState)){
-            editTextState.requestFocus();
-            editTextState.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(editTextPhone)){
-            editTextPhone.requestFocus();
-            editTextPhone.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.name(editTextName.getText().toString())){
-            editTextName.requestFocus();
-            editTextName.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.name(editTextStreet.getText().toString())){
-            editTextStreet.requestFocus();
-            editTextStreet.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.name(editTextDistrict.getText().toString())){
-            editTextDistrict.requestFocus();
-            editTextDistrict.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.name(editTextCity.getText().toString())){
-            editTextCity.requestFocus();
-            editTextCity.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.name(editTextState.getText().toString())){
-            editTextState.requestFocus();
-            editTextState.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.phone(editTextPhone.getText().toString())){
-            editTextPhone.requestFocus();
-            editTextPhone.setError(getString(R.string.invalid_phone));
-            valid = false;
-        }
-
-        if (!valid){
-            return;
-        }
+        if (!isAllFieldsValid(validations)) return;
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -157,62 +73,99 @@ public class EditClientActivity extends AppCompatActivity {
         ClientServices clientServices = new ClientServices(getApplicationContext());
 
         Client client = new Client();
-        client.setName(editTextName.getText().toString().trim().toUpperCase());
-        client.setPhone(editTextPhone.getText().toString().trim());
+        client.setName(nameEditText.getText().toString().trim().toUpperCase());
+        client.setPhone(phoneEditText.getText().toString().trim());
         client.setStatus(AccountStatus.ACTIVE.getValue());
 
         Address address = new Address();
-        address.setStreet(editTextStreet.getText().toString().trim().toUpperCase());
-        address.setNumber(Integer.parseInt(editTextNumber.getText().toString()));
-        address.setDistrict(editTextDistrict.getText().toString().trim().toUpperCase());
-        address.setCity(editTextCity.getText().toString().trim().toUpperCase());
-        address.setState(editTextState.getText().toString().trim().toUpperCase());
+        address.setStreet(streetEditText.getText().toString().trim().toUpperCase());
+        address.setNumber(Integer.parseInt(numberEditText.getText().toString()));
+        address.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
+        address.setCity(cityEditText.getText().toString().trim().toUpperCase());
+        address.setState(stateEditText.getText().toString().trim().toUpperCase());
         address.setStatus(AccountStatus.ACTIVE.getValue());
 
         client.setAddress(address);
 
         try {
+
             clientServices.updateClient(client, client.getIdAdm());
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.edit_successful);
-            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            String message = getString(R.string.edit_successful);
 
-                    finish();
-                }
-            });
-            builder.show();
-        }
-        catch (ClientNotRegistered error){
+            new AlertDialogGenerator(this, message, true).invoke();
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.client_not_registered);
-            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+        } catch (ClientNotRegistered error){
 
-                }
-            });
-            builder.show();
+            String message = getString(R.string.client_not_registered);
 
+            new AlertDialogGenerator(this, message, false).invoke();
 
-        }
-        catch (Exception error){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(R.string.unknow_error));
-            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+        } catch (Exception error){
 
-                }
-            });
-            builder.show();
+            String message = getString(R.string.unknow_error);
+
+            new AlertDialogGenerator(this, message, false).invoke();
         }
 
 
 
 
+    }
+
+    private boolean isAllFieldsValid(Validations validations) {
+
+        boolean valid = validations.editValdiade(nameEditText, streetEditText,
+                numberEditText, districtEditText, cityEditText, stateEditText, phoneEditText
+        );
+
+        if (!validations.name(nameEditText.getText().toString())){
+            if (nameEditText.getError() == null){
+                nameEditText.requestFocus();
+                nameEditText.setError(getString(R.string.invalid_Name));
+            }
+            valid = false;
+        }
+
+        if (!validations.name(streetEditText.getText().toString())){
+            if (streetEditText.getError() == null) {
+                streetEditText.requestFocus();
+                streetEditText.setError(getString(R.string.invalid_Name));
+            }
+            valid = false;
+        }
+
+        if (!validations.name(districtEditText.getText().toString())){
+            if (districtEditText.getError() == null){
+                districtEditText.requestFocus();
+                districtEditText.setError(getString(R.string.invalid_Name));
+            }
+            valid = false;
+        }
+
+        if (!validations.name(cityEditText.getText().toString())){
+            if (cityEditText.getError() == null) {
+                cityEditText.requestFocus();
+                cityEditText.setError(getString(R.string.invalid_Name));
+            }
+            valid = false;
+        }
+
+        if (!validations.name(stateEditText.getText().toString())){
+            if (stateEditText.getError() == null) {
+                stateEditText.requestFocus();
+                stateEditText.setError(getString(R.string.invalid_Name));
+            }
+            valid = false;
+        }
+
+        if (!validations.phone(phoneEditText.getText().toString())){
+            if (phoneEditText.getError() == null) {
+                phoneEditText.requestFocus();
+                phoneEditText.setError(getString(R.string.invalid_phone));
+            }
+            valid = false;
+        }
+        return valid;
     }
 }

@@ -1,9 +1,18 @@
 package bsi.mpoo.istock.services;
 
+import android.content.Context;
 import android.util.Patterns;
 import android.widget.EditText;
 
+import bsi.mpoo.istock.R;
+
 public class Validations {
+
+    private Context context;
+
+    public Validations(Context context){
+        this.context = context;
+    }
 
     public boolean name(String name){
         if (!name.isEmpty() && name.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")){
@@ -38,6 +47,17 @@ public class Validations {
             return true;
         }
         return false;
+    }
+
+    public boolean editValdiade(EditText...editTexts){
+        boolean valid = true;
+        for (EditText editText: editTexts){
+            if (!editValidate(editText)){
+                editText.setError(context.getString(R.string.requiredField));
+                valid = false;
+            }
+        }
+        return valid;
     }
 
     public boolean phone(String phone){

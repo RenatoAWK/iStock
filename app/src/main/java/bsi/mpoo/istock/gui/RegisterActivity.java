@@ -50,76 +50,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void register(View view) {
 
-        Validations validations = new Validations();
+        Validations validations = new Validations(getApplicationContext());
 
-        boolean valid = true;
-
-        if (!validations.editValidate(companyEditText)){
-            companyEditText.requestFocus();
-            companyEditText.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(nameEditText)){
-            nameEditText.requestFocus();
-            nameEditText.setError(getString(R.string.requiredField));
-        }
-
-        if (!validations.editValidate(emailEditText)){
-            emailEditText.requestFocus();
-            emailEditText.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(passwordEditText)){
-            passwordEditText.requestFocus();
-            passwordEditText.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.editValidate(passwordConfirmationEditText)){
-            passwordConfirmationEditText.requestFocus();
-            passwordConfirmationEditText.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!validations.name(nameEditText.getText().toString())){
-            nameEditText.requestFocus();
-            nameEditText.setError(getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.email(emailEditText.getText().toString())){
-            emailEditText.requestFocus();
-            emailEditText.setError(getString(R.string.invalid_email));
-            valid = false;
-        }
-
-        if (!validations.password(passwordEditText.getText().toString())){
-            passwordEditText.requestFocus();
-            passwordEditText.setError(getString(R.string.invalid_password_weak));
-            valid = false;
-        }
-
-        if (!validations.password(passwordConfirmationEditText.getText().toString())){
-            passwordConfirmationEditText.requestFocus();
-            passwordConfirmationEditText.setError(getString(R.string.invalid_password_weak));
-            valid = false;
-        }
-
-        if (!validations.passwordEquals(
-                passwordEditText.getText().toString(),
-                passwordConfirmationEditText.getText().toString())){
-
-                passwordEditText.setError(getString(R.string.invalid_password_not_equals));
-                passwordConfirmationEditText.requestFocus();
-                passwordConfirmationEditText.setError(getString(R.string.invalid_password_not_equals));
-
-                valid = false;
-
-        }
-
-        if (!valid){
+        if (!isAllFieldsValid(validations)){
             return;
         }
 
@@ -137,29 +70,27 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             userServices.registerUser(newUser);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.register_done);
-            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            String message = getString(R.string.register_done);
 
-                    finish();
-                }
-            });
-            builder.show();
+            new AlertDialogGenerator(this, message, true).invoke();
 
-        }
-        catch (EmailAlreadyRegistered error){
+        } catch (EmailAlreadyRegistered error){
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(R.string.email_already_registered));
-            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            String message = getString(R.string.email_already_registered);
 
-                }
-            });
-            builder.show();
+            new AlertDialogGenerator(this, message, false).invoke();
+
+            emailEditText.setText("");
+            passwordEditText.setText("");
+            passwordConfirmationEditText.setText("");
+
+            emailEditText.requestFocus();
+
+        } catch (Exception error){
+
+            String message = getString(R.string.unknow_error);
+
+            new AlertDialogGenerator(this, message, false);
 
             emailEditText.setText("");
             passwordEditText.setText("");
@@ -168,27 +99,61 @@ public class RegisterActivity extends AppCompatActivity {
             emailEditText.requestFocus();
 
         }
-        catch (Exception error){
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(R.string.unknow_error));
-            builder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            builder.show();
-
-            emailEditText.setText("");
-            passwordEditText.setText("");
-            passwordConfirmationEditText.setText("");
-
-            emailEditText.requestFocus();
-
-        }
-
-
-
     }
+
+    private boolean isAllFieldsValid(Validations validations) {
+
+        boolean valid = validations.editValdiade(nameEditText, companyEditText,
+                emailEditText, passwordEditText, passwordConfirmationEditText);
+
+
+        if (!validations.name(nameEditText.getText().toString())){
+            if (nameEditText.getError() == null){
+                nameEditText.requestFocus();
+                nameEditText.setError(getString(R.string.invalid_Name));
+            }
+            valid = false;
+        }
+
+        if (!validations.email(emailEditText.getText().toString())){
+            if (emailEditText.getError() == null){
+                emailEditText.requestFocus();
+                emailEditText.setError(getString(R.string.invalid_email));
+            }
+            valid = false;
+        }
+
+        if (!validations.password(passwordEditText.getText().toString())){
+            if (passwordEditText.getError() == null){
+                passwordEditText.requestFocus();
+                passwordEditText.setError(getString(R.string.invalid_password_weak));
+            }
+            valid = false;
+        }
+
+        if (!validations.password(passwordConfirmationEditText.getText().toString())){
+            if (passwordConfirmationEditText.getError() == null){
+                passwordConfirmationEditText.requestFocus();
+                passwordConfirmationEditText.setError(getString(R.string.invalid_password_weak));
+            }
+            valid = false;
+        }
+
+        if (!validations.passwordEquals(
+                passwordEditText.getText().toString(),
+                passwordConfirmationEditText.getText().toString())){
+
+                if (passwordEditText.getError() == null){
+                    passwordEditText.requestFocus();
+                    passwordEditText.setError(getString(R.string.invalid_password_not_equals));
+                }
+                if (passwordConfirmationEditText.getError() == null){
+                    passwordConfirmationEditText.requestFocus();
+                    passwordConfirmationEditText.setError(getString(R.string.invalid_password_not_equals));
+                }
+                valid = false;
+        }
+        return valid;
+    }
+
 }

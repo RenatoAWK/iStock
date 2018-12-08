@@ -34,34 +34,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view){
 
-        Validations validations = new Validations();
+        Validations validations = new Validations(getApplicationContext());
 
-        boolean valid = true;
-
-        if (!validations.editValidate(emailEditText)){
-            emailEditText.requestFocus();
-            emailEditText.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-        if (!validations.editValidate(passwordEditText)){
-            passwordEditText.requestFocus();
-            passwordEditText.setError(getString(R.string.requiredField));
-            valid = false;
-        }
-
-        if (!valid){
-            return;
-        }
-
-        if (!validations.email(emailEditText.getText().toString())){
-            emailEditText.requestFocus();
-            emailEditText.setError(getString(R.string.invalid_email));
-            valid = false;
-        }
-
-        if (!valid){
-            return;
-        }
+        if (!isAllFieldsValid(validations)) return;
 
         UserServices userServices = new UserServices(getApplicationContext());
 
@@ -75,15 +50,27 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             Intent intent = new Intent(this, MainActivity.class);
-
             intent.putExtra("user", user);
 
             finish();
-
             startActivity(intent);
 
         }
 
+    }
+
+    private boolean isAllFieldsValid(Validations validations) {
+
+        boolean valid = validations.editValdiade(emailEditText, passwordEditText);
+
+        if (!validations.email(emailEditText.getText().toString())){
+            if (emailEditText.getError() == null){
+                emailEditText.requestFocus();
+                emailEditText.setError(getString(R.string.invalid_email));
+            }
+            valid = false;
+        }
+        return valid;
     }
 
     public void CreateAccount(View view) {
@@ -92,7 +79,6 @@ public class LoginActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         String email = emailEditText.getText().toString();
         bundle.putString("email",email);
-
         intent.putExtras(bundle);
 
         startActivity(intent);
