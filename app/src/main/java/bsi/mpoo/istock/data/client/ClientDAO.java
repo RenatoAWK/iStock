@@ -60,8 +60,6 @@ public class ClientDAO {
                 ContractClient.COLUMN_ID_ADDRESS,
                 ContractClient.COLUMN_ID_ADM,
                 ContractClient.COLUMN_STATUS,
-                ContractClient.COLUMN_ID_ADM,
-                ContractClient.COLUMN_STATUS
         };
 
         String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
