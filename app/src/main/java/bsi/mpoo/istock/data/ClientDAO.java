@@ -55,8 +55,8 @@ public class ClientDAO {
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
                 ContractClient.COLUMN_ID_ADM,
-                ContractClient.COLUMN_STATUS,
-                ContractClient.COLUMN_ID_ADM
+                ContractClient.COLUMN_STATUS
+
         };
 
         String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
@@ -97,7 +97,8 @@ public class ClientDAO {
                 ContractClient.COLUMN_NAME,
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
-                ContractClient.COLUMN_ID_ADM
+                ContractClient.COLUMN_ID_ADM,
+                ContractClient.COLUMN_STATUS
         };
 
         String selection = ContractClient._ID+" = ?";
@@ -133,10 +134,11 @@ public class ClientDAO {
                 ContractClient.COLUMN_NAME,
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
-                ContractClient.COLUMN_ID_ADM
+                ContractClient.COLUMN_ID_ADM,
+                ContractClient.COLUMN_STATUS
         };
 
-        String sortOrder = ContractClient.COLUMN_NAME +" "+ Contract.ASC;
+        String sortOrder = ContractClient.COLUMN_NAME +" "+ order;
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()) };
@@ -178,10 +180,11 @@ public class ClientDAO {
                 ContractClient.COLUMN_NAME,
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
-                ContractClient.COLUMN_ID_ADM
+                ContractClient.COLUMN_ID_ADM,
+                ContractClient.COLUMN_STATUS
         };
 
-        String sortOrder = ContractClient.COLUMN_NAME +" "+ Contract.ASC;
+        String sortOrder = ContractClient.COLUMN_NAME +" "+ order;
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractClient.COLUMN_STATUS+" = ?";
@@ -267,6 +270,8 @@ public class ClientDAO {
         int phoneIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_PHONE);
         int idAddressIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADDRESS);
         int admIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADM);
+        int statusIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_STATUS);
+
 
 
         long id = cursor.getLong(idIndex);
@@ -274,11 +279,13 @@ public class ClientDAO {
         String phone = cursor.getString(phoneIndex);
         int idAddress = cursor.getInt(idAddressIndex);
         long idAdm = cursor.getLong(admIndex);
+        int status = cursor.getInt(statusIndex);
 
         Client createdClient = new Client();
         createdClient.setId(id);
         createdClient.setName(name);
         createdClient.setPhone(phone);
+        createdClient.setStatus(status);
 
         AddressDAO addressDAO = new AddressDAO(context);
         Address address = new Address();
