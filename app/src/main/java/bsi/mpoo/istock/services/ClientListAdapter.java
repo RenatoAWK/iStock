@@ -61,7 +61,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
             int position = getLayoutPosition();
             Client client = clientList.get(position);
 
-            final String detaillOption = context.getApplicationContext().getString(R.string.details);
+            final String detailOption = context.getApplicationContext().getString(R.string.details);
             final String deleteOption = context.getApplicationContext().getString(R.string.delete);
             final String editOption = context.getApplicationContext().getString(R.string.edit);
 
@@ -85,7 +85,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
                 intent.putExtra("client", client);
                 context.startActivity(intent);
 
-            } else if (item.getTitle().equals(detaillOption)){
+            } else if (item.getTitle().equals(detailOption)){
 
                 DialogDetails dialogDetails = new DialogDetails(context);
                 dialogDetails.invoke(client);

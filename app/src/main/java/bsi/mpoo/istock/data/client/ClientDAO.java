@@ -182,7 +182,8 @@ public class ClientDAO {
                 ContractClient.COLUMN_NAME,
                 ContractClient.COLUMN_PHONE,
                 ContractClient.COLUMN_ID_ADDRESS,
-                ContractClient.COLUMN_ID_ADM
+                ContractClient.COLUMN_ID_ADM,
+                ContractClient.COLUMN_STATUS
         };
 
         String sortOrder = ContractClient.COLUMN_NAME +" "+ order;
