@@ -40,6 +40,8 @@ public class ClientsFragment extends Fragment {
 
         user = getArguments().getParcelable("user");
 
+        getActivity().setTitle(getString(R.string.clients));
+
 
     }
 
@@ -49,14 +51,12 @@ public class ClientsFragment extends Fragment {
         clientServices = new ClientServices(getActivity().getApplicationContext());
         clientArrayList = clientServices.getAcitiveClientsAsc(user);
 
-        recyclerView = getActivity().findViewById(R.id.recyclerview);
+        recyclerView = getActivity().findViewById(R.id.recyclerviewClient);
 
         adapter = new ClientListAdapter(context, clientArrayList, user);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        getActivity().setTitle(getString(R.string.clients));
     }
 
     @Override

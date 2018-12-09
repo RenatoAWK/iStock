@@ -58,7 +58,7 @@ public class RegisterProductActivity extends AppCompatActivity {
         newProduct.setQuantity(Long.parseLong(quantityEditText.getText().toString()));
 
         if (minimumEditText.getText().toString().isEmpty()){
-            newProduct.setMinimumQuantity(-1);
+            newProduct.setMinimumQuantity(0);
         }
         else {
             newProduct.setMinimumQuantity(Long.parseLong(minimumEditText.getText().toString()));

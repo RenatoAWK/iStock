@@ -14,41 +14,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.EditClientActivity;
 import bsi.mpoo.istock.gui.LoginActivity;
 
-public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder> {
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
 
-    private final ArrayList<Client> clientList;
+    private final ArrayList<Product> productList;
     private LayoutInflater inflater;
     private Context context;
     private User user;
 
-    public ClientListAdapter(Context context, ArrayList<Client> clientList, User user){
+    public ProductListAdapter(Context context, ArrayList<Product> productList, User user){
         inflater = LayoutInflater.from(context);
-        this.clientList = clientList;
+        this.productList = productList;
         this.user = user;
         this.context = context;
 
     }
 
-    class ClientViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         final TextView nameItemView;
-        final TextView phoneItemView;
-        final ClientListAdapter adapter;
+        final TextView quantityItemView;
+        final TextView priceItemView;
+        final ProductListAdapter adapter;
 
-        private ClientViewHolder(View itemView, ClientListAdapter adapter ){
+        private ProductViewHolder(View itemView, ProductListAdapter adapter ){
             super(itemView);
             itemView.setOnCreateContextMenuListener(this);
-            nameItemView = itemView.findViewById(R.id.nameClientItemList);
-            phoneItemView = itemView.findViewById(R.id.phoneClientItemList);
+            nameItemView = itemView.findViewById(R.id.nameProductItemList);
+            quantityItemView = itemView.findViewById(R.id.quantityProductItemList);
+            priceItemView = itemView.findViewById(R.id.priceProductItemList);
             this.adapter = adapter;
 
         }
@@ -56,10 +60,10 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
         @Override
         public boolean onMenuItemClick(MenuItem item){
 
-            ClientServices clientServices = new ClientServices(context);
+            ProductServices productServices = new ProductServices(context);
 
             int position = getLayoutPosition();
-            Client client = clientList.get(position);
+            Product product = productList.get(position);
 
             final String detailOption = context.getApplicationContext().getString(R.string.details);
             final String deleteOption = context.getApplicationContext().getString(R.string.delete);
@@ -69,8 +73,8 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
 
                 try {
-                    clientServices.disableClient(client);
-                    clientList.remove(position);
+                    productServices.disableProduct(product);
+                    productList.remove(position);
                     adapter.notifyDataSetChanged();
 
                 }
@@ -81,14 +85,14 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
                 }
 
             } else if (item.getTitle().equals(editOption)){
-                Intent intent = new Intent(context, EditClientActivity.class);
-                intent.putExtra("client", client);
-                context.startActivity(intent);
+            //    Intent intent = new Intent(context, EditClientActivity.class);
+            //    intent.putExtra("product", product);
+            //    context.startActivity(intent);
 
             } else if (item.getTitle().equals(detailOption)){
 
                 DialogDetails dialogDetails = new DialogDetails(context);
-                dialogDetails.invoke(client);
+                dialogDetails.invoke(product);
             }
 
             return false;
@@ -110,24 +114,27 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
     @NonNull
     @Override
-    public ClientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = inflater.inflate(R.layout.client_list_item, parent, false);
-        return new ClientViewHolder(itemView, this);
+        View itemView = inflater.inflate(R.layout.product_list_item, parent, false);
+        return new ProductViewHolder(itemView, this);
 
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ClientViewHolder clientViewHolder, int position) {
-        String currentName = clientList.get(position).getName();
-        String currentPhone = clientList.get(position).getPhone();
-        clientViewHolder.nameItemView.setText(currentName);
-        clientViewHolder.phoneItemView.setText(currentPhone);
+    public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
+        String currentName = productList.get(position).getName();
+        String currentQuantity = String.valueOf(productList.get(position).getQuantity());
+        String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
+
+        productViewHolder.nameItemView.setText(currentName);
+        productViewHolder.quantityItemView.setText(currentQuantity);
+        productViewHolder.priceItemView.setText(currentPrice);
     }
 
     @Override
     public int getItemCount() {
-        return clientList.size();
+        return productList.size();
     }
 }
