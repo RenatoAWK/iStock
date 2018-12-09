@@ -12,6 +12,7 @@ public class Product implements Parcelable {
     private BigDecimal price;
     private long minimumQuantity;
     private User user;
+    private int status;
 
     public Product(){}
 
@@ -54,6 +55,22 @@ public class Product implements Parcelable {
 
     public void setMinimumQuantity(long minimumQuantity) {
         this.minimumQuantity = minimumQuantity;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

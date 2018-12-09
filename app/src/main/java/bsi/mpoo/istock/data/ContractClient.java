@@ -19,7 +19,7 @@ public class ContractClient implements BaseColumns {
                     ContractClient.COLUMN_NAME + " TEXT,"+
                     ContractClient.COLUMN_PHONE + " TEXT,"+
                     ContractClient.COLUMN_ID_ADDRESS + " INTEGER,"+
-                    ContractClient.COLUMN_ID_ADM + " TEXT,"+
+                    ContractClient.COLUMN_ID_ADM + " INTEGER,"+
                     ContractClient.COLUMN_STATUS + " INTEGER,"+
                     "FOREIGN KEY("+COLUMN_ID_ADDRESS+") REFERENCES "+
                     ContractAddress.TABLE_NAME+" ("+ContractAddress._ID+"),"+
