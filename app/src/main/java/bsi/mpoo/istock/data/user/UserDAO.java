@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.data;
+package bsi.mpoo.istock.data.user;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.provider.BaseColumns;
 
+import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.User;
 
 public class UserDAO{

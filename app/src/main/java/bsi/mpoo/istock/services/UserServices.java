@@ -2,7 +2,7 @@ package bsi.mpoo.istock.services;
 
 import android.content.Context;
 
-import bsi.mpoo.istock.data.UserDAO;
+import bsi.mpoo.istock.data.user.UserDAO;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 

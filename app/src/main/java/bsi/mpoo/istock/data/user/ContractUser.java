@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.data;
+package bsi.mpoo.istock.data.user;
 
 import android.provider.BaseColumns;
 

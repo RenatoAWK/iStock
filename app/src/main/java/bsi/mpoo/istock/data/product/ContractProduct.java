@@ -1,6 +1,8 @@
-package bsi.mpoo.istock.data;
+package bsi.mpoo.istock.data.product;
 
 import android.provider.BaseColumns;
+
+import bsi.mpoo.istock.data.user.ContractUser;
 
 public class ContractProduct  implements BaseColumns{
 

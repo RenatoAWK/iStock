@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
-import bsi.mpoo.istock.data.ClientDAO;
+import bsi.mpoo.istock.data.client.ClientDAO;
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;

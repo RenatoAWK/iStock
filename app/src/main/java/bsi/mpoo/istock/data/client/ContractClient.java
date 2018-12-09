@@ -1,6 +1,9 @@
-package bsi.mpoo.istock.data;
+package bsi.mpoo.istock.data.client;
 
 import android.provider.BaseColumns;
+
+import bsi.mpoo.istock.data.address.ContractAddress;
+import bsi.mpoo.istock.data.user.ContractUser;
 
 public class ContractClient implements BaseColumns {
 

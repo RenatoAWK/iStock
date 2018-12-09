@@ -4,6 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import bsi.mpoo.istock.data.address.ContractAddress;
+import bsi.mpoo.istock.data.client.ContractClient;
+import bsi.mpoo.istock.data.product.ContractProduct;
+import bsi.mpoo.istock.data.user.ContractUser;
+
 public class DbHelper extends SQLiteOpenHelper {
 
     public DbHelper(Context context) {

@@ -11,7 +11,7 @@ public class Product implements Parcelable {
     private String name;
     private BigDecimal price;
     private long minimumQuantity;
-    private User user;
+    private User administrator;
     private int status;
 
     public Product(){}
@@ -22,7 +22,8 @@ public class Product implements Parcelable {
         this.name = parcel.readString();
         this.price = new BigDecimal(parcel.readString());
         this.minimumQuantity = parcel.readLong();
-        this.user = (User)parcel.readValue(User.class.getClassLoader());
+        this.administrator = (User)parcel.readValue(User.class.getClassLoader());
+        this.status = parcel.readInt();
     }
 
     public long getId() {
@@ -57,12 +58,12 @@ public class Product implements Parcelable {
         this.minimumQuantity = minimumQuantity;
     }
 
-    public User getUser() {
-        return user;
+    public User getAdministrator() {
+        return administrator;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAdministrator(User administrator) {
+        this.administrator = administrator;
     }
 
     public int getStatus() {
@@ -85,7 +86,8 @@ public class Product implements Parcelable {
         dest.writeString(name);
         dest.writeString(price.toString());
         dest.writeLong(minimumQuantity);
-        dest.writeValue(user);
+        dest.writeValue(administrator);
+        dest.writeInt(status);
 
     }
 

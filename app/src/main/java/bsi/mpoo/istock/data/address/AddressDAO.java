@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.data;
+package bsi.mpoo.istock.data.address;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
+import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.Address;
-import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.services.AccountStatus;
 
 public class AddressDAO {
