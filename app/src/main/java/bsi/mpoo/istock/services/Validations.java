@@ -82,13 +82,25 @@ public class Validations {
         }
     }
 
+    public boolean quantity(String quantity){
+        try {
+            long number = Long.parseLong(quantity);
+            if (number > 0){
+                return true;
+            }
+            throw  new Exception();
+        } catch (Exception error){
+            return false;
+        }
+    }
+
     public boolean minimum(String minimum) {
         if (minimum.isEmpty()){
             return true;
         }
         try {
-            BigDecimal bigDecimal = new BigDecimal(minimum);
-            if (bigDecimal.compareTo(new BigDecimal("0"))>=0){
+            long number = Long.parseLong(minimum);
+            if (number > 0){
                 return true;
             }
             throw new Exception();

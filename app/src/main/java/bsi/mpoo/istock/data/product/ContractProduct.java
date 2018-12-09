@@ -11,6 +11,7 @@ public class ContractProduct  implements BaseColumns{
     public static final String TABLE_NAME = "products";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_QUANTITY = "quantity";
     public static final String COLUMN_MINIMUM_QUANTITY = "minimum_quantity";
     public static final String COLUMN_ID_ADM = "id_administrator";
     public static final String COLUMN_STATUS = "status";
@@ -20,6 +21,7 @@ public class ContractProduct  implements BaseColumns{
             ContractProduct._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
             ContractProduct.COLUMN_NAME + " TEXT,"+
             ContractProduct.COLUMN_PRICE + " TEXT,"+
+            ContractProduct.COLUMN_QUANTITY + " INTEGER,"+
             ContractProduct.COLUMN_MINIMUM_QUANTITY + " INTEGER,"+
             ContractProduct.COLUMN_ID_ADM + " INTEGER,"+
             ContractProduct.COLUMN_STATUS + " INTEGER,"+

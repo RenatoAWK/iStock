@@ -58,6 +58,18 @@
                 android:inputType="numberDecimal" />
 
             <EditText
+                android:id="@+id/editTextQuantityRegisterProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginBottom="8dp"
+                android:ems="10"
+                android:hint="@string/quantity"
+                android:inputType="number" />
+
+            <EditText
                 android:id="@+id/editTextMinimumRegisterProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -33,6 +33,7 @@ public class ProductDAO {
         ContentValues values = new ContentValues();
         values.put(ContractProduct.COLUMN_NAME, product.getName());
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
+        values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
@@ -54,6 +55,7 @@ public class ProductDAO {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
                 ContractProduct.COLUMN_PRICE,
+                ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
@@ -96,6 +98,7 @@ public class ProductDAO {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
                 ContractProduct.COLUMN_PRICE,
+                ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
@@ -133,6 +136,7 @@ public class ProductDAO {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
                 ContractProduct.COLUMN_PRICE,
+                ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
@@ -179,6 +183,7 @@ public class ProductDAO {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
                 ContractProduct.COLUMN_PRICE,
+                ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
@@ -226,6 +231,7 @@ public class ProductDAO {
         ContentValues values = new ContentValues();
         values.put(ContractProduct.COLUMN_NAME, product.getName());
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
+        values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
         values.put(ContractProduct.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
@@ -245,6 +251,7 @@ public class ProductDAO {
         ContentValues values = new ContentValues();
         values.put(ContractProduct.COLUMN_NAME, product.getName());
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
+        values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
@@ -262,6 +269,7 @@ public class ProductDAO {
         int idIndex = cursor.getColumnIndexOrThrow(ContractProduct._ID);
         int nameIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_NAME);
         int priceIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_PRICE);
+        int quantityIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_QUANTITY);
         int idMinimumIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_MINIMUM_QUANTITY);
         int admIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_ID_ADM);
         int statusIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_ID_ADM);
@@ -270,6 +278,7 @@ public class ProductDAO {
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(nameIndex);
         String price = cursor.getString(priceIndex);
+        long quantity = cursor.getLong(quantityIndex);
         long minimum = cursor.getLong(idMinimumIndex);
         long idAdm = cursor.getLong(admIndex);
         int status = cursor.getInt(statusIndex);
@@ -278,6 +287,7 @@ public class ProductDAO {
         createdProduct.setId(id);
         createdProduct.setName(name);
         createdProduct.setPrice(new BigDecimal(price));
+        createdProduct.setQuantity(quantity);
         createdProduct.setMinimumQuantity(minimum);
         createdProduct.setStatus(status);
 

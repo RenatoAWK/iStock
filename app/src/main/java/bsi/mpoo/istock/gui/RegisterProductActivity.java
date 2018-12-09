@@ -21,6 +21,7 @@ public class RegisterProductActivity extends AppCompatActivity {
 
     EditText nameEditText;
     EditText priceEditText;
+    EditText quantityEditText;
     EditText minimumEditText;
 
     User user;
@@ -35,6 +36,7 @@ public class RegisterProductActivity extends AppCompatActivity {
 
         nameEditText = findViewById(R.id.editTextNameRegisterProduct);
         priceEditText = findViewById(R.id.editTextPriceRegisterProduct);
+        quantityEditText = findViewById(R.id.editTextQuantityRegisterProduct);
         minimumEditText = findViewById(R.id.editTextMinimumRegisterProduct);
     }
 
@@ -53,6 +55,7 @@ public class RegisterProductActivity extends AppCompatActivity {
         Product newProduct = new Product();
         newProduct.setName(nameEditText.getText().toString().trim().toUpperCase());
         newProduct.setPrice(new BigDecimal(priceEditText.getText().toString()));
+        newProduct.setQuantity(Long.parseLong(quantityEditText.getText().toString()));
 
         if (minimumEditText.getText().toString().isEmpty()){
             newProduct.setMinimumQuantity(-1);
@@ -93,7 +96,7 @@ public class RegisterProductActivity extends AppCompatActivity {
 
     private boolean isAllFieldsValid(Validations validations){
 
-        boolean valid = validations.editValidate(nameEditText, priceEditText);
+        boolean valid = validations.editValidate(nameEditText, quantityEditText, priceEditText);
 
         if (!validations.name(nameEditText.getText().toString())){
             if (nameEditText.getError() == null){
@@ -109,6 +112,14 @@ public class RegisterProductActivity extends AppCompatActivity {
             }
             valid = false;
         }
+        if (!validations.quantity(quantityEditText.getText().toString())){
+            if (quantityEditText.getError() == null){
+                quantityEditText.requestFocus();
+                quantityEditText.setError(getString(R.string.invalid_value));
+            }
+            valid = false;
+        }
+
         if (!validations.minimum(minimumEditText.getText().toString())){
             minimumEditText.requestFocus();
             minimumEditText.setError(getString(R.string.invalid_quantity));
