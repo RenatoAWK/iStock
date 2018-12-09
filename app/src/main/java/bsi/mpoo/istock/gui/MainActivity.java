@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity
 
                 } else if (fragment instanceof ProductsFragment){
 
+                    Intent intent = new Intent(getApplicationContext(), RegisterProductActivity.class);
+                    intent.putExtra("user",user);
+                    startActivity(intent);
+
                 } else if (fragment instanceof ClientsFragment){
 
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);

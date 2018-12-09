@@ -85,7 +85,7 @@ public class ProductDAO {
 
     }
 
-    public Product getClientById(Product product) {
+    public Product getProductById(Product product) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();

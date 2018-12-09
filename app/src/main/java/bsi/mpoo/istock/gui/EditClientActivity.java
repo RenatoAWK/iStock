@@ -116,7 +116,7 @@ public class EditClientActivity extends AppCompatActivity {
 
     private boolean isAllFieldsValid(Validations validations) {
 
-        boolean valid = validations.editValdiade(nameEditText, streetEditText,
+        boolean valid = validations.editValidate(nameEditText, streetEditText,
                 numberEditText, districtEditText, cityEditText, stateEditText, phoneEditText
         );
 

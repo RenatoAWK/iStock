@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isAllFieldsValid(Validations validations) {
 
-        boolean valid = validations.editValdiade(emailEditText, passwordEditText);
+        boolean valid = validations.editValidate(emailEditText, passwordEditText);
 
         if (!validations.email(emailEditText.getText().toString())){
             if (emailEditText.getError() == null){

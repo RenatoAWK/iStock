@@ -62,4 +62,44 @@ public class Exceptions {
             return this.idError;
         }
     }
+
+    public static class ProductAlreadyRegistered extends Exception{
+
+        private ExceptionsEnum error;
+
+        private int idError;
+
+        public ProductAlreadyRegistered(){
+            this.error = ExceptionsEnum.PRODUCT_ALREADY_REGISTERED;
+            this.idError = this.error.getValue();
+        }
+
+        public String getStringError(){
+            return this.error.toString();
+        }
+
+        public int getIdError() {
+            return this.idError;
+        }
+    }
+
+    public static class ProductNotRegistered extends Exception{
+
+        private ExceptionsEnum error;
+
+        private int idError;
+
+        public ProductNotRegistered(){
+            this.error = ExceptionsEnum.PRODUCT_NOT_REGISTERED;
+            this.idError = this.error.getValue();
+        }
+
+        public String getStringError(){
+            return this.error.toString();
+        }
+
+        public int getIdError() {
+            return this.idError;
+        }
+    }
 }

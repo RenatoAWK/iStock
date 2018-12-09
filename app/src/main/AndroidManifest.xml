@@ -23,7 +23,8 @@
             android:name=".gui.MainActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".gui.EditClientActivity"></activity>
+        <activity android:name=".gui.EditClientActivity" />
+        <activity android:name=".gui.RegisterProductActivity"></activity>
     </application>
 
 </manifest>

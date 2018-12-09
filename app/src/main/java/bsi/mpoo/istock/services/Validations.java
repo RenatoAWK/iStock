@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Patterns;
 import android.widget.EditText;
 
+import java.math.BigDecimal;
+
 import bsi.mpoo.istock.R;
 
 public class Validations {
@@ -49,7 +51,7 @@ public class Validations {
         return false;
     }
 
-    public boolean editValdiade(EditText...editTexts){
+    public boolean editValidate(EditText...editTexts){
         boolean valid = true;
         for (EditText editText: editTexts){
             if (!editValidate(editText)){
@@ -65,5 +67,35 @@ public class Validations {
             return true;
         }
         return false;
+    }
+
+    public boolean price(String price) {
+        try {
+            BigDecimal bigDecimal = new BigDecimal(price);
+            if (bigDecimal.compareTo(new BigDecimal("0"))>0){
+                return true;
+            }
+            throw new Exception();
+
+        }catch (Exception error){
+            return false;
+        }
+    }
+
+    public boolean minimum(String minimum) {
+        if (minimum.isEmpty()){
+            return true;
+        }
+        try {
+            BigDecimal bigDecimal = new BigDecimal(minimum);
+            if (bigDecimal.compareTo(new BigDecimal("0"))>=0){
+                return true;
+            }
+            throw new Exception();
+
+        }catch (Exception error){
+            return false;
+        }
+
     }
 }

@@ -63,4 +63,11 @@
     <string name="client">Cliente</string>
     <string name="name">Nome</string>
     <string name="edit_client">Edição De Cliente</string>
+    <string name="register_product">Cadastro De Produto</string>
+    <string name="product_name">Nome Do Produto</string>
+    <string name="price">Preço</string>
+    <string name="minimum_quantity">Quantidade Mínima</string>
+    <string name="invalid_value">Valor inválido</string>
+    <string name="invalid_quantity">Quantidade Inválida</string>
+    <string name="product_already_registered">Produto já registrado</string>
 </resources>
