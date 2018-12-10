@@ -74,4 +74,6 @@
     <string name="quantity_subtitle">Quantidade</string>
     <string name="price_subtitle">Preço</string>
     <string name="without_info">Não informado</string>
+    <string name="edit_product">Edição De Produto</string>
+    <string name="product_not_registered">Producto não registrado</string>
 </resources>

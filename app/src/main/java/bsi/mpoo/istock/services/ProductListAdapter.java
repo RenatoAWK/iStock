@@ -24,6 +24,7 @@ import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.EditClientActivity;
+import bsi.mpoo.istock.gui.EditProductActivity;
 import bsi.mpoo.istock.gui.LoginActivity;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
@@ -85,9 +86,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 }
 
             } else if (item.getTitle().equals(editOption)){
-            //    Intent intent = new Intent(context, EditClientActivity.class);
-            //    intent.putExtra("product", product);
-            //    context.startActivity(intent);
+                Intent intent = new Intent(context, EditProductActivity.class);
+                intent.putExtra("product", product);
+                context.startActivity(intent);
 
             } else if (item.getTitle().equals(detailOption)){
 
