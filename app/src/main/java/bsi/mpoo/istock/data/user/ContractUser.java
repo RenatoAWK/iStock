@@ -25,7 +25,7 @@ public class ContractUser  implements BaseColumns {
                     ContractUser.COLUMN_TYPE + " INTEGER,"+
                     ContractUser.COLUMN_STATUS + " INTEGER,"+
                     ContractUser.COLUMN_COMPANY + " TEXT,"+
-                    ContractUser.COLUMN_ADMINISTRATOR + " INTEGER" +
+                    ContractUser.COLUMN_ADMINISTRATOR + " INTEGER," +
                     ContractUser.COLUMN_IMAGE + " BLOB"+
                     ")";
 

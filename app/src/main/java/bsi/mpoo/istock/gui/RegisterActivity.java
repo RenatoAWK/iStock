@@ -1,11 +1,22 @@
 package bsi.mpoo.istock.gui;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
@@ -23,6 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private EditText passwordConfirmationEditText;
     private EditText companyEditText;
+    private Uri pickedImage;
+    private ImageView imageRegister;
+    private byte[] image;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
         nameEditText = findViewById(R.id.editfullNameRegister);
         companyEditText = findViewById(R.id.editCompanyNameRegister);
+        imageRegister = findViewById(R.id.editImageRegister);
 
         emailEditText.setText(email);
 
@@ -65,9 +81,17 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setCompany(companyEditText.getText().toString().trim());
         newUser.setAdministrator(-1);
 
-        try {
-            userServices.registerUser(newUser);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        image = null;
+        if (bitmap != null){
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
+            image = out.toByteArray();
+        }
+        newUser.setImage(image);
 
+        try {
+
+            userServices.registerUser(newUser);
             String message = getString(R.string.register_done);
 
             new AlertDialogGenerator(this, message, true).invoke();
@@ -154,4 +178,31 @@ public class RegisterActivity extends AppCompatActivity {
         return valid;
     }
 
+    public void pickImage(View view) {
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"),1);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == 1){
+                pickedImage = data.getData();
+
+                imageRegister = findViewById(R.id.editImageRegister);
+                try {
+
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+
+                    imageRegister.setImageBitmap(bitmap);
+                    imageRegister.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }catch (IOException error){
+                    String message = getString(R.string.unknow_error);
+                    new AlertDialogGenerator(this,message,false).invoke();
+                }
+            }
+        }
+    }
 }

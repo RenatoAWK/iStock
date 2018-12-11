@@ -32,7 +32,8 @@
             <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+                android:gravity="bottom">
 
                 <EditText
                     android:id="@+id/editCompanyNameRegister"
@@ -41,22 +42,23 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
                     android:ems="10"
                     android:hint="@string/company_name"
                     android:inputType="text"
-                    android:layout_weight="1"
-                    app:layout_constraintBottom_toTopOf="@+id/editfullNameRegister"
-                    />
+                    app:layout_constraintBottom_toTopOf="@+id/editfullNameRegister" />
 
                 <ImageView
                     android:id="@+id/editImageRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
                     android:ems="10"
+                    android:onClick="pickImage"
                     app:srcCompat="@drawable/ic_user" />
 
 
@@ -70,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="9dp"
+                android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:hint="@string/full_name"
                 android:inputType="textPersonName"
@@ -82,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
@@ -94,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:hint="@string/password"
                 android:inputType="textPassword"
@@ -106,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
                 android:ems="10"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
@@ -118,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="12dp"
                 android:background="@color/colorPrimary"
                 android:onClick="register"
                 android:text="@string/sign_up"
