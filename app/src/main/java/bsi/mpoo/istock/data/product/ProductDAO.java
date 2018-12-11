@@ -272,7 +272,7 @@ public class ProductDAO {
         int quantityIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_QUANTITY);
         int idMinimumIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_MINIMUM_QUANTITY);
         int admIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_ID_ADM);
-        int statusIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_ID_ADM);
+        int statusIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_STATUS);
 
 
         long id = cursor.getLong(idIndex);
