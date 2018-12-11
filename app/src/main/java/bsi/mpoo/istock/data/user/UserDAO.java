@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.provider.BaseColumns;
 
+import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.User;
 
@@ -28,6 +29,7 @@ public class UserDAO{
         values.put(ContractUser.COLUMN_STATUS, user.getStatus());
         values.put(ContractUser.COLUMN_COMPANY, user.getCompany());
         values.put(ContractUser.COLUMN_ADMINISTRATOR, user.getAdministrator());
+        values.put(ContractUser.COLUMN_IMAGE, user.getImage());
 
         long newRowID = db.insert(ContractUser.TABLE_NAME, null, values);
 
@@ -35,7 +37,7 @@ public class UserDAO{
         db.close();
     }
 
-    public User getUserbyEmail(User user) {
+    public User getUserByEmail(User user) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -50,7 +52,8 @@ public class UserDAO{
                 ContractUser.COLUMN_TYPE,
                 ContractUser.COLUMN_STATUS,
                 ContractUser.COLUMN_COMPANY,
-                ContractUser.COLUMN_ADMINISTRATOR
+                ContractUser.COLUMN_ADMINISTRATOR,
+                ContractUser.COLUMN_IMAGE
         };
 
         String selection = ContractUser.COLUMN_EMAIL+" = ?";
@@ -92,7 +95,8 @@ public class UserDAO{
                 ContractUser.COLUMN_TYPE,
                 ContractUser.COLUMN_STATUS,
                 ContractUser.COLUMN_COMPANY,
-                ContractUser.COLUMN_ADMINISTRATOR
+                ContractUser.COLUMN_ADMINISTRATOR,
+                ContractUser.COLUMN_IMAGE
         };
 
         String selection = ContractUser._ID+" = ?";
@@ -129,6 +133,7 @@ public class UserDAO{
         int statusIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_STATUS);
         int companyIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_COMPANY);
         int administratorIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_ADMINISTRATOR);
+        int imageIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_IMAGE);
 
         long id = cursor.getInt(idIndex);
         String name = cursor.getString(nameIndex);
@@ -138,6 +143,7 @@ public class UserDAO{
         int status = cursor.getInt(statusIndex);
         String company = cursor.getString(companyIndex);
         long administrator = cursor.getLong(administratorIndex);
+        byte[] image = cursor.getBlob(imageIndex);
 
         User createdUser = new User();
         createdUser.setId(id);
@@ -148,6 +154,7 @@ public class UserDAO{
         createdUser.setStatus(status);
         createdUser.setCompany(company);
         createdUser.setAdministrator(administrator);
+        createdUser.setImage(image);
 
         return createdUser;
 

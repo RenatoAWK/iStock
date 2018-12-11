@@ -14,6 +14,7 @@ public class ContractUser  implements BaseColumns {
     public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_COMPANY = "company";
     public static final String COLUMN_ADMINISTRATOR = "administrator";
+    public static final String COLUMN_IMAGE = "image";
 
     public static final String SQL_CREATE_TABLE_USER =
             "CREATE TABLE "+ContractUser.TABLE_NAME+" ("+
@@ -24,7 +25,9 @@ public class ContractUser  implements BaseColumns {
                     ContractUser.COLUMN_TYPE + " INTEGER,"+
                     ContractUser.COLUMN_STATUS + " INTEGER,"+
                     ContractUser.COLUMN_COMPANY + " TEXT,"+
-                    ContractUser.COLUMN_ADMINISTRATOR + " INTEGER)";
+                    ContractUser.COLUMN_ADMINISTRATOR + " INTEGER" +
+                    ContractUser.COLUMN_IMAGE + " BLOB"+
+                    ")";
 
 
     public static  final String SQL_DELETE_USERS =

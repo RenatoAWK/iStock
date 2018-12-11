@@ -11,6 +11,7 @@ public class User implements Parcelable {
     private int type;
     private int status;
     private String company;
+    private byte[] image;
 
     private long administrator;
 
@@ -25,6 +26,9 @@ public class User implements Parcelable {
         status = parcel.readInt();
         company = parcel.readString();
         administrator = parcel.readLong();
+        image = new byte[parcel.readInt()];
+        parcel.readByteArray(image);
+
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -54,6 +58,8 @@ public class User implements Parcelable {
         dest.writeInt(status);
         dest.writeString(company);
         dest.writeLong(administrator);
+        dest.writeInt(image.length);
+        dest.writeByteArray(image);
     }
 
     public long getId() {
@@ -118,5 +124,13 @@ public class User implements Parcelable {
 
     public void setAdministrator(long administrator) {
         this.administrator = administrator;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

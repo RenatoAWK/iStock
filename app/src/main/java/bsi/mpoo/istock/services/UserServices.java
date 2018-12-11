@@ -18,7 +18,7 @@ public class UserServices {
 
     private boolean isUserRegistered(User user){
 
-        User searchedUser = userDAO.getUserbyEmail(user);
+        User searchedUser = userDAO.getUserByEmail(user);
 
         if (searchedUser == null) {
             return false;
@@ -42,7 +42,7 @@ public class UserServices {
 
     public User login(User user){
 
-        User searchedUser = userDAO.getUserbyEmail(user);
+        User searchedUser = userDAO.getUserByEmail(user);
         if (searchedUser != null){
             if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
                 return searchedUser;
