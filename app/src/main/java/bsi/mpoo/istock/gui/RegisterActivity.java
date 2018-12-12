@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.AccountStatus;
 import bsi.mpoo.istock.services.UserTypes;
@@ -34,10 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private EditText passwordConfirmationEditText;
     private EditText companyEditText;
-    private Uri pickedImage;
     private ImageView imageRegister;
-    private byte[] image;
-    private Bitmap bitmap;
+    private Bitmap reducedImageProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +80,9 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setCompany(companyEditText.getText().toString().trim());
         newUser.setAdministrator(-1);
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        image = null;
-        if (bitmap != null){
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
-            image = out.toByteArray();
-        }
-        newUser.setImage(image);
+        ImageServices imageServices = new ImageServices();
+
+        newUser.setImage(imageServices.imageToByte(reducedImageProfile));
 
         try {
 
@@ -187,20 +182,32 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
         if (resultCode == Activity.RESULT_OK){
+
             if (requestCode == 1){
-                pickedImage = data.getData();
+
+                Uri pickedImage = data.getData();
 
                 imageRegister = findViewById(R.id.editImageRegister);
+
                 try {
 
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                    ImageServices imageServices = new ImageServices();
 
-                    imageRegister.setImageBitmap(bitmap);
+                    Bitmap imageProfile = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                    byte[] imageProfileByte = imageServices.imageToByte(imageProfile);
+                    reducedImageProfile = imageServices.byteToImage(imageServices.reduceBitmap(imageProfileByte));
+
+
+                    imageRegister.setImageBitmap(reducedImageProfile);
                     imageRegister.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
                 }catch (IOException error){
+
                     String message = getString(R.string.unknow_error);
                     new AlertDialogGenerator(this,message,false).invoke();
+
                 }
             }
         }

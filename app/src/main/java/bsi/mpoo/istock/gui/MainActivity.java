@@ -26,6 +26,7 @@ import bsi.mpoo.istock.gui.fragments.HomeFragment;
 import bsi.mpoo.istock.gui.fragments.ProductsFragment;
 import bsi.mpoo.istock.gui.fragments.SalesFragment;
 import bsi.mpoo.istock.gui.fragments.UsersFragment;
+import bsi.mpoo.istock.services.ImageServices;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -98,9 +99,9 @@ public class MainActivity extends AppCompatActivity
         textViewCompany.setText(user.getCompany());
 
         if (user.getImage() != null){
-            byte[] image = user.getImage();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-            companyImageView.setImageBitmap(bitmap);
+
+            ImageServices imageServices = new ImageServices();
+            companyImageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
             companyImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         }
