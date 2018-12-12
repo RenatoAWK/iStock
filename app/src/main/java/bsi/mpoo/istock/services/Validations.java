@@ -70,44 +70,30 @@ public class Validations {
     }
 
     public boolean price(String price) {
-        try {
-            BigDecimal bigDecimal = new BigDecimal(price);
-            if (bigDecimal.compareTo(new BigDecimal("0"))>0){
-                return true;
-            }
-            throw new Exception();
-
-        }catch (Exception error){
-            return false;
+        BigDecimal bigDecimal = new BigDecimal(price);
+        if (bigDecimal.compareTo(new BigDecimal("0"))>0) {
+            return true;
         }
+        return false;
     }
 
     public boolean quantity(String quantity){
-        try {
-            long number = Long.parseLong(quantity);
-            if (number > 0){
-                return true;
-            }
-            throw  new Exception();
-        } catch (Exception error){
-            return false;
+        long number = Long.parseLong(quantity);
+        if (number >= 0) {
+            return true;
         }
+        return false;
     }
 
     public boolean minimum(String minimum) {
         if (minimum.isEmpty()){
             return true;
         }
-        try {
-            long number = Long.parseLong(minimum);
-            if (number > 0){
+        long number = Long.parseLong(minimum);
+            if (number > 0) {
                 return true;
             }
-            throw new Exception();
-
-        }catch (Exception error){
             return false;
-        }
 
     }
 }
