@@ -26,8 +26,7 @@ public class User implements Parcelable {
         status = parcel.readInt();
         company = parcel.readString();
         administrator = parcel.readLong();
-        image = new byte[parcel.readInt()];
-        parcel.readByteArray(image);
+        image = (byte[]) parcel.readValue(Byte[].class.getClassLoader());
 
     }
 
@@ -58,8 +57,7 @@ public class User implements Parcelable {
         dest.writeInt(status);
         dest.writeString(company);
         dest.writeLong(administrator);
-        dest.writeInt(image.length);
-        dest.writeByteArray(image);
+        dest.writeValue(image);
     }
 
     public long getId() {

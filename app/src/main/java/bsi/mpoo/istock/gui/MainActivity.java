@@ -1,6 +1,8 @@
 package bsi.mpoo.istock.gui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import bsi.mpoo.istock.R;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
         TextView textViewCompany;
         TextView textViewName;
+        ImageView companyImageView;
 
         Intent intent = getIntent();
         user = intent.getParcelableExtra("user");
@@ -88,9 +92,19 @@ public class MainActivity extends AppCompatActivity
 
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);
+        companyImageView = headerView.findViewById(R.id.imageViewHeader);
 
         textViewName.setText(user.getName());
         textViewCompany.setText(user.getCompany());
+
+        if (user.getImage() != null){
+            byte[] image = user.getImage();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
+            companyImageView.setImageBitmap(bitmap);
+            companyImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        }
+
 
         displaySelectedScreen(R.id.nav_home);
 
