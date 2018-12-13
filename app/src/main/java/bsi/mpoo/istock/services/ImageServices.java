@@ -2,6 +2,8 @@ package bsi.mpoo.istock.services;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
 
@@ -59,6 +61,37 @@ public class ImageServices {
 
         }
         return resultImageByte;
+    }
+
+    public Bitmap rotate(Bitmap bitmap, int codeOrientation) {
+
+        int angle = 360;
+        switch (codeOrientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                angle = 0;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                angle = 90;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                angle = 180;
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                angle = 270;
+                break;
+        }
+
+        if (angle == 360 || angle == 0){
+            return bitmap;
+        }
+
+        return rotateHelper(bitmap, angle);
+    }
+    private Bitmap rotateHelper(Bitmap bitmap, int angle){
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
 

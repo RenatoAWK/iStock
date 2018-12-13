@@ -28,8 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.editEmailLogin);
         passwordEditText = findViewById(R.id.editPasswordLogin);
 
-        emailEditText.requestFocus();
-
     }
 
     public void login(View view){

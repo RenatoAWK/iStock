@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
@@ -195,9 +197,21 @@ public class RegisterActivity extends AppCompatActivity {
 
                     ImageServices imageServices = new ImageServices();
 
+                    int orientation = 9;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                        InputStream inputStream = getContentResolver().openInputStream(pickedImage);
+                        ExifInterface exifInterface = new ExifInterface(inputStream);
+                        orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    }
+
+
                     Bitmap imageProfile = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
                     byte[] imageProfileByte = imageServices.imageToByte(imageProfile);
                     reducedImageProfile = imageServices.byteToImage(imageServices.reduceBitmap(imageProfileByte));
+
+                    if (orientation < 9){
+                        reducedImageProfile = imageServices.rotate(reducedImageProfile, orientation);
+                    }
 
 
                     imageRegister.setImageBitmap(reducedImageProfile);
