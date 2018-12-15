@@ -3,7 +3,6 @@ package bsi.mpoo.istock.gui;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-
 import bsi.mpoo.istock.R;
 
 public class AlertDialogGenerator {

@@ -5,10 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.data.address.AddressDAO;
@@ -25,34 +23,25 @@ public class ClientDAO {
     }
 
     public void insertClient(Client client) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
         values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_STATUS, client.getStatus());
-
         AddressDAO addressDAO = new AddressDAO(context);
         addressDAO.insertAddress(client.getAddress());
-
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
-
         long newRowID = db.insert(ContractClient.TABLE_NAME, null, values);
-
         client.setId(newRowID);
         db.close();
     }
 
     public Client getClientByName(Client client) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         Client searchedClient = null;
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractClient.COLUMN_NAME,
@@ -61,12 +50,10 @@ public class ClientDAO {
                 ContractClient.COLUMN_ID_ADM,
                 ContractClient.COLUMN_STATUS,
         };
-
         String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
                 ContractClient.COLUMN_ID_ADM+" =?";
         String[] selectionArgs = { client.getName().trim().toUpperCase(),
                 String.valueOf(client.getAdministrator().getId()) };
-
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -76,25 +63,19 @@ public class ClientDAO {
                 null,
                 null
         );
-
         if (cursor.getCount()==1){
             cursor.moveToNext();
             searchedClient = createClient(cursor);
         }
-
         cursor.close();
         db.close();
         return searchedClient;
-
     }
 
     public Client getClientById(Client client) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         Client searchedClient = null;
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractClient.COLUMN_NAME,
@@ -103,10 +84,8 @@ public class ClientDAO {
                 ContractClient.COLUMN_ID_ADM,
                 ContractClient.COLUMN_STATUS
         };
-
         String selection = ContractClient._ID+" = ?";
         String[] selectionArgs = { String.valueOf(client.getId()) };
-
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -116,22 +95,17 @@ public class ClientDAO {
                 null,
                 null
         );
-
         if (cursor.getCount()==1){
             searchedClient = createClient(cursor);
         }
-
         cursor.close();
         db.close();
         return searchedClient;
-
     }
 
     public List<Client> getListClientsByAdmId(User user, String order) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractClient.COLUMN_NAME,
@@ -140,13 +114,10 @@ public class ClientDAO {
                 ContractClient.COLUMN_ID_ADM,
                 ContractClient.COLUMN_STATUS
         };
-
         String sortOrder = ContractClient.COLUMN_NAME +" "+ Contract.ASC;
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()) };
-
-
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -156,28 +127,20 @@ public class ClientDAO {
                 null,
                 sortOrder
         );
-
         if (cursor.moveToNext()){
             do {
-
                 Client client = createClient(cursor);
                 clientList.add(client);
-
-
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         db.close();
         return clientList;
-
     }
 
     public List<Client> getActiveClientsByAdmId(User user, String order) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractClient.COLUMN_NAME,
@@ -186,15 +149,12 @@ public class ClientDAO {
                 ContractClient.COLUMN_ID_ADM,
                 ContractClient.COLUMN_STATUS
         };
-
         String sortOrder = ContractClient.COLUMN_NAME +" "+ order;
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractClient.COLUMN_STATUS+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()),
                 String.valueOf(AccountStatus.ACTIVE.getValue())};
-
-
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -204,110 +164,78 @@ public class ClientDAO {
                 null,
                 sortOrder
         );
-
         if (cursor.moveToNext()){
             do {
-
                 Client client = createClient(cursor);
                 clientList.add(client);
-
-
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         db.close();
         return clientList;
-
     }
 
     public void disableClient(Client client){
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         AddressDAO addressDAO = new AddressDAO(context);
         addressDAO.disableAddress(client.getAddress());
-
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
         values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
         values.put(ContractClient.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
-
         String selection = ContractClient._ID+" = ?";
         String[] selectionArgs = {String.valueOf(client.getId())};
-
         db.update(ContractClient.TABLE_NAME, values, selection, selectionArgs);
-
     }
 
     public void updateClient(Client client){
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         AddressDAO addressDAO = new AddressDAO(context);
         addressDAO.updateAddress(client.getAddress());
-
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
         values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
         values.put(ContractClient.COLUMN_STATUS, client.getStatus());
-
         String selection = ContractClient._ID+" = ?";
         String[] selectionArgs = {String.valueOf(client.getId())};
-
         db.update(ContractClient.TABLE_NAME, values, selection, selectionArgs);
-
     }
 
-
     private Client createClient(Cursor cursor){
-
         int idIndex = cursor.getColumnIndexOrThrow(ContractClient._ID);
         int nameIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_NAME);
         int phoneIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_PHONE);
         int idAddressIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADDRESS);
         int admIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_ID_ADM);
         int statusIndex = cursor.getColumnIndexOrThrow(ContractClient.COLUMN_STATUS);
-
-
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(nameIndex);
         String phone = cursor.getString(phoneIndex);
         int idAddress = cursor.getInt(idAddressIndex);
         long idAdm = cursor.getLong(admIndex);
         int status = cursor.getInt(statusIndex);
-
-
         Client createdClient = new Client();
         createdClient.setId(id);
         createdClient.setName(name);
         createdClient.setPhone(phone);
         createdClient.setStatus(status);
-
         AddressDAO addressDAO = new AddressDAO(context);
         Address address = new Address();
         address.setId(idAddress);
         Address searchedAddress = addressDAO.getAddressByID(address);
-
         createdClient.setAddress(searchedAddress);
-
         UserDAO userDAO = new UserDAO(context);
         User user = new User();
         user.setId(idAdm);
         User searchedUser = userDAO.getUserById(user);
-
         createdClient.setAdministrator(searchedUser);
-
         return createdClient;
 
     }
-
-
-
 }

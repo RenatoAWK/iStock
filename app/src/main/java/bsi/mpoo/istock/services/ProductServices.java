@@ -18,59 +18,40 @@ public class ProductServices {
     }
 
     public boolean isProductRegistered(Product product){
-
         Product searchedProduct = productDAO.getProductByName(product);
-
-        if (searchedProduct == null){
-            return false;
-        }
-        return true;
+        return searchedProduct != null;
     }
 
     public void registerProduct(Product product) throws Exception {
-
         if (isProductRegistered(product)){
             throw new Exceptions.ProductAlreadyRegistered();
-        }
-        else {
+        } else {
             productDAO.insertProduct(product);
         }
-
     }
 
     public void updateProduct(Product product) throws Exception{
         try {
             productDAO.updateProduct(product);
-        }catch (Exception error){
+        } catch (Exception error){
             throw new Exceptions.ProductNotRegistered();
         }
-
-
-
-
     }
 
     public void disableProduct(Product product) throws Exception{
 
         if (isProductRegistered(product)){
             productDAO.disableProduct(product);
-        }
-        else {
+        } else {
             throw  new Exceptions.ProductNotRegistered();
         }
-
-
     }
 
     public ArrayList<Product> getAcitiveProductsAsc(User user){
         return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(user,Contract.ASC);
-
     }
 
     public ArrayList<Product> getAcitiveProductsDesc(User user){
         return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(user,Contract.DESC);
-
     }
-
-
 }

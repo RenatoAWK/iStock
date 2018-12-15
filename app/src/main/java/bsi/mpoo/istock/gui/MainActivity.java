@@ -1,8 +1,6 @@
 package bsi.mpoo.istock.gui;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.fragments.ClientsFragment;
@@ -37,17 +34,13 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         TextView textViewCompany;
         TextView textViewName;
         ImageView companyImageView;
-
         Intent intent = getIntent();
         user = intent.getParcelableExtra("user");
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +52,11 @@ public class MainActivity extends AppCompatActivity
                 } else if (fragment instanceof SalesFragment){
 
                 } else if (fragment instanceof ProductsFragment){
-
                     Intent intent = new Intent(getApplicationContext(), RegisterProductActivity.class);
                     intent.putExtra("user",user);
                     startActivity(intent);
 
                 } else if (fragment instanceof ClientsFragment){
-
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
                     intent.putExtra("user",user);
                     startActivity(intent);
@@ -75,8 +66,6 @@ public class MainActivity extends AppCompatActivity
                 } else if (fragment instanceof HistoricFragment){
 
                 }
-
-
             }
         });
 
@@ -85,30 +74,21 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View headerView = navigationView.getHeaderView(0);
-
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);
         companyImageView = headerView.findViewById(R.id.imageViewHeader);
-
         textViewName.setText(user.getName());
         textViewCompany.setText(user.getCompany());
 
         if (user.getImage() != null){
-
             ImageServices imageServices = new ImageServices();
             setImageOnImageView(companyImageView, imageServices);
 
         }
-
-
         displaySelectedScreen(R.id.nav_home);
-
-
     }
 
     private void setImageOnImageView(ImageView companyImageView, ImageServices imageServices) {
@@ -128,25 +108,20 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-
         displaySelectedScreen(id);
-
         return true;
     }
 
     public void displaySelectedScreen(int id){
         Fragment fragment = null;
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
-
         Bundle bundle = new Bundle();
         bundle.putParcelable("user",user);
 
@@ -181,7 +156,6 @@ public class MainActivity extends AppCompatActivity
                 fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
-
             case R.id.nav_logout:
                 Intent intent = new Intent(this, LoginActivity.class);
                 finish();

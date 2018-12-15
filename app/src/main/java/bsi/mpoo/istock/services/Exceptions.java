@@ -3,9 +3,7 @@ package bsi.mpoo.istock.services;
 public class Exceptions {
 
     public static class EmailAlreadyRegistered extends Exception{
-
         private ExceptionsEnum error;
-
         private int idError;
 
         public EmailAlreadyRegistered(){
@@ -20,13 +18,10 @@ public class Exceptions {
         public int getIdError() {
             return this.idError;
         }
-
     }
 
     public static class ClientAlreadyRegistered extends Exception{
-
         private ExceptionsEnum error;
-
         private int idError;
 
         public ClientAlreadyRegistered(){
@@ -44,9 +39,7 @@ public class Exceptions {
     }
 
     public static class ClientNotRegistered extends Exception{
-
         private ExceptionsEnum error;
-
         private int idError;
 
         public ClientNotRegistered(){
@@ -64,9 +57,7 @@ public class Exceptions {
     }
 
     public static class ProductAlreadyRegistered extends Exception{
-
         private ExceptionsEnum error;
-
         private int idError;
 
         public ProductAlreadyRegistered(){
@@ -84,9 +75,7 @@ public class Exceptions {
     }
 
     public static class ProductNotRegistered extends Exception{
-
         private ExceptionsEnum error;
-
         private int idError;
 
         public ProductNotRegistered(){

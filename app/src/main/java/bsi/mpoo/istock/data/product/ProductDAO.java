@@ -26,10 +26,8 @@ public class ProductDAO {
     }
 
     public void insertProduct(Product product) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(ContractProduct.COLUMN_NAME, product.getName());
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
@@ -37,20 +35,15 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
-
         long newRowID = db.insert(ContractProduct.TABLE_NAME, null, values);
-
         product.setId(newRowID);
         db.close();
     }
 
     public Product getProductByName(Product product) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         Product searchedProduct = null;
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
@@ -60,12 +53,10 @@ public class ProductDAO {
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
         };
-
         String selection = ContractProduct.COLUMN_NAME+" = ?"+" AND "+
                 ContractProduct.COLUMN_ID_ADM+" =?";
         String[] selectionArgs = { product.getName().trim().toUpperCase(),
                 String.valueOf(product.getAdministrator().getId()) };
-
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -75,25 +66,19 @@ public class ProductDAO {
                 null,
                 null
         );
-
         if (cursor.getCount()==1){
             cursor.moveToNext();
             searchedProduct = createProduct(cursor);
         }
-
         cursor.close();
         db.close();
         return searchedProduct;
-
     }
 
     public Product getProductById(Product product) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         Product searchedProduct = null;
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
@@ -103,10 +88,8 @@ public class ProductDAO {
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
         };
-
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = { String.valueOf(product.getId()) };
-
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -116,22 +99,17 @@ public class ProductDAO {
                 null,
                 null
         );
-
         if (cursor.getCount()==1){
             searchedProduct = createProduct(cursor);
         }
-
         cursor.close();
         db.close();
         return searchedProduct;
-
     }
 
     public List<Product> getListProductsByAdmId(User user, String order) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
@@ -141,13 +119,10 @@ public class ProductDAO {
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
         };
-
         String sortOrder = ContractProduct.COLUMN_NAME +" "+ order;
         List<Product> productList = new ArrayList<>();
         String selection = ContractProduct.COLUMN_ID_ADM+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()) };
-
-
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -157,28 +132,20 @@ public class ProductDAO {
                 null,
                 sortOrder
         );
-
         if (cursor.moveToNext()){
             do {
-
                 Product product = createProduct(cursor);
                 productList.add(product);
-
-
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         db.close();
         return productList;
-
     }
 
     public List<Product> getActiveProductsByAdmId(User user, String order) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractProduct.COLUMN_NAME,
@@ -188,15 +155,12 @@ public class ProductDAO {
                 ContractProduct.COLUMN_ID_ADM,
                 ContractProduct.COLUMN_STATUS
         };
-
         String sortOrder = ContractProduct.COLUMN_NAME +" "+ order;
         List<Product> productList = new ArrayList<>();
         String selection = ContractProduct.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractProduct.COLUMN_STATUS+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()),
                 String.valueOf(AccountStatus.ACTIVE.getValue())};
-
-
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -206,28 +170,20 @@ public class ProductDAO {
                 null,
                 sortOrder
         );
-
         if (cursor.moveToNext()){
             do {
-
                 Product product = createProduct(cursor);
                 productList.add(product);
-
-
             } while (cursor.moveToNext());
         }
-
         cursor.close();
         db.close();
         return productList;
-
     }
 
     public void disableProduct(Product product){
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(ContractProduct.COLUMN_NAME, product.getName());
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
@@ -235,19 +191,14 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
         values.put(ContractProduct.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
-
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
-
         db.update(ContractProduct.TABLE_NAME, values, selection, selectionArgs);
-
     }
 
     public void updateProduct(Product product){
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(ContractProduct.COLUMN_NAME, product.getName());
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
@@ -255,12 +206,9 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
-
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
-
         db.update(ContractProduct.TABLE_NAME, values, selection, selectionArgs);
-
     }
 
 
@@ -273,8 +221,6 @@ public class ProductDAO {
         int idMinimumIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_MINIMUM_QUANTITY);
         int admIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_ID_ADM);
         int statusIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_STATUS);
-
-
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(nameIndex);
         String price = cursor.getString(priceIndex);
@@ -282,7 +228,6 @@ public class ProductDAO {
         long minimum = cursor.getLong(idMinimumIndex);
         long idAdm = cursor.getLong(admIndex);
         int status = cursor.getInt(statusIndex);
-
         Product createdProduct = new Product();
         createdProduct.setId(id);
         createdProduct.setName(name);
@@ -290,19 +235,12 @@ public class ProductDAO {
         createdProduct.setQuantity(quantity);
         createdProduct.setMinimumQuantity(minimum);
         createdProduct.setStatus(status);
-
         UserDAO userDAO = new UserDAO(context);
         User user = new User();
         user.setId(idAdm);
         User searchedUser = userDAO.getUserById(user);
-
         createdProduct.setAdministrator(searchedUser);
-
         return createdProduct;
-
     }
-
-
-
 }
 

@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
@@ -26,23 +25,17 @@ public class EditClientActivity extends AppCompatActivity {
     EditText stateEditText;
     EditText phoneEditText;
     Button registerButton;
-
     Client client;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_client);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         this.client = bundle.getParcelable("client");
-
-
         nameEditText = findViewById(R.id.editTextNameEditClient);
         streetEditText = findViewById(R.id.editTextStreetEditClient);
         numberEditText = findViewById(R.id.editTextNumberEditClient);
@@ -51,7 +44,6 @@ public class EditClientActivity extends AppCompatActivity {
         stateEditText = findViewById(R.id.editTextStateEditClient);
         phoneEditText = findViewById(R.id.editTextPhoneEditClient);
         registerButton = findViewById(R.id.buttonRegisterEditClient);
-
         nameEditText.setText(client.getName());
         streetEditText.setText(client.getAddress().getStreet());
         numberEditText.setText(String.valueOf(client.getAddress().getNumber()));
@@ -59,22 +51,16 @@ public class EditClientActivity extends AppCompatActivity {
         cityEditText.setText(client.getAddress().getCity());
         stateEditText.setText(client.getAddress().getState());
         phoneEditText.setText(client.getPhone());
-
     }
 
     public void edit(View view) {
-
         Validations validations = new Validations(getApplicationContext());
-
         if (!isAllFieldsValid(validations)) return;
-
         ClientServices clientServices = new ClientServices(getApplicationContext());
-
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
         newClient.setPhone(phoneEditText.getText().toString().trim());
         newClient.setStatus(AccountStatus.ACTIVE.getValue());
-
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
         newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));
@@ -83,39 +69,26 @@ public class EditClientActivity extends AppCompatActivity {
         newAddress.setState(stateEditText.getText().toString().trim().toUpperCase());
         newAddress.setStatus(AccountStatus.ACTIVE.getValue());
         newAddress.setId(client.getAddress().getId());
-
         newClient.setAddress(newAddress);
         newClient.setAdministrator(client.getAdministrator());
         newClient.setId(client.getId());
 
         try {
-
             clientServices.updateClient(newClient);
-
             String message = getString(R.string.edit_successful);
-
             new AlertDialogGenerator(this, message, true).invoke();
 
         } catch (ClientNotRegistered error){
-
             String message = getString(R.string.client_not_registered);
-
             new AlertDialogGenerator(this, message, false).invoke();
 
         } catch (Exception error){
-
             String message = getString(R.string.unknow_error);
-
             new AlertDialogGenerator(this, message, false).invoke();
         }
-
-
-
-
     }
 
     private boolean isAllFieldsValid(Validations validations) {
-
         boolean valid = validations.editValidate(nameEditText, streetEditText,
                 numberEditText, districtEditText, cityEditText, stateEditText, phoneEditText
         );
@@ -127,7 +100,6 @@ public class EditClientActivity extends AppCompatActivity {
             }
             valid = false;
         }
-
         if (!validations.name(streetEditText.getText().toString())){
             if (streetEditText.getError() == null) {
                 streetEditText.requestFocus();

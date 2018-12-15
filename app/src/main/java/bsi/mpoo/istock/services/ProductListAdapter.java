@@ -39,7 +39,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.productList = productList;
         this.user = user;
         this.context = context;
-
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
@@ -60,19 +59,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         @Override
         public boolean onMenuItemClick(MenuItem item){
-
             ProductServices productServices = new ProductServices(context);
-
             int position = getLayoutPosition();
             Product product = productList.get(position);
-
             final String detailOption = context.getApplicationContext().getString(R.string.details);
             final String deleteOption = context.getApplicationContext().getString(R.string.delete);
             final String editOption = context.getApplicationContext().getString(R.string.edit);
 
             if (item.getTitle().toString().equals(deleteOption)){
-
-
                 try {
                     productServices.disableProduct(product);
                     productList.remove(position);
@@ -80,22 +74,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
                 }
                 catch (Exception error) {
-
                     new AlertDialogGenerator((Activity) context, error.getMessage(),false).invoke();
-
                 }
 
             } else if (item.getTitle().equals(editOption)){
                 Intent intent = new Intent(context, EditProductActivity.class);
                 intent.putExtra("product", product);
                 context.startActivity(intent);
-
             } else if (item.getTitle().equals(detailOption)){
-
                 DialogDetails dialogDetails = new DialogDetails(context);
                 dialogDetails.invoke(product);
             }
-
             return false;
         }
 
@@ -104,11 +93,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
             MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
             MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
-
             detailItem.setOnMenuItemClickListener(this);
             editItem.setOnMenuItemClickListener(this);
             deleteItem.setOnMenuItemClickListener(this);
-
         }
     }
 
@@ -116,11 +103,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View itemView = inflater.inflate(R.layout.product_list_item, parent, false);
         return new ProductViewHolder(itemView, this);
-
-
     }
 
     @Override
@@ -128,7 +112,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String currentName = productList.get(position).getName();
         String currentQuantity = String.valueOf(productList.get(position).getQuantity());
         String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
-
         productViewHolder.nameItemView.setText(currentName);
         productViewHolder.quantityItemView.setText(currentQuantity);
         productViewHolder.priceItemView.setText(currentPrice);

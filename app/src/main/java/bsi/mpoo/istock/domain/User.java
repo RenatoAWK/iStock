@@ -12,7 +12,6 @@ public class User implements Parcelable {
     private int status;
     private String company;
     private byte[] image;
-
     private long administrator;
 
     public User(){}
@@ -27,7 +26,6 @@ public class User implements Parcelable {
         company = parcel.readString();
         administrator = parcel.readLong();
         image = (byte[]) parcel.readValue(Byte[].class.getClassLoader());
-
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -63,71 +61,54 @@ public class User implements Parcelable {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
-
     public int getType() {
         return type;
     }
-
     public void setType(int type) {
         this.type = type;
     }
-
     public int getStatus() {
         return status;
     }
-
     public void setStatus(int status) {
         this.status = status;
     }
-
     public String getCompany() {
         return company;
     }
-
     public void setCompany(String company) {
         this.company = company;
     }
-
     public long getAdministrator() {
         return administrator;
     }
-
     public void setAdministrator(long administrator) {
         this.administrator = administrator;
     }
-
     public byte[] getImage() {
         return image;
     }
-
     public void setImage(byte[] image) {
         this.image = image;
     }

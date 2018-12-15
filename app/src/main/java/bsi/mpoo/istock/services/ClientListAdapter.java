@@ -57,25 +57,20 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
         public boolean onMenuItemClick(MenuItem item){
 
             ClientServices clientServices = new ClientServices(context);
-
             int position = getLayoutPosition();
             Client client = clientList.get(position);
-
             final String detailOption = context.getApplicationContext().getString(R.string.details);
             final String deleteOption = context.getApplicationContext().getString(R.string.delete);
             final String editOption = context.getApplicationContext().getString(R.string.edit);
 
             if (item.getTitle().toString().equals(deleteOption)){
 
-
                 try {
                     clientServices.disableClient(client);
                     clientList.remove(position);
                     adapter.notifyDataSetChanged();
 
-                }
-                catch (Exception error) {
-
+                } catch (Exception error) {
                     new AlertDialogGenerator((Activity) context, error.getMessage(),false).invoke();
 
                 }
@@ -86,11 +81,10 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
                 context.startActivity(intent);
 
             } else if (item.getTitle().equals(detailOption)){
-
                 DialogDetails dialogDetails = new DialogDetails(context);
                 dialogDetails.invoke(client);
-            }
 
+            }
             return false;
         }
 
@@ -99,23 +93,17 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
             MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
             MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
             MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
-
             detailItem.setOnMenuItemClickListener(this);
             editItem.setOnMenuItemClickListener(this);
             deleteItem.setOnMenuItemClickListener(this);
-
         }
     }
-
 
     @NonNull
     @Override
     public ClientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View itemView = inflater.inflate(R.layout.client_list_item, parent, false);
         return new ClientViewHolder(itemView, this);
-
-
     }
 
     @Override

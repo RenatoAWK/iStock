@@ -25,7 +25,6 @@ import bsi.mpoo.istock.services.UserTypes;
 import bsi.mpoo.istock.services.Validations;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
-
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText nameEditText;
@@ -40,35 +39,27 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         String email = bundle.getString("email");
-
         emailEditText = findViewById(R.id.editEmailRegister);
         passwordEditText = findViewById(R.id.editPasswordRegister);
         passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
         nameEditText = findViewById(R.id.editfullNameRegister);
         companyEditText = findViewById(R.id.editCompanyNameRegister);
         imageRegister = findViewById(R.id.editImageRegister);
-
         emailEditText.setText(email);
-
     }
 
     public void register(View view) {
-
         Validations validations = new Validations(getApplicationContext());
-
         if (!isAllFieldsValid(validations)){
             return;
+
         }
-
         UserServices userServices = new UserServices(this);
-
         User newUser = new User();
         newUser.setName(nameEditText.getText().toString());
         newUser.setEmail(emailEditText.getText().toString().trim().toUpperCase());
@@ -76,51 +67,37 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setType(UserTypes.ADMINISTRATOR.getValue());
         newUser.setStatus(AccountStatus.ACTIVE.getValue());
         newUser.setCompany(companyEditText.getText().toString().trim());
-        newUser.setAdministrator(-1);
-
+        newUser.setAdministrator(UserTypes.IS_THE_ADMINISTRATOR.getValue());
         ImageServices imageServices = new ImageServices();
-
         newUser.setImage(imageServices.imageToByte(reducedImageProfile));
 
         try {
-
             userServices.registerUser(newUser);
             String message = getString(R.string.register_done);
-
             new AlertDialogGenerator(this, message, true).invoke();
 
         } catch (EmailAlreadyRegistered error){
-
             String message = getString(R.string.email_already_registered);
-
             new AlertDialogGenerator(this, message, false).invoke();
-
             emailEditText.setText("");
             passwordEditText.setText("");
             passwordConfirmationEditText.setText("");
-
             emailEditText.requestFocus();
 
         } catch (Exception error){
-
             String message = getString(R.string.unknow_error);
-
-            new AlertDialogGenerator(this, message, false);
-
+            new AlertDialogGenerator(this, message, false).invoke();
             emailEditText.setText("");
             passwordEditText.setText("");
             passwordConfirmationEditText.setText("");
-
             emailEditText.requestFocus();
 
         }
     }
 
     private boolean isAllFieldsValid(Validations validations) {
-
         boolean valid = validations.editValidate(nameEditText, companyEditText,
                 emailEditText, passwordEditText, passwordConfirmationEditText);
-
 
         if (!validations.name(nameEditText.getText().toString())){
             if (nameEditText.getError() == null){
@@ -162,6 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                     passwordEditText.requestFocus();
                     passwordEditText.setError(getString(R.string.invalid_password_not_equals));
                 }
+
                 if (passwordConfirmationEditText.getError() == null){
                     passwordConfirmationEditText.requestFocus();
                     passwordConfirmationEditText.setError(getString(R.string.invalid_password_not_equals));
@@ -172,10 +150,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void pickImage(View view) {
-
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"),ImageEnum.REQUEST_CODE.getValue());
-
     }
 
     @Override
@@ -189,9 +165,9 @@ public class RegisterActivity extends AppCompatActivity {
                 imageRegister = findViewById(R.id.editImageRegister);
 
                 try {
-
                     ImageServices imageServices = new ImageServices();
                     int orientation = ImageEnum.ORIENTATION_OUT_OF_BOUNDS.getValue();
+
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                         InputStream inputStream = getContentResolver().openInputStream(pickedImage);
                         ExifInterface exifInterface = new ExifInterface(inputStream);
@@ -200,14 +176,16 @@ public class RegisterActivity extends AppCompatActivity {
                     Bitmap imageProfile = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
                     byte[] imageProfileByte = imageServices.imageToByte(imageProfile);
                     reducedImageProfile = imageServices.byteToImage(imageServices.reduceBitmap(imageProfileByte));
+
                     if (orientation < ImageEnum.ORIENTATION_OUT_OF_BOUNDS.getValue()){
                         reducedImageProfile = imageServices.rotate(reducedImageProfile, orientation);
                     }
                     setImageOnImageView();
 
-                }catch (IOException error){
+                } catch (IOException error){
                     String message = getString(R.string.unknow_error);
                     new AlertDialogGenerator(this,message,false).invoke();
+
                 }
             }
         }

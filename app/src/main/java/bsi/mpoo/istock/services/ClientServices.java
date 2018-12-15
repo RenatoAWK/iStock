@@ -13,63 +13,44 @@ import bsi.mpoo.istock.services.Exceptions.ClientNotRegistered;
 public class ClientServices {
 
     private ClientDAO clientDAO;
-
     public ClientServices(Context context){
         this.clientDAO = new ClientDAO(context);
     }
 
     private boolean isClientRegistered(Client client){
-
         Client searchedClient = clientDAO.getClientByName(client);
-
-        if (searchedClient == null){
-            return false;
-        }
-        return true;
+        return searchedClient != null;
     }
 
     public void registerClient(Client client) throws Exception {
-
         if (isClientRegistered(client)){
             throw new ClientAlreadyRegistered();
-        }
-        else {
+        } else {
             clientDAO.insertClient(client);
         }
-
     }
 
     public void updateClient(Client client) throws Exception{
             try {
                 clientDAO.updateClient(client);
-            }catch (Exception error){
+            } catch (Exception error){
                 throw new ClientNotRegistered();
             }
-
-
-
-
     }
 
     public void disableClient(Client client) throws Exception{
-
         if (isClientRegistered(client)){
             clientDAO.disableClient(client);
-        }
-        else {
+        } else {
             throw  new ClientNotRegistered();
         }
-
-
     }
 
     public ArrayList<Client> getAcitiveClientsAsc(User user){
         return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(user,Contract.ASC);
-
     }
 
     public ArrayList<Client> getAcitiveClientsDesc(User user){
         return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(user,Contract.DESC);
-
     }
 }

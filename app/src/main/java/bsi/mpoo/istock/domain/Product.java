@@ -2,11 +2,9 @@ package bsi.mpoo.istock.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.math.BigDecimal;
 
 public class Product implements Parcelable {
-
     private long id;
     private String name;
     private BigDecimal price;
@@ -18,7 +16,6 @@ public class Product implements Parcelable {
     public Product(){}
 
     public Product(Parcel parcel){
-
         this.id = parcel.readLong();
         this.name = parcel.readString();
         this.price = new BigDecimal(parcel.readString());
@@ -31,55 +28,42 @@ public class Product implements Parcelable {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public BigDecimal getPrice() {
         return price;
     }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
     public long getQuantity() {
         return quantity;
     }
-
     public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
-
     public long getMinimumQuantity() {
         return minimumQuantity;
     }
-
     public void setMinimumQuantity(long minimumQuantity) {
         this.minimumQuantity = minimumQuantity;
     }
-
     public User getAdministrator() {
         return administrator;
     }
-
     public void setAdministrator(User administrator) {
         this.administrator = administrator;
     }
-
     public int getStatus() {
         return status;
     }
-
     public void setStatus(int status) {
         this.status = status;
     }
@@ -91,7 +75,6 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
         dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(price.toString());
@@ -99,12 +82,9 @@ public class Product implements Parcelable {
         dest.writeLong(minimumQuantity);
         dest.writeValue(administrator);
         dest.writeInt(status);
-
     }
 
     public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>(){
-
-
         @Override
         public Product createFromParcel(Parcel source) {
             return new Product(source);

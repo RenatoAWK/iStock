@@ -21,50 +21,36 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
         emailEditText = findViewById(R.id.editEmailLogin);
         passwordEditText = findViewById(R.id.editPasswordLogin);
-
     }
 
     public void login(View view){
 
         Validations validations = new Validations(getApplicationContext());
-
         if (!isAllFieldsValid(validations)) return;
-
         UserServices userServices = new UserServices(getApplicationContext());
-
         String email = emailEditText.getText().toString().trim().toUpperCase();
         String password = passwordEditText.getText().toString();
-
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password); // no encryption here
-
+        user.setPassword(password);
         User searchedUser = userServices.login(user);
 
         if (searchedUser == null){
             emailEditText.setError(getString(R.string.invalid_email_or_password));
             passwordEditText.setError(getString(R.string.invalid_email_or_password));
-
-        }
-        else {
+        } else {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("user", searchedUser);
-
             finish();
             startActivity(intent);
-
         }
-
     }
 
     private boolean isAllFieldsValid(Validations validations) {
-
         boolean valid = validations.editValidate(emailEditText, passwordEditText);
 
         if (!validations.email(emailEditText.getText().toString())){
@@ -74,17 +60,17 @@ public class LoginActivity extends AppCompatActivity {
             }
             valid = false;
         }
+
         return valid;
     }
 
     public void CreateAccount(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
 
+        Intent intent = new Intent(this, RegisterActivity.class);
         Bundle bundle = new Bundle();
         String email = emailEditText.getText().toString();
         bundle.putString("email",email);
         intent.putExtras(bundle);
-
         startActivity(intent);
     }
 

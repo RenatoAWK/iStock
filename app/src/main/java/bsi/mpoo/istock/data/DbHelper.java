@@ -14,20 +14,22 @@ public class DbHelper extends SQLiteOpenHelper {
     public DbHelper(Context context) {
         super(context, Contract.DATABASE_NAME, null, Contract.DATABASE_VERSION);
     }
+
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(ContractUser.SQL_CREATE_TABLE_USER);
         db.execSQL(ContractClient.SQL_CREATE_TABLE_CLIENT);
         db.execSQL(ContractAddress.SQL_CREATE_TABLE_ADDRESS);
         db.execSQL(ContractProduct.SQL_CREATE_TABLE_PRODUCT);
     }
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(ContractUser.SQL_DELETE_USERS);
         db.execSQL(ContractClient.SQL_DELETE_CLIENTS);
         db.execSQL(ContractAddress.SQL_DELETE_ADDRESS);
         db.execSQL(ContractProduct.SQL_DELETE_PRODUCTS);
         onCreate(db);
     }
+
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }

@@ -11,7 +11,6 @@ public class ImageServices {
     public ImageServices(){}
 
     public byte[] imageToByte(Bitmap imageBitmap){
-
         byte[] imageByte = null;
         if (imageBitmap != null){
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -23,7 +22,6 @@ public class ImageServices {
     }
 
     public Bitmap byteToImage(byte[] imageByte){
-
         Bitmap imageBitmap = null;
         if (imageByte != null){
             imageBitmap = BitmapFactory.decodeByteArray(imageByte,
@@ -33,8 +31,8 @@ public class ImageServices {
     }
 
     public byte[] reduceBitmap(byte[] imageByte){
-
         byte[] resultImageByte = null;
+
         if (imageByte != null){
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -58,7 +56,6 @@ public class ImageServices {
     }
 
     public Bitmap rotate(Bitmap bitmap, int codeOrientation) {
-
         int angle = ImageEnum.SAFE_ANGLE.getValue();
         switch (codeOrientation) {
             case ExifInterface.ORIENTATION_NORMAL:
@@ -78,13 +75,11 @@ public class ImageServices {
         if (angle == ImageEnum.SAFE_ANGLE.getValue()){
             return bitmap;
         }
-
         return rotateHelper(bitmap, angle);
     }
     private Bitmap rotateHelper(Bitmap bitmap, int angle){
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
-
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 

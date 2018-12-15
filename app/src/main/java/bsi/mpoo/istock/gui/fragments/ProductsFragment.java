@@ -14,17 +14,12 @@ import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.ClientListAdapter;
 import bsi.mpoo.istock.services.ProductListAdapter;
 import bsi.mpoo.istock.services.ProductServices;
 
 public class ProductsFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private ProductListAdapter adapter;
     private User user;
-    private ProductServices productServices;
-    private ArrayList<Product> productArrayList;
     private Context context;
 
     @Nullable
@@ -36,23 +31,17 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         user = getArguments().getParcelable("user");
-
         getActivity().setTitle(getString(R.string.products));
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        productServices = new ProductServices(getActivity().getApplicationContext());
-        productArrayList = productServices.getAcitiveProductsAsc(user);
-
-        recyclerView = getActivity().findViewById(R.id.recyclerviewProduct);
-
-        adapter = new ProductListAdapter(context, productArrayList, user);
-
+        ProductServices productServices = new ProductServices(getActivity().getApplicationContext());
+        ArrayList<Product> productArrayList = productServices.getAcitiveProductsAsc(user);
+        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewProduct);
+        ProductListAdapter adapter = new ProductListAdapter(context, productArrayList, user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

@@ -15,7 +15,6 @@ public class ContractClient implements BaseColumns {
     public static final String COLUMN_ID_ADDRESS = "id_address";
     public static final String COLUMN_ID_ADM = "id_administrator";
     public static final String COLUMN_STATUS = "status";
-
     public static final String SQL_CREATE_TABLE_CLIENT =
             "CREATE TABLE "+ContractClient.TABLE_NAME+" ("+
                     ContractClient._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
@@ -29,8 +28,6 @@ public class ContractClient implements BaseColumns {
                     "FOREIGN KEY("+ContractClient.COLUMN_ID_ADM +") REFERENCES "+
                     ContractUser.TABLE_NAME+" ("+ContractUser._ID+")"+
                     ")";
-
-
     public static  final String SQL_DELETE_CLIENTS =
             "DROP TABLE IF EXISTS "+ ContractClient.TABLE_NAME;
 

@@ -11,37 +11,25 @@ public class UserServices {
     private UserDAO userDAO;
 
     public UserServices(Context context){
-
         this.userDAO = new UserDAO(context);
-
     }
 
     private boolean isUserRegistered(User user){
-
         User searchedUser = userDAO.getUserByEmail(user);
-
-        if (searchedUser == null) {
-            return false;
-        }
-        return true;
+        return searchedUser != null;
     }
 
     public void registerUser(User user) throws Exception {
 
         if (isUserRegistered(user)){
             throw new EmailAlreadyRegistered();
-        }
-        else {
-
+        } else {
             user.setPassword(Encryption.encrypt(user.getPassword()));
             userDAO.insertUser(user);
-
         }
-
     }
 
     public User login(User user){
-
         User searchedUser = userDAO.getUserByEmail(user);
         if (searchedUser != null){
             if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
@@ -49,7 +37,6 @@ public class UserServices {
             }
         }
         return searchedUser;
-
     }
 
 }

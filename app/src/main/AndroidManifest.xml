@@ -26,6 +26,7 @@
         <activity android:name=".gui.EditClientActivity" />
         <activity android:name=".gui.RegisterProductActivity" />
         <activity android:name=".gui.EditProductActivity"></activity>
+        <activity android:name=".gui.DialogDetails" />
     </application>
 
 </manifest>

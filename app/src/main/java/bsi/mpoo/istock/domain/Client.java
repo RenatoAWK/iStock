@@ -3,10 +3,7 @@ package bsi.mpoo.istock.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
 public class Client implements Parcelable {
-
-
     private long id;
     private String name;
     private String phone;
@@ -17,60 +14,46 @@ public class Client implements Parcelable {
     public Client(){}
 
     public Client(Parcel parcel){
-
         this.id = parcel.readLong();
         this.name = parcel.readString();
         this.phone = parcel.readString();
         this.address = (Address)parcel.readValue(Address.class.getClassLoader());
         this.administrator = (User)parcel.readValue(User.class.getClassLoader());
-
-
     }
 
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getPhone() {
         return phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
     public Address getAddress() {
         return address;
     }
-
     public void setAddress(Address address) {
         this.address = address;
     }
-
     public User getAdministrator() {
         return administrator;
     }
-
     public void setAdministrator(User administrator) {
         this.administrator = administrator;
     }
-
     public int getStatus() {
         return status;
     }
-
     public void setStatus(int status) {
         this.status = status;
     }
@@ -82,20 +65,15 @@ public class Client implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
         dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(phone);
         dest.writeValue(address);
         dest.writeValue(administrator);
         dest.writeInt(status);
-
-
     }
 
     public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>(){
-
-
         @Override
         public Client createFromParcel(Parcel source) {
             return new Client(source);

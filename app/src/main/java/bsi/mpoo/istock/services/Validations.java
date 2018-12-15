@@ -17,38 +17,23 @@ public class Validations {
     }
 
     public boolean name(String name){
-        if (!name.isEmpty() && name.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$")){
-            return true;
-        }
-        return false;
+        return !name.isEmpty() && name.matches("^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$");
     }
 
     public boolean email(String email){
-        if (Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            return true;
-        }
-        return false;
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public boolean password(String password){
-        if (password.length() >= 5 && password.length() <= 10){
-            return true;
-        }
-        return false;
+        return password.length() >= 5 && password.length() <= 10;
     }
 
     public boolean passwordEquals(String password, String passwordConfirmation){
-        if (password.equals(passwordConfirmation)){
-            return true;
-        }
-        return false;
+        return password.equals(passwordConfirmation);
     }
 
     public boolean editValidate(EditText editText){
-        if (editText != null && !editText.getText().toString().trim().equals("")){
-            return true;
-        }
-        return false;
+        return editText != null && !editText.getText().toString().trim().equals("");
     }
 
     public boolean editValidate(EditText...editTexts){
@@ -63,26 +48,17 @@ public class Validations {
     }
 
     public boolean phone(String phone){
-        if (!phone.isEmpty() && !phone.matches("^[0-9]")){
-            return true;
-        }
-        return false;
+        return !phone.isEmpty() && !phone.matches("^[0-9]");
     }
 
     public boolean price(String price) {
         BigDecimal bigDecimal = new BigDecimal(price);
-        if (bigDecimal.compareTo(new BigDecimal("0"))>0) {
-            return true;
-        }
-        return false;
+        return bigDecimal.compareTo(new BigDecimal("0")) > 0;
     }
 
     public boolean quantity(String quantity){
         long number = Long.parseLong(quantity);
-        if (number >= 0) {
-            return true;
-        }
-        return false;
+        return number >= 0;
     }
 
     public boolean minimum(String minimum) {
@@ -90,10 +66,7 @@ public class Validations {
             return true;
         }
         long number = Long.parseLong(minimum);
-            if (number > 0) {
-                return true;
-            }
-            return false;
+        return number > 0;
 
     }
 }

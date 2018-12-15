@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
@@ -27,19 +26,14 @@ public class RegisterClientActivity extends AppCompatActivity {
     EditText stateEditText;
     EditText phoneEditText;
     Button registerButton;
-
     User user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_client);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-
         nameEditText = findViewById(R.id.editTextNameRegisterClient);
         streetEditText = findViewById(R.id.editTextStreetRegisterClient);
         numberEditText = findViewById(R.id.editTextNumberRegisterClient);
@@ -48,27 +42,20 @@ public class RegisterClientActivity extends AppCompatActivity {
         stateEditText = findViewById(R.id.editTextStateRegisterClient);
         phoneEditText = findViewById(R.id.editTextPhoneRegisterClient);
         registerButton = findViewById(R.id.buttonRegisterRegisterClient);
-
     }
 
     public void register(View view) {
-
         Validations validations = new Validations(getApplicationContext());
-
         if (!isAllFieldsValid(validations)) return;
-
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         user = bundle.getParcelable("user");
-
         ClientServices clientServices = new ClientServices(getApplicationContext());
-
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
         newClient.setPhone(phoneEditText.getText().toString().trim());
         newClient.setStatus(AccountStatus.ACTIVE.getValue());
         newClient.setAdministrator(user);
-
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
         newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));
@@ -76,38 +63,27 @@ public class RegisterClientActivity extends AppCompatActivity {
         newAddress.setCity(cityEditText.getText().toString().trim().toUpperCase());
         newAddress.setState(stateEditText.getText().toString().trim().toUpperCase());
         newAddress.setStatus(AccountStatus.ACTIVE.getValue());
-
         newClient.setAddress(newAddress);
-
 
         try {
             clientServices.registerClient(newClient);
-
             String message = getString(R.string.register_done);
-
             new AlertDialogGenerator(this, message, true ).invoke();
 
-        }
-        catch (ClientAlreadyRegistered error){
-
+        } catch (ClientAlreadyRegistered error){
             String message = getString(R.string.client_already_registered);
-
             new AlertDialogGenerator(this, message, false ).invoke();
-
             nameEditText.setText("");
 
-        }
-        catch (Exception error){
-
+        } catch (Exception error){
             String message = getString(R.string.unknow_error);
-
             new AlertDialogGenerator(this, message, false).invoke();
+
         }
 
     }
 
     private boolean isAllFieldsValid(Validations validations) {
-
         boolean valid = validations.editValidate(nameEditText, streetEditText,
                 numberEditText, districtEditText, cityEditText, stateEditText, phoneEditText
         );
@@ -159,7 +135,6 @@ public class RegisterClientActivity extends AppCompatActivity {
             }
             valid = false;
         }
-
         return valid;
     }
 }

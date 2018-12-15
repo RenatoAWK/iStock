@@ -15,7 +15,6 @@ public class ContractProduct  implements BaseColumns{
     public static final String COLUMN_MINIMUM_QUANTITY = "minimum_quantity";
     public static final String COLUMN_ID_ADM = "id_administrator";
     public static final String COLUMN_STATUS = "status";
-
     public static final String SQL_CREATE_TABLE_PRODUCT =
             "CREATE TABLE "+ContractProduct.TABLE_NAME+" ("+
             ContractProduct._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
@@ -28,8 +27,6 @@ public class ContractProduct  implements BaseColumns{
             "FOREIGN KEY("+COLUMN_ID_ADM+") REFERENCES "+
             ContractUser.TABLE_NAME+" ("+ContractUser._ID+")"+
             ")";
-
-
     public static  final String SQL_DELETE_PRODUCTS =
             "DROP TABLE IF EXISTS "+ ContractProduct.TABLE_NAME;
 
