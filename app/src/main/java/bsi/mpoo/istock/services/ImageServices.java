@@ -3,8 +3,7 @@ package bsi.mpoo.istock.services;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.media.ExifInterface;
-
+import android.support.media.ExifInterface;
 import java.io.ByteArrayOutputStream;
 
 public class ImageServices {
@@ -14,10 +13,10 @@ public class ImageServices {
     public byte[] imageToByte(Bitmap imageBitmap){
 
         byte[] imageByte = null;
-
         if (imageBitmap != null){
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG,70,out);
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG,
+                    ImageEnum.QUALITY.getValue(),out);
             imageByte = out.toByteArray();
         }
         return imageByte;
@@ -26,46 +25,41 @@ public class ImageServices {
     public Bitmap byteToImage(byte[] imageByte){
 
         Bitmap imageBitmap = null;
-
         if (imageByte != null){
-            imageBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
+            imageBitmap = BitmapFactory.decodeByteArray(imageByte,
+                    ImageEnum.OFFSET.getValue(), imageByte.length);
         }
         return imageBitmap;
-
     }
 
     public byte[] reduceBitmap(byte[] imageByte){
+
         byte[] resultImageByte = null;
-
         if (imageByte != null){
-
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length, options);
-
-            final int REQUIRED_SIZE = 100;
-
-            int scale = 1;
-
-            while (options.outWidth/scale/2 >= REQUIRED_SIZE &&
-                    options.outHeight/scale/2 >= REQUIRED_SIZE){
-                scale *= 2;
-            }
-
+            BitmapFactory.decodeByteArray(imageByte, ImageEnum.OFFSET.getValue(), imageByte.length, options);
+            int scale = ImageEnum.SCALE_BASE.getValue();
+            scale = reduceCalc(options, scale);
             BitmapFactory.Options options2 = new BitmapFactory.Options();
             options2.inSampleSize = scale;
-
-            Bitmap resultBitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length,options2);
-
+            Bitmap resultBitmap = BitmapFactory.decodeByteArray(imageByte, ImageEnum.OFFSET.getValue(), imageByte.length,options2);
             resultImageByte = imageToByte(resultBitmap);
-
         }
         return resultImageByte;
     }
 
+    private int reduceCalc(BitmapFactory.Options options, int scale) {
+        while (options.outWidth/scale/2 >= ImageEnum.REQUIRED_SIZE.getValue() &&
+                options.outHeight/scale/2 >= ImageEnum.REQUIRED_SIZE.getValue()){
+            scale *= 2;
+        }
+        return scale;
+    }
+
     public Bitmap rotate(Bitmap bitmap, int codeOrientation) {
 
-        int angle = 360;
+        int angle = ImageEnum.SAFE_ANGLE.getValue();
         switch (codeOrientation) {
             case ExifInterface.ORIENTATION_NORMAL:
                 angle = 0;
@@ -81,7 +75,7 @@ public class ImageServices {
                 break;
         }
 
-        if (angle == 360 || angle == 0){
+        if (angle == ImageEnum.SAFE_ANGLE.getValue()){
             return bitmap;
         }
 

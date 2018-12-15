@@ -101,8 +101,7 @@ public class MainActivity extends AppCompatActivity
         if (user.getImage() != null){
 
             ImageServices imageServices = new ImageServices();
-            companyImageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
-            companyImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            setImageOnImageView(companyImageView, imageServices);
 
         }
 
@@ -110,6 +109,11 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(R.id.nav_home);
 
 
+    }
+
+    private void setImageOnImageView(ImageView companyImageView, ImageServices imageServices) {
+        companyImageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
+        companyImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
     @Override
