@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         actionBar.hide();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String email = bundle.getString("email");
+        String email = bundle.getString(Constants.BundleKeys.EMAIL);
         emailEditText = findViewById(R.id.editEmailRegister);
         passwordEditText = findViewById(R.id.editPasswordRegister);
         passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
@@ -77,17 +77,15 @@ public class RegisterActivity extends AppCompatActivity {
         } catch (EmailAlreadyRegistered error){
             String message = getString(R.string.email_already_registered);
             new AlertDialogGenerator(this, message, false).invoke();
-            emailEditText.setText("");
-            passwordEditText.setText("");
-            passwordConfirmationEditText.setText("");
+            validations.clearFields(emailEditText, passwordEditText,
+                    passwordConfirmationEditText, emailEditText);
             emailEditText.requestFocus();
 
         } catch (Exception error){
             String message = getString(R.string.unknow_error);
             new AlertDialogGenerator(this, message, false).invoke();
-            emailEditText.setText("");
-            passwordEditText.setText("");
-            passwordConfirmationEditText.setText("");
+            validations.clearFields(emailEditText, passwordEditText,
+                    passwordConfirmationEditText);
             emailEditText.requestFocus();
 
         }
@@ -98,50 +96,30 @@ public class RegisterActivity extends AppCompatActivity {
                 emailEditText, passwordEditText, passwordConfirmationEditText);
 
         if (!validations.name(nameEditText.getText().toString())){
-            if (nameEditText.getError() == null){
-                nameEditText.requestFocus();
-                nameEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(nameEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
         if (!validations.email(emailEditText.getText().toString())){
-            if (emailEditText.getError() == null){
-                emailEditText.requestFocus();
-                emailEditText.setError(getString(R.string.invalid_email));
-            }
+            validations.setErrorIfNull(emailEditText,getString(R.string.invalid_email));
             valid = false;
         }
 
         if (!validations.password(passwordEditText.getText().toString())){
-            if (passwordEditText.getError() == null){
-                passwordEditText.requestFocus();
-                passwordEditText.setError(getString(R.string.invalid_password_weak));
-            }
+            validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password_weak));
             valid = false;
         }
 
         if (!validations.password(passwordConfirmationEditText.getText().toString())){
-            if (passwordConfirmationEditText.getError() == null){
-                passwordConfirmationEditText.requestFocus();
-                passwordConfirmationEditText.setError(getString(R.string.invalid_password_weak));
-            }
+            validations.setErrorIfNull(passwordConfirmationEditText,getString(R.string.invalid_password_weak));
             valid = false;
         }
 
         if (!validations.passwordEquals(
                 passwordEditText.getText().toString(),
                 passwordConfirmationEditText.getText().toString())){
-
-                if (passwordEditText.getError() == null){
-                    passwordEditText.requestFocus();
-                    passwordEditText.setError(getString(R.string.invalid_password_not_equals));
-                }
-
-                if (passwordConfirmationEditText.getError() == null){
-                    passwordConfirmationEditText.requestFocus();
-                    passwordConfirmationEditText.setError(getString(R.string.invalid_password_not_equals));
-                }
+                validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password_not_equals));
+                validations.setErrorIfNull(passwordConfirmationEditText, getString(R.string.invalid_password_not_equals));
                 valid = false;
         }
         return valid;

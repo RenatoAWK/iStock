@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.Validations;
 
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             passwordEditText.setError(getString(R.string.invalid_email_or_password));
         } else {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("user", searchedUser);
+            intent.putExtra(Constants.BundleKeys.USER, searchedUser);
             finish();
             startActivity(intent);
         }
@@ -54,10 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean valid = validations.editValidate(emailEditText, passwordEditText);
 
         if (!validations.email(emailEditText.getText().toString())){
-            if (emailEditText.getError() == null){
-                emailEditText.requestFocus();
-                emailEditText.setError(getString(R.string.invalid_email));
-            }
+            validations.setErrorIfNull(emailEditText, getString(R.string.invalid_email));
             valid = false;
         }
 
@@ -69,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
         Bundle bundle = new Bundle();
         String email = emailEditText.getText().toString();
-        bundle.putString("email",email);
+        bundle.putString(Constants.BundleKeys.EMAIL,email);
         intent.putExtras(bundle);
         startActivity(intent);
     }

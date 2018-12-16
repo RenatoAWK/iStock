@@ -23,6 +23,7 @@ import bsi.mpoo.istock.gui.fragments.HomeFragment;
 import bsi.mpoo.istock.gui.fragments.ProductsFragment;
 import bsi.mpoo.istock.gui.fragments.SalesFragment;
 import bsi.mpoo.istock.gui.fragments.UsersFragment;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 
 public class MainActivity extends AppCompatActivity
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity
         TextView textViewName;
         ImageView companyImageView;
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("user");
+        user = intent.getParcelableExtra(Constants.BundleKeys.USER);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
@@ -53,12 +54,12 @@ public class MainActivity extends AppCompatActivity
 
                 } else if (fragment instanceof ProductsFragment){
                     Intent intent = new Intent(getApplicationContext(), RegisterProductActivity.class);
-                    intent.putExtra("user",user);
+                    intent.putExtra(Constants.BundleKeys.USER,user);
                     startActivity(intent);
 
                 } else if (fragment instanceof ClientsFragment){
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
-                    intent.putExtra("user",user);
+                    intent.putExtra(Constants.BundleKeys.USER,user);
                     startActivity(intent);
 
                 } else if (fragment instanceof  UsersFragment){
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("user",user);
+        bundle.putParcelable(Constants.BundleKeys.USER,user);
 
         switch (id){
             case R.id.nav_home:

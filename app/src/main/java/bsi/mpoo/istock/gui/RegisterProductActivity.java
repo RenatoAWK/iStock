@@ -63,6 +63,7 @@ public class RegisterProductActivity extends AppCompatActivity {
         } catch (ProductAlreadyRegistered error){
             String message = getString(R.string.product_already_registered);
             new AlertDialogGenerator(this, message, false).invoke();
+            validations.clearFields(nameEditText);
 
         } catch (Exception error){
             String message = getString(R.string.unknow_error);
@@ -75,26 +76,17 @@ public class RegisterProductActivity extends AppCompatActivity {
         boolean valid = validations.editValidate(nameEditText, quantityEditText, priceEditText);
 
         if (!validations.name(nameEditText.getText().toString())){
-            if (nameEditText.getError() == null){
-                nameEditText.requestFocus();
-                nameEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(nameEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
         if (!validations.price(priceEditText.getText().toString())){
-            if (priceEditText.getError() == null){
-                priceEditText.requestFocus();
-                priceEditText.setError(getString(R.string.invalid_value));
-            }
+            validations.setErrorIfNull(priceEditText, getString(R.string.invalid_value));
             valid = false;
         }
 
         if (!validations.quantity(quantityEditText.getText().toString())){
-            if (quantityEditText.getError() == null){
-                quantityEditText.requestFocus();
-                quantityEditText.setError(getString(R.string.invalid_value));
-            }
+            validations.setErrorIfNull(quantityEditText, getString(R.string.invalid_value));
             valid = false;
         }
 

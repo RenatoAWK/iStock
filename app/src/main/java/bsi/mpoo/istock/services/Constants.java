@@ -27,4 +27,11 @@ public class Constants {
         public static final int IS_THE_ADMINISTRATOR = -1;
     }
 
+    public static class BundleKeys {
+        public static final String USER = "user";
+        public static final String CLIENT = "client";
+        public static final String PRODUCT = "product";
+        public static final String EMAIL = "email";
+    }
+
 }

@@ -38,7 +38,7 @@ public class EditProductActivity extends AppCompatActivity {
         priceEditText.setText(String.valueOf(product.getPrice()));
         quantityEditText.setText(String.valueOf(product.getQuantity()));
 
-        if (product.getMinimumQuantity() != 0){
+        if (product.getMinimumQuantity() > 0){
             minimumEditText.setText(String.valueOf(product.getMinimumQuantity()));
         }
     }
@@ -81,26 +81,17 @@ public class EditProductActivity extends AppCompatActivity {
     private boolean isAllFieldsValid(Validations validations){
         boolean valid = validations.editValidate(nameEditText, quantityEditText, priceEditText);
         if (!validations.name(nameEditText.getText().toString())){
-            if (nameEditText.getError() == null){
-                nameEditText.requestFocus();
-                nameEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(nameEditText,getString(R.string.invalid_Name) );
             valid = false;
         }
 
         if (!validations.price(priceEditText.getText().toString())){
-            if (priceEditText.getError() == null){
-                priceEditText.requestFocus();
-                priceEditText.setError(getString(R.string.invalid_value));
-            }
+            validations.setErrorIfNull(priceEditText, getString(R.string.invalid_value));
             valid = false;
         }
 
         if (!validations.quantity(quantityEditText.getText().toString())){
-            if (quantityEditText.getError() == null){
-                quantityEditText.requestFocus();
-                quantityEditText.setError(getString(R.string.invalid_value));
-            }
+            validations.setErrorIfNull(quantityEditText, getString(R.string.invalid_value));
             valid = false;
         }
 

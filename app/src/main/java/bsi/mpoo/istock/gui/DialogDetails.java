@@ -19,7 +19,6 @@ public class DialogDetails extends AppCompatActivity {
         this.context = context;
         builder = new AlertDialog.Builder(context);
         builder.setPositiveButton("OK", null);
-
     }
 
     public void invoke(Client client){

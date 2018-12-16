@@ -2,10 +2,8 @@ package bsi.mpoo.istock.services;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -13,16 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.EditClientActivity;
-import bsi.mpoo.istock.gui.LoginActivity;
 
 public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder> {
 
@@ -55,7 +50,6 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
         @Override
         public boolean onMenuItemClick(MenuItem item){
-
             ClientServices clientServices = new ClientServices(context);
             int position = getLayoutPosition();
             Client client = clientList.get(position);

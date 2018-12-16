@@ -94,49 +94,32 @@ public class EditClientActivity extends AppCompatActivity {
         );
 
         if (!validations.name(nameEditText.getText().toString())){
-            if (nameEditText.getError() == null){
-                nameEditText.requestFocus();
-                nameEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(nameEditText, getString(R.string.invalid_Name));
             valid = false;
         }
+
         if (!validations.name(streetEditText.getText().toString())){
-            if (streetEditText.getError() == null) {
-                streetEditText.requestFocus();
-                streetEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(streetEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
         if (!validations.name(districtEditText.getText().toString())){
-            if (districtEditText.getError() == null){
-                districtEditText.requestFocus();
-                districtEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(districtEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
         if (!validations.name(cityEditText.getText().toString())){
-            if (cityEditText.getError() == null) {
-                cityEditText.requestFocus();
-                cityEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(cityEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
         if (!validations.name(stateEditText.getText().toString())){
-            if (stateEditText.getError() == null) {
-                stateEditText.requestFocus();
-                stateEditText.setError(getString(R.string.invalid_Name));
-            }
+            validations.setErrorIfNull(stateEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
         if (!validations.phone(phoneEditText.getText().toString())){
-            if (phoneEditText.getError() == null) {
-                phoneEditText.requestFocus();
-                phoneEditText.setError(getString(R.string.invalid_phone));
-            }
+            validations.setErrorIfNull(phoneEditText,getString(R.string.invalid_phone) );
             valid = false;
         }
         return valid;

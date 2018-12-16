@@ -3,9 +3,7 @@ package bsi.mpoo.istock.services;
 import android.content.Context;
 import android.util.Patterns;
 import android.widget.EditText;
-
 import java.math.BigDecimal;
-
 import bsi.mpoo.istock.R;
 
 public class Validations {
@@ -68,5 +66,18 @@ public class Validations {
         long number = Long.parseLong(minimum);
         return number > 0;
 
+    }
+
+    public void clearFields(EditText...editTexts){
+        for (EditText editText: editTexts){
+            editText.setText("");
+        }
+    }
+
+    public void setErrorIfNull(EditText editText, String message){
+        if (editText.getError() == null){
+            editText.requestFocus();
+            editText.setError(message);
+        }
     }
 }

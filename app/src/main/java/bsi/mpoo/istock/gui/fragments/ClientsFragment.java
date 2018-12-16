@@ -16,6 +16,7 @@ import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientListAdapter;
 import bsi.mpoo.istock.services.ClientServices;
+import bsi.mpoo.istock.services.Constants;
 
 public class ClientsFragment extends Fragment {
     private User user;
@@ -30,7 +31,7 @@ public class ClientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = getArguments().getParcelable("user");
+        user = getArguments().getParcelable(Constants.BundleKeys.USER);
         getActivity().setTitle(getString(R.string.clients));
     }
 

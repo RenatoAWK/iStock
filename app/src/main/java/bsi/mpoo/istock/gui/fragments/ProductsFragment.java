@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ProductListAdapter;
 import bsi.mpoo.istock.services.ProductServices;
 
@@ -31,7 +32,7 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = getArguments().getParcelable("user");
+        user = getArguments().getParcelable(Constants.BundleKeys.USER);
         getActivity().setTitle(getString(R.string.products));
     }
 
