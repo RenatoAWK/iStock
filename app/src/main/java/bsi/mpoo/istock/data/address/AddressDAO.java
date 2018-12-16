@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.Address;
-import bsi.mpoo.istock.services.AccountStatus;
+import bsi.mpoo.istock.services.Constants;
 
 public class AddressDAO {
     private Context context;
@@ -75,10 +75,10 @@ public class AddressDAO {
         values.put(ContractAddress.COLUMN_DISTRICT, address.getDistrict());
         values.put(ContractAddress.COLUMN_CITY, address.getCity());
         values.put(ContractAddress.COLUMN_STATE, address.getState());
-        values.put(ContractAddress.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
-        String selecion = ContractAddress._ID+" = ?";
-        String[] selecionArgs = {String.valueOf(address.getId())};
-        db.update(ContractAddress.TABLE_NAME, values, selecion, selecionArgs);
+        values.put(ContractAddress.COLUMN_STATUS,Constants.Status.INACTIVE );
+        String selection = ContractAddress._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(address.getId())};
+        db.update(ContractAddress.TABLE_NAME, values, selection, selectionArgs);
     }
 
     public void updateAddress(Address address){
@@ -91,9 +91,9 @@ public class AddressDAO {
         values.put(ContractAddress.COLUMN_CITY, address.getCity());
         values.put(ContractAddress.COLUMN_STATE, address.getState());
         values.put(ContractAddress.COLUMN_STATUS, address.getStatus());
-        String selecion = ContractAddress._ID+" = ?";
-        String[] selecionArgs = {String.valueOf(address.getId())};
-        db.update(ContractAddress.TABLE_NAME, values, selecion, selecionArgs);
+        String selection = ContractAddress._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(address.getId())};
+        db.update(ContractAddress.TABLE_NAME, values, selection, selectionArgs);
     }
 
     private Address createAddress(Cursor cursor){

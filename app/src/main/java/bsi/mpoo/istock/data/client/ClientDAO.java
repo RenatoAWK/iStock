@@ -14,7 +14,7 @@ import bsi.mpoo.istock.data.user.UserDAO;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.AccountStatus;
+import bsi.mpoo.istock.services.Constants;
 
 public class ClientDAO {
     private Context context;
@@ -154,7 +154,7 @@ public class ClientDAO {
         String selection = ContractClient.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractClient.COLUMN_STATUS+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()),
-                String.valueOf(AccountStatus.ACTIVE.getValue())};
+                String.valueOf(Constants.Status.ACTIVE)};
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -185,7 +185,7 @@ public class ClientDAO {
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
         values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
-        values.put(ContractClient.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
+        values.put(ContractClient.COLUMN_STATUS, Constants.Status.INACTIVE);
         String selection = ContractClient._ID+" = ?";
         String[] selectionArgs = {String.valueOf(client.getId())};
         db.update(ContractClient.TABLE_NAME, values, selection, selectionArgs);

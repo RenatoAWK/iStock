@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.AccountStatus;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ProductAlreadyRegistered;
 import bsi.mpoo.istock.services.ProductServices;
 import bsi.mpoo.istock.services.Validations;
@@ -53,7 +53,7 @@ public class RegisterProductActivity extends AppCompatActivity {
             newProduct.setMinimumQuantity(Long.parseLong(minimumEditText.getText().toString()));
         }
 
-        newProduct.setStatus(AccountStatus.ACTIVE.getValue());
+        newProduct.setStatus(Constants.Status.ACTIVE);
         newProduct.setAdministrator(user);
         try {
             productServices.registerProduct(newProduct);

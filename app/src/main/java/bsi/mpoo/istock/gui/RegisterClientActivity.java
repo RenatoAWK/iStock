@@ -11,8 +11,8 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.AccountStatus;
 import bsi.mpoo.istock.services.ClientServices;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 import bsi.mpoo.istock.services.Validations;
 
@@ -54,7 +54,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
         newClient.setPhone(phoneEditText.getText().toString().trim());
-        newClient.setStatus(AccountStatus.ACTIVE.getValue());
+        newClient.setStatus(Constants.Status.ACTIVE);
         newClient.setAdministrator(user);
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
@@ -62,7 +62,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         newAddress.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
         newAddress.setCity(cityEditText.getText().toString().trim().toUpperCase());
         newAddress.setState(stateEditText.getText().toString().trim().toUpperCase());
-        newAddress.setStatus(AccountStatus.ACTIVE.getValue());
+        newAddress.setStatus(Constants.Status.ACTIVE);
         newClient.setAddress(newAddress);
 
         try {

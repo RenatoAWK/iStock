@@ -5,19 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
-import bsi.mpoo.istock.data.address.AddressDAO;
 import bsi.mpoo.istock.data.user.UserDAO;
-import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.AccountStatus;
+import bsi.mpoo.istock.services.Constants;
 
 public class ProductDAO {
     private Context context;
@@ -160,7 +155,7 @@ public class ProductDAO {
         String selection = ContractProduct.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractProduct.COLUMN_STATUS+" = ?";
         String[] selectionArgs = { String.valueOf(user.getId()),
-                String.valueOf(AccountStatus.ACTIVE.getValue())};
+                String.valueOf(Constants.Status.ACTIVE)};
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -190,7 +185,7 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
-        values.put(ContractProduct.COLUMN_STATUS, AccountStatus.INACTIVE.getValue());
+        values.put(ContractProduct.COLUMN_STATUS, Constants.Status.INACTIVE);
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
         db.update(ContractProduct.TABLE_NAME, values, selection, selectionArgs);

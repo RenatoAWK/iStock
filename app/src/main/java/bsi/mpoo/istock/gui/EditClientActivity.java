@@ -10,8 +10,8 @@ import android.widget.EditText;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
-import bsi.mpoo.istock.services.AccountStatus;
 import bsi.mpoo.istock.services.ClientServices;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ClientNotRegistered;
 import bsi.mpoo.istock.services.Validations;
 
@@ -60,14 +60,14 @@ public class EditClientActivity extends AppCompatActivity {
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
         newClient.setPhone(phoneEditText.getText().toString().trim());
-        newClient.setStatus(AccountStatus.ACTIVE.getValue());
+        newClient.setStatus(Constants.Status.ACTIVE);
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
         newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));
         newAddress.setDistrict(districtEditText.getText().toString().trim().toUpperCase());
         newAddress.setCity(cityEditText.getText().toString().trim().toUpperCase());
         newAddress.setState(stateEditText.getText().toString().trim().toUpperCase());
-        newAddress.setStatus(AccountStatus.ACTIVE.getValue());
+        newAddress.setStatus(Constants.Status.ACTIVE);
         newAddress.setId(client.getAddress().getId());
         newClient.setAddress(newAddress);
         newClient.setAdministrator(client.getAdministrator());

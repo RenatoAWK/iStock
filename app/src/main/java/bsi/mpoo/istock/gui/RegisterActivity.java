@@ -3,7 +3,7 @@ package bsi.mpoo.istock.gui;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.ExifInterface;
+import android.support.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -17,11 +17,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.ImageEnum;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.UserServices;
-import bsi.mpoo.istock.services.AccountStatus;
-import bsi.mpoo.istock.services.UserTypes;
 import bsi.mpoo.istock.services.Validations;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
@@ -64,10 +62,10 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.setName(nameEditText.getText().toString());
         newUser.setEmail(emailEditText.getText().toString().trim().toUpperCase());
         newUser.setPassword(passwordEditText.getText().toString());
-        newUser.setType(UserTypes.ADMINISTRATOR.getValue());
-        newUser.setStatus(AccountStatus.ACTIVE.getValue());
+        newUser.setType(Constants.UserTypes.ADMINISTRATOR);
+        newUser.setStatus(Constants.Status.ACTIVE);
         newUser.setCompany(companyEditText.getText().toString().trim());
-        newUser.setAdministrator(UserTypes.IS_THE_ADMINISTRATOR.getValue());
+        newUser.setAdministrator(Constants.UserTypes.IS_THE_ADMINISTRATOR);
         ImageServices imageServices = new ImageServices();
         newUser.setImage(imageServices.imageToByte(reducedImageProfile));
 
@@ -151,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void pickImage(View view) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"),ImageEnum.REQUEST_CODE.getValue());
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.pick_a_image)),Constants.Image.REQUEST_CODE);
     }
 
     @Override
@@ -159,14 +157,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK){
 
-            if (requestCode == ImageEnum.REQUEST_CODE.getValue()){
+            if (requestCode == Constants.Image.REQUEST_CODE){
 
                 Uri pickedImage = data.getData();
                 imageRegister = findViewById(R.id.editImageRegister);
 
                 try {
                     ImageServices imageServices = new ImageServices();
-                    int orientation = ImageEnum.ORIENTATION_OUT_OF_BOUNDS.getValue();
+                    int orientation = Constants.Image.ORIENTATION_OUT_OF_BOUNDS;
 
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                         InputStream inputStream = getContentResolver().openInputStream(pickedImage);
@@ -177,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                     byte[] imageProfileByte = imageServices.imageToByte(imageProfile);
                     reducedImageProfile = imageServices.byteToImage(imageServices.reduceBitmap(imageProfileByte));
 
-                    if (orientation < ImageEnum.ORIENTATION_OUT_OF_BOUNDS.getValue()){
+                    if (orientation < Constants.Image.ORIENTATION_OUT_OF_BOUNDS){
                         reducedImageProfile = imageServices.rotate(reducedImageProfile, orientation);
                     }
                     setImageOnImageView();
