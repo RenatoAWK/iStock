@@ -72,7 +72,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
             } else if (item.getTitle().equals(editOption)){
                 Intent intent = new Intent(context, EditProductActivity.class);
-                intent.putExtra("product", product);
+                intent.putExtra(Constants.BundleKeys.PRODUCT, product);
                 context.startActivity(intent);
             } else if (item.getTitle().equals(detailOption)){
                 DialogDetails dialogDetails = new DialogDetails(context);

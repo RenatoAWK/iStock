@@ -35,7 +35,7 @@ public class EditClientActivity extends AppCompatActivity {
         actionBar.hide();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        this.client = bundle.getParcelable("client");
+        this.client = bundle.getParcelable(Constants.BundleKeys.CLIENT);
         nameEditText = findViewById(R.id.editTextNameEditClient);
         streetEditText = findViewById(R.id.editTextStreetEditClient);
         numberEditText = findViewById(R.id.editTextNumberEditClient);

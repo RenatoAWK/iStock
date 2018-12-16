@@ -49,7 +49,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         if (!isAllFieldsValid(validations)) return;
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        user = bundle.getParcelable("user");
+        user = bundle.getParcelable(Constants.BundleKeys.USER);
         ClientServices clientServices = new ClientServices(getApplicationContext());
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());

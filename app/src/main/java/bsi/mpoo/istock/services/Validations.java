@@ -50,11 +50,17 @@ public class Validations {
     }
 
     public boolean price(String price) {
+        if (price.isEmpty()){
+            return false;
+        }
         BigDecimal bigDecimal = new BigDecimal(price);
         return bigDecimal.compareTo(new BigDecimal("0")) > 0;
     }
 
     public boolean quantity(String quantity){
+        if (quantity.isEmpty()){
+            return false;
+        }
         long number = Long.parseLong(quantity);
         return number >= 0;
     }
@@ -76,8 +82,8 @@ public class Validations {
 
     public void setErrorIfNull(EditText editText, String message){
         if (editText.getError() == null){
-            editText.requestFocus();
             editText.setError(message);
         }
+        editText.requestFocus();
     }
 }

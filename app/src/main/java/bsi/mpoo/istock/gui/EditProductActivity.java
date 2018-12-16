@@ -9,6 +9,7 @@ import android.widget.EditText;
 import java.math.BigDecimal;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ProductNotRegistered;
 import bsi.mpoo.istock.services.ProductServices;
 import bsi.mpoo.istock.services.Validations;
@@ -29,7 +30,7 @@ public class EditProductActivity extends AppCompatActivity {
         actionBar.hide();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        this.product = bundle.getParcelable("product");
+        this.product = bundle.getParcelable(Constants.BundleKeys.PRODUCT);
         nameEditText = findViewById(R.id.editTextNameEditProduct);
         priceEditText = findViewById(R.id.editTextPriceEditProduct);
         quantityEditText = findViewById(R.id.editTextQuantityEditProduct);

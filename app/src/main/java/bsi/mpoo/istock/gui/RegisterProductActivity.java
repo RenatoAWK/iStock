@@ -40,7 +40,7 @@ public class RegisterProductActivity extends AppCompatActivity {
         if (!isAllFieldsValid(validations)) return;
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        user = bundle.getParcelable("user");
+        user = bundle.getParcelable(Constants.BundleKeys.USER);
         ProductServices productServices = new ProductServices(getApplicationContext());
         Product newProduct = new Product();
         newProduct.setName(nameEditText.getText().toString().trim().toUpperCase());

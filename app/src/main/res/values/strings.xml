@@ -77,4 +77,5 @@
     <string name="edit_product">Edição De Produto</string>
     <string name="product_not_registered">Producto não registrado</string>
     <string name="pick_a_image">Selecione uma imagem</string>
+    <string name="company_picture">Foto da empresa</string>
 </resources>

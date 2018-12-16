@@ -71,7 +71,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
             } else if (item.getTitle().equals(editOption)){
                 Intent intent = new Intent(context, EditClientActivity.class);
-                intent.putExtra("client", client);
+                intent.putExtra(Constants.BundleKeys.CLIENT, client);
                 context.startActivity(intent);
 
             } else if (item.getTitle().equals(detailOption)){
