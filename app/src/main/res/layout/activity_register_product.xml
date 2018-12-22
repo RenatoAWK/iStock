@@ -14,9 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="top"
-            >
-
+            android:layout_gravity="top">
 
             <TextView
                 android:id="@+id/textViewRegisterProduct"
@@ -34,69 +32,34 @@
 
             <EditText
                 android:id="@+id/editTextNameRegisterProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/product_name"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/editTextPriceRegisterProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/price"
                 android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/editTextQuantityRegisterProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/quantity"
                 android:inputType="number" />
 
             <EditText
                 android:id="@+id/editTextMinimumRegisterProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/minimum_quantity"
                 android:inputType="number" />
 
-
-
             <Button
                 android:id="@+id/buttonRegisterRegisterProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/colorPrimary"
+                style="@style/button_primary"
                 android:onClick="register"
-                android:text="@string/sign_up"
-                android:textColor="@android:color/white" />
+                android:text="@string/sign_up"/>
 
         </LinearLayout>
-
     </ScrollView>
-
-
-
 </android.support.constraint.ConstraintLayout>

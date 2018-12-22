@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewCadastroEmpresaCadastro"
+                android:id="@+id/textViewRegisterCompanyRegister"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -37,16 +37,11 @@
 
                 <EditText
                     android:id="@+id/editCompanyNameRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="12dp"
+                    style="@style/edit_text"
                     android:layout_weight="1"
-                    android:ems="10"
                     android:hint="@string/company_name"
                     android:inputType="text"
-                    app:layout_constraintBottom_toTopOf="@+id/editfullNameRegister" />
+                    app:layout_constraintBottom_toTopOf="@+id/editFullNameRegister" />
 
                 <ImageView
                     android:id="@+id/editImageRegister"
@@ -54,10 +49,9 @@
                     android:layout_height="100dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="16dp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:ems="10"
                     android:onClick="pickImage"
                     app:srcCompat="@drawable/ic_user"
                     android:contentDescription="@string/company_picture"
@@ -69,64 +63,38 @@
 
 
             <EditText
-                android:id="@+id/editfullNameRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
+                android:id="@+id/editFullNameRegister"
+                style="@style/edit_text"
                 android:hint="@string/full_name"
                 android:inputType="textPersonName"
                 />
 
             <EditText
                 android:id="@+id/editEmailRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 />
 
             <EditText
                 android:id="@+id/editPasswordRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 />
 
             <EditText
                 android:id="@+id/editPasswordConfirmRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/confirm_password"
                 android:inputType="textPassword"
                 />
 
             <Button
                 android:id="@+id/buttonRegisterRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
-                android:background="@color/colorPrimary"
+                style="@style/button_primary"
                 android:onClick="register"
                 android:text="@string/sign_up"
-                android:textColor="@android:color/white"
                 />
 
         </LinearLayout>

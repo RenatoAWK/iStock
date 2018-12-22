@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.editEmailRegister);
         passwordEditText = findViewById(R.id.editPasswordRegister);
         passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
-        nameEditText = findViewById(R.id.editfullNameRegister);
+        nameEditText = findViewById(R.id.editFullNameRegister);
         companyEditText = findViewById(R.id.editCompanyNameRegister);
         imageRegister = findViewById(R.id.editImageRegister);
         emailEditText.setText(email);

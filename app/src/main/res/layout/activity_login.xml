@@ -29,50 +29,28 @@
 
             <EditText
                 android:id="@+id/editEmailLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="64dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:ems="10"
                 android:hint="@string/email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                style="@style/edit_text" />
 
             <EditText
                 android:id="@+id/editPasswordLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/password"
                 android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/buttonLoginLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/colorPrimary"
+                style="@style/button_primary"
                 android:onClick="login"
-                android:text="@string/login"
-                android:textColor="@android:color/white" />
+                android:text="@string/login" />
 
             <Button
                 android:id="@+id/buttonCreateAccountLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@color/colorAccent"
+                style="@style/button_secondary"
                 android:onClick="CreateAccount"
-                android:text="@string/create_account"
-                android:textColor="@android:color/black" />
+                android:text="@string/create_account" />
 
             <TextView
                 android:id="@+id/textForgotLogin"

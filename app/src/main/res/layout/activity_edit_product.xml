@@ -14,10 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="top"
-            >
-
-
+            android:layout_gravity="top">
             <TextView
                 android:id="@+id/textViewEditProduct"
                 android:layout_width="match_parent"
@@ -34,69 +31,34 @@
 
             <EditText
                 android:id="@+id/editTextNameEditProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/product_name"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/editTextPriceEditProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/price"
                 android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/editTextQuantityEditProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/quantity"
                 android:inputType="number" />
 
             <EditText
                 android:id="@+id/editTextMinimumEditProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/minimum_quantity"
                 android:inputType="number" />
 
-
-
             <Button
                 android:id="@+id/buttonRegisterEditProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/colorPrimary"
+                style="@style/button_primary"
                 android:onClick="edit"
-                android:text="@string/confirm"
-                android:textColor="@android:color/white" />
+                android:text="@string/confirm"/>
 
         </LinearLayout>
-
     </ScrollView>
-
-
-
 </android.support.constraint.ConstraintLayout>

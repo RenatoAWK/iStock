@@ -14,9 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="top"
-            >
-
+            android:layout_gravity="top">
 
             <TextView
                 android:id="@+id/textViewEditClient"
@@ -34,104 +32,52 @@
 
             <EditText
                 android:id="@+id/editTextNameEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/full_name"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/editTextStreetEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/street"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/editTextNumberEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/number"
                 android:inputType="number" />
 
-
             <EditText
                 android:id="@+id/editTextDistrictEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/district"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/editTextCityEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/city"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/editTextStateEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/state"
                 android:inputType="text" />
 
             <EditText
                 android:id="@+id/editTextPhoneEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                style="@style/edit_text"
                 android:hint="@string/phone"
                 android:inputType="number" />
 
             <Button
                 android:id="@+id/buttonRegisterEditClient"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/colorPrimary"
+                style="@style/button_primary"
                 android:onClick="edit"
-                android:text="@string/confirm"
-                android:textColor="@android:color/white" />
+                android:text="@string/confirm"/>
 
         </LinearLayout>
-
     </ScrollView>
-
-
-
 </android.support.constraint.ConstraintLayout>
