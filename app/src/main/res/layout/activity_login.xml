@@ -23,6 +23,7 @@
                 android:layout_height="70dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="64dp"
+                android:layout_marginBottom="64dp"
                 android:layout_marginEnd="8dp"
                 app:srcCompat="@drawable/logo"
                 android:contentDescription="@string/logotipo" />
