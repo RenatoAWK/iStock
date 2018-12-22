@@ -35,13 +35,18 @@
             android:orientation="horizontal"
                 android:gravity="bottom">
 
-                <EditText
-                    android:id="@+id/editCompanyNameRegister"
-                    style="@style/edit_text"
+                <android.support.design.widget.TextInputLayout
                     android:layout_weight="1"
-                    android:hint="@string/company_name"
-                    android:inputType="text"
-                    app:layout_constraintBottom_toTopOf="@+id/editFullNameRegister" />
+                    style="@style/text_input_layout">
+
+                    <EditText
+                        android:id="@+id/editCompanyNameRegister"
+                        style="@style/edit_text"
+                        android:hint="@string/company_name"
+                        android:inputType="text"
+                        app:layout_constraintBottom_toTopOf="@+id/editFullNameRegister" />
+
+                </android.support.design.widget.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/editImageRegister"
@@ -57,38 +62,52 @@
                     android:contentDescription="@string/company_picture"
                     android:focusable="true" />
 
-
             </LinearLayout>
 
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
+                <EditText
+                    android:id="@+id/editFullNameRegister"
+                    style="@style/edit_text"
+                    android:hint="@string/full_name"
+                    android:inputType="textPersonName"/>
 
-            <EditText
-                android:id="@+id/editFullNameRegister"
-                style="@style/edit_text"
-                android:hint="@string/full_name"
-                android:inputType="textPersonName"
-                />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editEmailRegister"
-                style="@style/edit_text"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
-            <EditText
-                android:id="@+id/editPasswordRegister"
-                style="@style/edit_text"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                />
+                <EditText
+                    android:id="@+id/editEmailRegister"
+                    style="@style/edit_text"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editPasswordRegister"
+                    style="@style/edit_text"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
             <EditText
                 android:id="@+id/editPasswordConfirmRegister"
                 style="@style/edit_text"
                 android:hint="@string/confirm_password"
-                android:inputType="textPassword"
-                />
+                android:inputType="textPassword"/>
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/buttonRegisterRegister"

@@ -27,18 +27,28 @@
                 app:srcCompat="@drawable/logo"
                 android:contentDescription="@string/logotipo" />
 
-            <EditText
-                android:id="@+id/editEmailLogin"
-                android:layout_marginTop="64dp"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                style="@style/edit_text" />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
-            <EditText
-                android:id="@+id/editPasswordLogin"
-                style="@style/edit_text"
-                android:hint="@string/password"
-                android:inputType="textPassword" />
+                <EditText
+                    android:id="@+id/editEmailLogin"
+                    android:layout_marginTop="64dp"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    style="@style/edit_text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editPasswordLogin"
+                    style="@style/edit_text"
+                    android:hint="@string/password"
+                    android:inputType="textPassword" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/buttonLoginLogin"

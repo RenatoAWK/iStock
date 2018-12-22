@@ -27,50 +27,84 @@
                 android:text="@string/edit_client"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="28sp"
-                />
+                android:textSize="28sp" />
 
-            <EditText
-                android:id="@+id/editTextNameEditClient"
-                style="@style/edit_text"
-                android:hint="@string/full_name"
-                android:inputType="textPersonName" />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
-            <EditText
-                android:id="@+id/editTextStreetEditClient"
-                style="@style/edit_text"
-                android:hint="@string/street"
-                android:inputType="text" />
+                <EditText
+                    android:id="@+id/editTextNameEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/full_name"
+                    android:inputType="textPersonName" />
 
-            <EditText
-                android:id="@+id/editTextNumberEditClient"
-                style="@style/edit_text"
-                android:hint="@string/number"
-                android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editTextDistrictEditClient"
-                style="@style/edit_text"
-                android:hint="@string/district"
-                android:inputType="text" />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
-            <EditText
-                android:id="@+id/editTextCityEditClient"
-                style="@style/edit_text"
-                android:hint="@string/city"
-                android:inputType="text" />
+                <EditText
+                    android:id="@+id/editTextStreetEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/street"
+                    android:inputType="text" />
 
-            <EditText
-                android:id="@+id/editTextStateEditClient"
-                style="@style/edit_text"
-                android:hint="@string/state"
-                android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editTextPhoneEditClient"
-                style="@style/edit_text"
-                android:hint="@string/phone"
-                android:inputType="number" />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextNumberEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/number"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextDistrictEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/district"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextCityEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/city"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextStateEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/state"
+                    android:inputType="text" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextPhoneEditClient"
+                    style="@style/edit_text"
+                    android:hint="@string/phone"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/buttonRegisterEditClient"

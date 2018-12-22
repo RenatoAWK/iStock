@@ -29,29 +29,49 @@
                 android:textSize="28sp"
                 />
 
-            <EditText
-                android:id="@+id/editTextNameEditProduct"
-                style="@style/edit_text"
-                android:hint="@string/product_name"
-                android:inputType="text" />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
 
-            <EditText
-                android:id="@+id/editTextPriceEditProduct"
-                style="@style/edit_text"
-                android:hint="@string/price"
-                android:inputType="numberDecimal" />
+                <EditText
+                    android:id="@+id/editTextNameEditProduct"
+                    style="@style/edit_text"
+                    android:hint="@string/product_name"
+                    android:inputType="text" />
 
-            <EditText
-                android:id="@+id/editTextQuantityEditProduct"
-                style="@style/edit_text"
-                android:hint="@string/quantity"
-                android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editTextMinimumEditProduct"
-                style="@style/edit_text"
-                android:hint="@string/minimum_quantity"
-                android:inputType="number" />
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextPriceEditProduct"
+                    style="@style/edit_text"
+                    android:hint="@string/price"
+                    android:inputType="numberDecimal" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextQuantityEditProduct"
+                    style="@style/edit_text"
+                    android:hint="@string/quantity"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                style="@style/text_input_layout">
+
+                <EditText
+                    android:id="@+id/editTextMinimumEditProduct"
+                    style="@style/edit_text"
+                    android:hint="@string/minimum_quantity"
+                    android:inputType="number" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/buttonRegisterEditProduct"
