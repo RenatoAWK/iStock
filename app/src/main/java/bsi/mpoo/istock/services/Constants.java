@@ -35,7 +35,7 @@ public class Constants {
     }
 
     public static class MaskTypes {
-        public static final String PHONE = "(##) ####-#####";
+        public static final String PHONE = "(NN) N NNNN-NNNN";
     }
 
 }

@@ -14,7 +14,7 @@ import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
-import bsi.mpoo.istock.services.Mask;
+import bsi.mpoo.istock.services.MaskGenerator;
 import bsi.mpoo.istock.services.Validations;
 
 public class RegisterClientActivity extends AppCompatActivity {
@@ -42,7 +42,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         cityEditText = findViewById(R.id.editTextCityRegisterClient);
         stateEditText = findViewById(R.id.editTextStateRegisterClient);
         phoneEditText = findViewById(R.id.editTextPhoneRegisterClient);
-        phoneEditText.addTextChangedListener(Mask.insert(Constants.MaskTypes.PHONE,phoneEditText));
+        MaskGenerator.mask(phoneEditText, Constants.MaskTypes.PHONE);
         registerButton = findViewById(R.id.buttonRegisterRegisterClient);
     }
 
@@ -55,7 +55,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         ClientServices clientServices = new ClientServices(getApplicationContext());
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
-        newClient.setPhone(Mask.unmask(phoneEditText.getText().toString()));
+        newClient.setPhone(MaskGenerator.unmask(phoneEditText.getText().toString()));
         newClient.setStatus(Constants.Status.ACTIVE);
         newClient.setAdministrator(user);
         Address newAddress = new Address();

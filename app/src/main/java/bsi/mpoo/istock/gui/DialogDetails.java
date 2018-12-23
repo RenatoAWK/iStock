@@ -11,7 +11,7 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.services.Constants;
-import bsi.mpoo.istock.services.Mask;
+import bsi.mpoo.istock.services.MaskGenerator;
 
 public class DialogDetails extends AppCompatActivity {
     private AlertDialog.Builder builder;
@@ -38,7 +38,7 @@ public class DialogDetails extends AppCompatActivity {
         districtTextView.setText(client.getAddress().getDistrict());
         cityTextView.setText(client.getAddress().getCity());
         stateTextView.setText(client.getAddress().getState());
-        phoneTextView.setText(Mask.mask(Constants.MaskTypes.PHONE, client.getPhone()));
+        phoneTextView.setText(MaskGenerator.unmaskedTextToStringMasked(client.getPhone(), Constants.MaskTypes.PHONE));
         builder.setView(view);
         builder.show();
     }

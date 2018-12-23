@@ -103,7 +103,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
     @Override
     public void onBindViewHolder(@NonNull ClientViewHolder clientViewHolder, int position) {
         String currentName = clientList.get(position).getName();
-        String currentPhone = Mask.mask(Constants.MaskTypes.PHONE, clientList.get(position).getPhone());
+        String currentPhone = MaskGenerator.unmaskedTextToStringMasked(clientList.get(position).getPhone(), Constants.MaskTypes.PHONE);
         clientViewHolder.nameItemView.setText(currentName);
         clientViewHolder.phoneItemView.setText(currentPhone);
     }

@@ -49,7 +49,7 @@ public class Validations {
         if (phone.isEmpty()){
             return false;
         } else {
-            return phone.length() == 15;
+            return phone.length() == 16;
         }
     }
 

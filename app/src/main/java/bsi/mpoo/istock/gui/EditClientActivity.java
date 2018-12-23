@@ -13,7 +13,7 @@ import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ClientNotRegistered;
-import bsi.mpoo.istock.services.Mask;
+import bsi.mpoo.istock.services.MaskGenerator;
 import bsi.mpoo.istock.services.Validations;
 
 public class EditClientActivity extends AppCompatActivity {
@@ -51,8 +51,9 @@ public class EditClientActivity extends AppCompatActivity {
         districtEditText.setText(client.getAddress().getDistrict());
         cityEditText.setText(client.getAddress().getCity());
         stateEditText.setText(client.getAddress().getState());
-        phoneEditText.setText(Mask.mask(Constants.MaskTypes.PHONE, client.getPhone()));
-        phoneEditText.addTextChangedListener(Mask.insert(Constants.MaskTypes.PHONE,phoneEditText));
+        MaskGenerator.mask(phoneEditText, Constants.MaskTypes.PHONE);
+        phoneEditText.setText(MaskGenerator.unmask(client.getPhone()));
+
     }
 
     public void edit(View view) {
@@ -61,7 +62,7 @@ public class EditClientActivity extends AppCompatActivity {
         ClientServices clientServices = new ClientServices(getApplicationContext());
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
-        newClient.setPhone(Mask.unmask(phoneEditText.getText().toString()));
+        newClient.setPhone(MaskGenerator.unmask(phoneEditText.getText().toString()));
         newClient.setStatus(Constants.Status.ACTIVE);
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
