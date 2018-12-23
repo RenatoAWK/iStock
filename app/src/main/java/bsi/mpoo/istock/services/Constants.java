@@ -34,4 +34,8 @@ public class Constants {
         public static final String EMAIL = "email";
     }
 
+    public static class MaskTypes {
+        public static final String PHONE = "(##) ####-#####";
+    }
+
 }

@@ -55,7 +55,7 @@
     <string name="phone">Telefone</string>
     <string name="phone_subtitle">Telefone </string>
     <string name="details">Detalhes</string>
-    <string name="invalid_phone">Somente números são permitidos</string>
+    <string name="invalid_phone">É preciso ter DDD e 9 digitos</string>
     <string name="edit_successful">Edição realizada com sucesso</string>
     <string name="client_not_registered">Cliente não registrado</string>
     <string name="edit">Editar</string>

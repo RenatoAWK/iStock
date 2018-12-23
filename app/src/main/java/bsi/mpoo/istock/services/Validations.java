@@ -46,7 +46,11 @@ public class Validations {
     }
 
     public boolean phone(String phone){
-        return !phone.isEmpty() && !phone.matches("^[0-9]");
+        if (phone.isEmpty()){
+            return false;
+        } else {
+            return phone.length() == 15;
+        }
     }
 
     public boolean price(String price) {

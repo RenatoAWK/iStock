@@ -10,6 +10,8 @@ import java.text.NumberFormat;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.Mask;
 
 public class DialogDetails extends AppCompatActivity {
     private AlertDialog.Builder builder;
@@ -36,7 +38,7 @@ public class DialogDetails extends AppCompatActivity {
         districtTextView.setText(client.getAddress().getDistrict());
         cityTextView.setText(client.getAddress().getCity());
         stateTextView.setText(client.getAddress().getState());
-        phoneTextView.setText(client.getPhone());
+        phoneTextView.setText(Mask.mask(Constants.MaskTypes.PHONE, client.getPhone()));
         builder.setView(view);
         builder.show();
     }
