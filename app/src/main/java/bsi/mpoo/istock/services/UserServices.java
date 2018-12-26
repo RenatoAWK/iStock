@@ -34,9 +34,11 @@ public class UserServices {
         if (searchedUser != null){
             if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
                 return searchedUser;
+            } else {
+              return null;
             }
         }
-        return searchedUser;
+        return null;
     }
 
 }
