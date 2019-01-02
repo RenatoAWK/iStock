@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ProductListAdapter;
@@ -32,7 +33,8 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = getArguments().getParcelable(Constants.BundleKeys.USER);
+        user = Session.getInstance().getUser();
+        int ver = Session.getInstance().getRemember();
         getActivity().setTitle(getString(R.string.products));
     }
 

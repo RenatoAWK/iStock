@@ -96,6 +96,7 @@ public class ClientDAO {
                 null
         );
         if (cursor.getCount()==1){
+            cursor.moveToNext();
             searchedClient = createClient(cursor);
         }
         cursor.close();

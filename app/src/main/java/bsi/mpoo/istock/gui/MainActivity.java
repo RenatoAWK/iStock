@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.fragments.ClientsFragment;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
@@ -25,11 +26,10 @@ import bsi.mpoo.istock.gui.fragments.SalesFragment;
 import bsi.mpoo.istock.gui.fragments.UsersFragment;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
+import bsi.mpoo.istock.services.SessionServices;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity
         TextView textViewCompany;
         TextView textViewName;
         ImageView companyImageView;
-        Intent intent = getIntent();
-        user = intent.getParcelableExtra(Constants.BundleKeys.USER);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
@@ -54,12 +52,10 @@ public class MainActivity extends AppCompatActivity
 
                 } else if (fragment instanceof ProductsFragment){
                     Intent intent = new Intent(getApplicationContext(), RegisterProductActivity.class);
-                    intent.putExtra(Constants.BundleKeys.USER,user);
                     startActivity(intent);
 
                 } else if (fragment instanceof ClientsFragment){
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
-                    intent.putExtra(Constants.BundleKeys.USER,user);
                     startActivity(intent);
 
                 } else if (fragment instanceof  UsersFragment){
@@ -81,10 +77,10 @@ public class MainActivity extends AppCompatActivity
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);
         companyImageView = headerView.findViewById(R.id.imageViewHeader);
-        textViewName.setText(user.getName());
-        textViewCompany.setText(user.getCompany());
+        textViewName.setText(Session.getInstance().getUser().getName());
+        textViewCompany.setText(Session.getInstance().getUser().getCompany());
 
-        if (user.getImage() != null){
+        if (Session.getInstance().getUser().getImage() != null){
             ImageServices imageServices = new ImageServices();
             setImageOnImageView(companyImageView, imageServices);
 
@@ -93,7 +89,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setImageOnImageView(ImageView companyImageView, ImageServices imageServices) {
-        companyImageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
+        companyImageView.setImageBitmap(imageServices.byteToImage(Session.getInstance().getUser().getImage()));
         companyImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 
@@ -123,42 +119,36 @@ public class MainActivity extends AppCompatActivity
     public void displaySelectedScreen(int id){
         Fragment fragment = null;
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constants.BundleKeys.USER,user);
 
         switch (id){
             case R.id.nav_home:
                 fragment = new HomeFragment();
-                fragment.setArguments(bundle);
                 floatingActionButton.hide();
                 break;
             case R.id.nav_sales:
                 fragment = new SalesFragment();
-                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_products:
                 fragment = new ProductsFragment();
-                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_clients:
                 fragment = new ClientsFragment();
-                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_users:
                 fragment = new UsersFragment();
-                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_historic:
                 fragment = new HistoricFragment();
-                fragment.setArguments(bundle);
                 floatingActionButton.show();
                 break;
             case R.id.nav_logout:
                 Intent intent = new Intent(this, LoginActivity.class);
+                SessionServices sessionServices = new SessionServices(getApplicationContext());
+                sessionServices.clearSession();
                 finish();
                 startActivity(intent);
         }

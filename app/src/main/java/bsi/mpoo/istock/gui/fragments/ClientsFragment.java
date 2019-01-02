@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientListAdapter;
 import bsi.mpoo.istock.services.ClientServices;
@@ -31,7 +32,7 @@ public class ClientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = getArguments().getParcelable(Constants.BundleKeys.USER);
+        user = Session.getInstance().getUser();
         getActivity().setTitle(getString(R.string.clients));
     }
 

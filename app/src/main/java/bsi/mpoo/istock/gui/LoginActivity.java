@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.SessionServices;
 import bsi.mpoo.istock.services.UserServices;
 import bsi.mpoo.istock.services.Validations;
 
@@ -17,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
+    private Switch switchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,23 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.hide();
         emailEditText = findViewById(R.id.editEmailLogin);
         passwordEditText = findViewById(R.id.editPasswordLogin);
+        switchButton = findViewById(R.id.switchButtonLogin);
+        SessionServices sessionServices = new SessionServices(getApplicationContext());
+        Session session =  sessionServices.getSession();
+        if (session != null){
+            if (session.getRemember() == Constants.Session.NOT_TO_REMEMBER){
+                sessionServices.clearSession();
+            } else {
+                Session.getInstance().setId(session.getId());
+                Session.getInstance().setRemember(session.getRemember());
+                Session.getInstance().setId_user(session.getId_user());
+                Session.getInstance().setUser(session.getUser());
+                Intent intent = new Intent(this, MainActivity.class);
+                finish();
+                startActivity(intent);
+
+            }
+        }
     }
 
     public void login(View view){
@@ -44,8 +65,19 @@ public class LoginActivity extends AppCompatActivity {
             emailEditText.setError(getString(R.string.invalid_email_or_password));
             passwordEditText.setError(getString(R.string.invalid_email_or_password));
         } else {
+            Session.getInstance().setUser(searchedUser);
+            Session.getInstance().setId_user(searchedUser.getId());
+            boolean switchState = switchButton.isChecked();
+            int remember;
+            if (switchState){
+                remember = Constants.Session.REMEMBER;
+            } else {
+                remember = Constants.Session.NOT_TO_REMEMBER;
+            }
+            Session.getInstance().setRemember(remember);
+            SessionServices sessionServices = new SessionServices(getApplicationContext());
+            sessionServices.updateSession(Session.getInstance());
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(Constants.BundleKeys.USER, searchedUser);
             finish();
             startActivity(intent);
         }

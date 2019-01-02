@@ -1,6 +1,5 @@
 package bsi.mpoo.istock.gui;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.widget.EditText;
 import java.math.BigDecimal;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ProductAlreadyRegistered;
@@ -17,11 +17,10 @@ import bsi.mpoo.istock.services.Validations;
 
 public class RegisterProductActivity extends AppCompatActivity {
 
-    EditText nameEditText;
-    EditText priceEditText;
-    EditText quantityEditText;
-    EditText minimumEditText;
-    User user;
+    private EditText nameEditText;
+    private EditText priceEditText;
+    private EditText quantityEditText;
+    private EditText minimumEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +37,7 @@ public class RegisterProductActivity extends AppCompatActivity {
     public void register(View view) {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)) return;
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        user = bundle.getParcelable(Constants.BundleKeys.USER);
+        User user = Session.getInstance().getUser();
         ProductServices productServices = new ProductServices(getApplicationContext());
         Product newProduct = new Product();
         newProduct.setName(nameEditText.getText().toString().trim().toUpperCase());

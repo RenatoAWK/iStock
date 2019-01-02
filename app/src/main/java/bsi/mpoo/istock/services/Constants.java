@@ -38,4 +38,10 @@ public class Constants {
         public static final String PHONE = "(NN) N NNNN-NNNN";
     }
 
+    public static class Session {
+        public static final int REMEMBER = 1;
+        public static final int NOT_TO_REMEMBER = 0;
+        public static final int POSITION_USER = 1;
+    }
+
 }

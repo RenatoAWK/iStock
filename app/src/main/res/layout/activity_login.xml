@@ -51,6 +51,11 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <Switch
+                android:id="@+id/switchButtonLogin"
+                style="@style/switch_button"
+                android:text="@string/keep_logged" />
+
             <Button
                 android:id="@+id/buttonLoginLogin"
                 style="@style/button_primary"

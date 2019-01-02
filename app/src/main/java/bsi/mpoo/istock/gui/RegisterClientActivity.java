@@ -1,6 +1,5 @@
 package bsi.mpoo.istock.gui;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.widget.EditText;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Constants;
@@ -49,9 +49,7 @@ public class RegisterClientActivity extends AppCompatActivity {
     public void register(View view) {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)) return;
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        user = bundle.getParcelable(Constants.BundleKeys.USER);
+        user = Session.getInstance().getUser();
         ClientServices clientServices = new ClientServices(getApplicationContext());
         Client newClient = new Client();
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
