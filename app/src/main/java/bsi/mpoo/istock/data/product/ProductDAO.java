@@ -102,7 +102,7 @@ public class ProductDAO {
         return searchedProduct;
     }
 
-    public List<Product> getListProductsByAdmId(User user, String order) {
+    public List<Product> getProductsByAdmId(User user, String order) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {

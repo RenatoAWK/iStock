@@ -12,6 +12,7 @@
         <activity android:name=".gui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -24,7 +25,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".gui.EditClientActivity" />
         <activity android:name=".gui.RegisterProductActivity" />
-        <activity android:name=".gui.EditProductActivity"></activity>
+        <activity android:name=".gui.EditProductActivity" />
+        <activity android:name=".gui.EditUserActivity" />
+        <activity android:name=".gui.RegisterUserActivity"></activity>
     </application>
 
 </manifest>

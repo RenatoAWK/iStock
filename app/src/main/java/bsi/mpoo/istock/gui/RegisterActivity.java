@@ -55,7 +55,6 @@ public class RegisterActivity extends AppCompatActivity {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)){
             return;
-
         }
         UserServices userServices = new UserServices(this);
         User newUser = new User();

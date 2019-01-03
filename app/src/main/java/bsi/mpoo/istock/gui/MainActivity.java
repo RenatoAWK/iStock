@@ -17,14 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.fragments.ClientsFragment;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
 import bsi.mpoo.istock.gui.fragments.HomeFragment;
 import bsi.mpoo.istock.gui.fragments.ProductsFragment;
 import bsi.mpoo.istock.gui.fragments.SalesFragment;
 import bsi.mpoo.istock.gui.fragments.UsersFragment;
-import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.SessionServices;
 
@@ -59,6 +57,8 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intent);
 
                 } else if (fragment instanceof  UsersFragment){
+                    Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
+                    startActivity(intent);
 
                 } else if (fragment instanceof HistoricFragment){
 

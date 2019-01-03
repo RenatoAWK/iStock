@@ -6,9 +6,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.provider.BaseColumns;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Constants;
 
 public class UserDAO{
     private Context context;
@@ -22,8 +26,8 @@ public class UserDAO{
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ContractUser.COLUMN_NAME, user.getName());
-        values.put(ContractUser.COLUMN_EMAIL, user.getEmail());
+        values.put(ContractUser.COLUMN_NAME, user.getName().toUpperCase());
+        values.put(ContractUser.COLUMN_EMAIL, user.getEmail().toUpperCase());
         values.put(ContractUser.COLUMN_PASSWORD, user.getPassword());
         values.put(ContractUser.COLUMN_TYPE, user.getType());
         values.put(ContractUser.COLUMN_STATUS, user.getStatus());
@@ -41,9 +45,7 @@ public class UserDAO{
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         User searchedUser = null;
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractUser.COLUMN_NAME,
@@ -84,9 +86,7 @@ public class UserDAO{
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-
         User searchedUser = null;
-
         String[] projection = {
                 BaseColumns._ID,
                 ContractUser.COLUMN_NAME,
@@ -121,6 +121,84 @@ public class UserDAO{
         db.close();
         return searchedUser;
 
+    }
+
+    public List<User> getUsersByAdmId(User user, String order){
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                ContractUser.COLUMN_NAME,
+                ContractUser.COLUMN_EMAIL,
+                ContractUser.COLUMN_PASSWORD,
+                ContractUser.COLUMN_TYPE,
+                ContractUser.COLUMN_STATUS,
+                ContractUser.COLUMN_COMPANY,
+                ContractUser.COLUMN_ADMINISTRATOR,
+                ContractUser.COLUMN_IMAGE
+        };
+        String sortOrder = ContractUser.COLUMN_NAME +" "+ order;
+        List<User> userList = new ArrayList<>();
+        String selection = ContractUser.COLUMN_ADMINISTRATOR+" = ?";
+        String[] selectionArgs = { String.valueOf(user.getId()) };
+        Cursor cursor = db.query(
+                ContractUser.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+        if (cursor.moveToNext()){
+            do {
+                User newUser = createUser(cursor);
+                userList.add(newUser);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return userList;
+    }
+
+    public List<User> getActiveUsersByAdmId(User user, String order){
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                ContractUser.COLUMN_NAME,
+                ContractUser.COLUMN_EMAIL,
+                ContractUser.COLUMN_PASSWORD,
+                ContractUser.COLUMN_TYPE,
+                ContractUser.COLUMN_STATUS,
+                ContractUser.COLUMN_COMPANY,
+                ContractUser.COLUMN_ADMINISTRATOR,
+                ContractUser.COLUMN_IMAGE
+        };
+        String sortOrder = ContractUser.COLUMN_NAME +" "+ order;
+        List<User> userList = new ArrayList<>();
+        String selection = ContractUser.COLUMN_ADMINISTRATOR+" = ?"+" AND "+
+                ContractUser.COLUMN_STATUS+" = ?";
+        String[] selectionArgs = { String.valueOf(user.getId()),
+                String.valueOf(Constants.Status.ACTIVE)};
+        Cursor cursor = db.query(
+                ContractUser.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+        );
+        if (cursor.moveToNext()){
+            do {
+                User newUser = createUser(cursor);
+                userList.add(newUser);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return userList;
     }
 
     private User createUser(Cursor cursor){

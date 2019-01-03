@@ -44,4 +44,8 @@ public class Constants {
         public static final int POSITION_USER = 1;
     }
 
+    public static class Activity{
+        public static final String TEXT_PLAIN = "text/plain";
+    }
+
 }

@@ -79,4 +79,14 @@
     <string name="pick_a_image">Selecione uma imagem</string>
     <string name="company_picture">Foto da empresa</string>
     <string name="keep_logged">Manter conectado</string>
+    <string name="function">Função</string>
+    <string name="administration">Administração</string>
+    <string name="production">Produção</string>
+    <string name="register_user_company">Cadastro De Usuário Da Empresa</string>
+    <string name="domain_email_istock">\@iStock.com</string>
+    <string name="status_account">Status Da Conta</string>
+    <string name="active">Ativo</string>
+    <string name="inactive">Inativo</string>
+    <string name="first_access">Em primeiro acesso</string>
+    <string name="share">Compartilhar</string>
 </resources>

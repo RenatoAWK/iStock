@@ -34,7 +34,6 @@ public class ProductsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         user = Session.getInstance().getUser();
-        int ver = Session.getInstance().getRemember();
         getActivity().setTitle(getString(R.string.products));
     }
 

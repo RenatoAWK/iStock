@@ -2,6 +2,9 @@ package bsi.mpoo.istock.services;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
+import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.user.UserDAO;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
@@ -39,6 +42,22 @@ public class UserServices {
             }
         }
         return null;
+    }
+
+    public ArrayList<User> getAcitiveUsersAsc(User user){
+        return (ArrayList<User>) userDAO.getActiveUsersByAdmId(user,Contract.ASC);
+    }
+
+    public ArrayList<User> getAcitiveUsersDesc(User user){
+        return (ArrayList<User>) userDAO.getActiveUsersByAdmId(user,Contract.DESC);
+    }
+
+    public ArrayList<User> getUsersAsc(User user){
+        return (ArrayList<User>) userDAO.getUsersByAdmId(user, Contract.ASC);
+    }
+
+    public ArrayList<User> getUsersDesc(User user){
+        return (ArrayList<User>) userDAO.getUsersByAdmId(user, Contract.DESC);
     }
 
 }
