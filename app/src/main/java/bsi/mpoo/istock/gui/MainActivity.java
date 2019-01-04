@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);
         companyImageView = headerView.findViewById(R.id.imageViewHeader);
+        Menu nav_Menu = navigationView.getMenu();
         if (Session.getInstance().getAccount() instanceof Administrator){
             textViewName.setText(((Administrator) Session.getInstance().getAccount()).getUser().getName());
             textViewCompany.setText(((Administrator) Session.getInstance().getAccount()).getUser().getCompany());
@@ -90,10 +92,16 @@ public class MainActivity extends AppCompatActivity
             textViewName.setText(((Salesman) Session.getInstance().getAccount()).getUser().getName());
             textViewCompany.setText(((Salesman) Session.getInstance().getAccount()).getUser().getName());
             image = ((Salesman) Session.getInstance().getAccount()).getUser().getImage();
+            nav_Menu.findItem(R.id.nav_users).setVisible(false);
+            nav_Menu.findItem(R.id.nav_products).setVisible(false);
         } else {
             textViewName.setText(((Producer) Session.getInstance().getAccount()).getUser().getName());
             textViewCompany.setText(((Producer) Session.getInstance().getAccount()).getUser().getName());
             image = ((Producer) Session.getInstance().getAccount()).getUser().getImage();
+            nav_Menu.findItem(R.id.nav_sales).setVisible(false);
+            nav_Menu.findItem(R.id.nav_users).setVisible(false);
+            nav_Menu.findItem(R.id.nav_historic).setVisible(false);
+            nav_Menu.findItem(R.id.nav_clients).setVisible(false);
         }
 
         if (image != null){
