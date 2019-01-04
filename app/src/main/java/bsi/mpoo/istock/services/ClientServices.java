@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import bsi.mpoo.istock.data.client.ClientDAO;
 import bsi.mpoo.istock.data.Contract;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
@@ -17,13 +18,13 @@ public class ClientServices {
         this.clientDAO = new ClientDAO(context);
     }
 
-    private boolean isClientRegistered(Client client){
-        Client searchedClient = clientDAO.getClientByName(client);
+    private boolean isClientRegistered(String name, Administrator administrator){
+        Client searchedClient = clientDAO.getClientByName(name, administrator);
         return searchedClient != null;
     }
 
-    public void registerClient(Client client) throws Exception {
-        if (isClientRegistered(client)){
+    public void registerClient(Client client, Administrator administrator) throws Exception {
+        if (isClientRegistered(client.getName(), administrator)){
             throw new ClientAlreadyRegistered();
         } else {
             clientDAO.insertClient(client);
@@ -38,19 +39,19 @@ public class ClientServices {
             }
     }
 
-    public void disableClient(Client client) throws Exception{
-        if (isClientRegistered(client)){
+    public void disableClient(Client client, Administrator administrator) throws Exception{
+        if (isClientRegistered(client.getName(), administrator)){
             clientDAO.disableClient(client);
         } else {
             throw  new ClientNotRegistered();
         }
     }
 
-    public ArrayList<Client> getAcitiveClientsAsc(User user){
-        return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(user,Contract.ASC);
+    public ArrayList<Client> getAcitiveClientsAsc(Administrator administrator){
+        return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(administrator,Contract.ASC);
     }
 
-    public ArrayList<Client> getAcitiveClientsDesc(User user){
-        return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(user,Contract.DESC);
+    public ArrayList<Client> getAcitiveClientsDesc(Administrator administrator){
+        return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(administrator,Contract.DESC);
     }
 }

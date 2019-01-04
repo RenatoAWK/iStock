@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
@@ -24,12 +25,10 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
     private final ArrayList<Client> clientList;
     private LayoutInflater inflater;
     private Context context;
-    private User user;
 
-    public ClientListAdapter(Context context, ArrayList<Client> clientList, User user){
+    public ClientListAdapter(Context context, ArrayList<Client> clientList){
         inflater = LayoutInflater.from(context);
         this.clientList = clientList;
-        this.user = user;
         this.context = context;
 
     }
@@ -60,7 +59,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
             if (item.getTitle().toString().equals(deleteOption)){
 
                 try {
-                    clientServices.disableClient(client);
+                    clientServices.disableClient(client, Session.getInstance().getAdministrator());
                     clientList.remove(position);
                     adapter.notifyDataSetChanged();
 

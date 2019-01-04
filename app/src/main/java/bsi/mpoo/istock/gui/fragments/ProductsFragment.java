@@ -12,7 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
@@ -21,7 +24,7 @@ import bsi.mpoo.istock.services.ProductServices;
 
 public class ProductsFragment extends Fragment {
 
-    private User user;
+    private Object account;
     private Context context;
 
     @Nullable
@@ -33,7 +36,7 @@ public class ProductsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = Session.getInstance().getUser();
+        account = Session.getInstance().getAccount();
         getActivity().setTitle(getString(R.string.products));
     }
 
@@ -42,18 +45,16 @@ public class ProductsFragment extends Fragment {
         super.onStart();
         ProductServices productServices = new ProductServices(getActivity().getApplicationContext());
         ArrayList<Product> productArrayList;
-        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
-            productArrayList = productServices.getAcitiveProductsAsc(user);
-        } else {
-            User adm = new User();
-            adm.setId(user.getAdministrator());
-            productArrayList = productServices.getAcitiveProductsAsc(adm);
+
+        if (account instanceof Administrator || account instanceof Salesman || account instanceof Producer){
+            productArrayList = productServices.getAcitiveProductsAsc(Session.getInstance().getAdministrator());
+            RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewProduct);
+            ProductListAdapter adapter = new ProductListAdapter(context, productArrayList);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewProduct);
-        ProductListAdapter adapter = new ProductListAdapter(context, productArrayList, user);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
 
     @Override
     public void onAttach(Context context) {

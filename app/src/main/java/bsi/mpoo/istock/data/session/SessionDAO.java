@@ -5,14 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
-
-import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
-import bsi.mpoo.istock.data.user.ContractUser;
 import bsi.mpoo.istock.data.user.UserDAO;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.UserServices;
 
 public class SessionDAO {
     private Context context;
@@ -26,7 +27,13 @@ public class SessionDAO {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ContractSession._ID, Constants.Session.POSITION_USER);
-        values.put(ContractSession.ID_USER, session.getUser().getId());
+        if (session.getAccount() instanceof Administrator){
+            values.put(ContractSession.ID_USER, ((Administrator) session.getAccount()).getUser().getId());
+        } else if (session.getAccount() instanceof Salesman){
+            values.put(ContractSession.ID_USER, ((Salesman) session.getAccount()).getUser().getId());
+        } else {
+            values.put(ContractSession.ID_USER, ((Producer) session.getAccount()).getUser().getId());
+        }
         values.put(ContractSession.COLUMN_REMEMBER, session.getRemember());
         db.insert(ContractSession.TABLE_NAME, null, values);
         db.close();
@@ -78,11 +85,6 @@ public class SessionDAO {
             );
             db.close();
         }
-
-
-
-
-
     }
 
     private Session createSession(Cursor cursor){
@@ -94,12 +96,23 @@ public class SessionDAO {
         UserDAO userDAO = new UserDAO(context);
         User user = new User();
         user.setId(idUser);
-        User searchedUser = userDAO.getUserById(user);
+        User searchedUser = userDAO.getUserById(user.getId());
+        User adminUser = userDAO.getUserById(user.getAdministrator());
+        UserServices userServices = new UserServices(context);
         searchedSession.setId_user(idUser);
         searchedSession.setRemember(remember);
-        searchedSession.setUser(searchedUser);
+        Object account = userServices.getUserInDomainType(searchedUser);
+        if (account instanceof Administrator){
+            searchedSession.setAccount((Administrator) account);
+        } else if (account instanceof Salesman){
+            searchedSession.setAccount((Salesman) account);
+            Administrator administrator = (Administrator) userServices.getUserInDomainType(adminUser);
+            searchedSession.setAdministrator(administrator);
+        } else {
+            searchedSession.setAccount((Producer) account);
+            Administrator administrator = (Administrator) userServices.getUserInDomainType(adminUser);
+            searchedSession.setAdministrator(administrator);
+        }
         return searchedSession;
     }
-
-
 }

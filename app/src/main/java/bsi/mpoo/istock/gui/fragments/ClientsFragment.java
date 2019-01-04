@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientListAdapter;
@@ -20,7 +22,7 @@ import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Constants;
 
 public class ClientsFragment extends Fragment {
-    private User user;
+    private Object account;
     private Context context;
 
     @Nullable
@@ -32,7 +34,7 @@ public class ClientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = Session.getInstance().getUser();
+        account = Session.getInstance().getAccount();
         getActivity().setTitle(getString(R.string.clients));
     }
 
@@ -41,17 +43,14 @@ public class ClientsFragment extends Fragment {
         super.onStart();
         ClientServices clientServices = new ClientServices(getActivity().getApplicationContext());
         ArrayList<Client> clientArrayList;
-        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
-            clientArrayList = clientServices.getAcitiveClientsAsc(user);
-        } else {
-            User adm = new User();
-            adm.setId(user.getAdministrator());
-            clientArrayList = clientServices.getAcitiveClientsAsc(adm);
+        if (account instanceof Administrator || account instanceof  Salesman) {
+            clientArrayList = clientServices.getAcitiveClientsAsc(Session.getInstance().getAdministrator());
+            RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewClient);
+            ClientListAdapter adapter = new ClientListAdapter(context, clientArrayList);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewClient);
-        ClientListAdapter adapter = new ClientListAdapter(context, clientArrayList, user);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
     }
 
     @Override

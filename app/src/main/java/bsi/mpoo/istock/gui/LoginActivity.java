@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
@@ -21,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private Switch switchButton;
+    private Object account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +41,18 @@ public class LoginActivity extends AppCompatActivity {
             if (session.getRemember() == Constants.Session.NOT_TO_REMEMBER){
                 sessionServices.clearSession();
             } else {
-                Session.getInstance().setId(session.getId());
                 Session.getInstance().setRemember(session.getRemember());
                 Session.getInstance().setId_user(session.getId_user());
-                Session.getInstance().setUser(session.getUser());
+                account = session.getAccount();
+                if (account instanceof Administrator){
+                    Session.getInstance().setAccount((Administrator) session.getAccount());
+                } else if (session.getAccount() instanceof Salesman){
+                    Session.getInstance().setAccount((Salesman) session.getAccount());
+                    Session.getInstance().setAdministrator(session.getAdministrator());
+                } else {
+                    Session.getInstance().setAccount((Producer) session.getAccount());
+                    Session.getInstance().setAdministrator(session.getAdministrator());
+                }
                 Intent intent = new Intent(this, MainActivity.class);
                 finish();
                 startActivity(intent);
@@ -65,7 +77,26 @@ public class LoginActivity extends AppCompatActivity {
             emailEditText.setError(getString(R.string.invalid_email_or_password));
             passwordEditText.setError(getString(R.string.invalid_email_or_password));
         } else {
-            Session.getInstance().setUser(searchedUser);
+            account = userServices.getUserInDomainType(searchedUser);
+            Administrator administrator;
+            if (account instanceof Administrator){
+                administrator = (Administrator) account;
+            } else {
+                User adminUser = userServices.getUserById(searchedUser.getAdministrator());
+                administrator = (Administrator) userServices.getUserInDomainType(adminUser);
+            }
+
+
+            if (account instanceof Administrator){
+                Session.getInstance().setAdministrator((Administrator) account);
+                Session.getInstance().setAccount((Administrator) account);
+            } else if (account instanceof Salesman){
+                Session.getInstance().setAdministrator((administrator));
+                Session.getInstance().setAccount((Salesman) account);
+            } else {
+                Session.getInstance().setAdministrator((administrator));
+                Session.getInstance().setAccount((Producer) account);
+            }
             Session.getInstance().setId_user(searchedUser.getId());
             boolean switchState = switchButton.isChecked();
             int remember;

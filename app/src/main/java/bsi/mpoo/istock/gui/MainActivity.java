@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.fragments.ClientsFragment;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
@@ -28,6 +31,8 @@ import bsi.mpoo.istock.services.SessionServices;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    byte[] image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +82,21 @@ public class MainActivity extends AppCompatActivity
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);
         companyImageView = headerView.findViewById(R.id.imageViewHeader);
-        textViewName.setText(Session.getInstance().getUser().getName());
-        textViewCompany.setText(Session.getInstance().getUser().getCompany());
+        if (Session.getInstance().getAccount() instanceof Administrator){
+            textViewName.setText(((Administrator) Session.getInstance().getAccount()).getUser().getName());
+            textViewCompany.setText(((Administrator) Session.getInstance().getAccount()).getUser().getCompany());
+            image = ((Administrator) Session.getInstance().getAccount()).getUser().getImage();
+        } else if (Session.getInstance().getAccount() instanceof Salesman){
+            textViewName.setText(((Salesman) Session.getInstance().getAccount()).getUser().getName());
+            textViewCompany.setText(((Salesman) Session.getInstance().getAccount()).getUser().getName());
+            image = ((Salesman) Session.getInstance().getAccount()).getUser().getImage();
+        } else {
+            textViewName.setText(((Producer) Session.getInstance().getAccount()).getUser().getName());
+            textViewCompany.setText(((Producer) Session.getInstance().getAccount()).getUser().getName());
+            image = ((Producer) Session.getInstance().getAccount()).getUser().getImage();
+        }
 
-        if (Session.getInstance().getUser().getImage() != null){
+        if (image != null){
             ImageServices imageServices = new ImageServices();
             setImageOnImageView(companyImageView, imageServices);
 
@@ -89,7 +105,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setImageOnImageView(ImageView companyImageView, ImageServices imageServices) {
-        companyImageView.setImageBitmap(imageServices.byteToImage(Session.getInstance().getUser().getImage()));
+        companyImageView.setImageBitmap(imageServices.byteToImage(image));
         companyImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
     }
 

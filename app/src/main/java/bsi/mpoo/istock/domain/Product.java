@@ -10,7 +10,7 @@ public class Product implements Parcelable {
     private BigDecimal price;
     private long quantity;
     private long minimumQuantity;
-    private User administrator;
+    private Administrator administrator;
     private int status;
 
     public Product(){}
@@ -21,7 +21,7 @@ public class Product implements Parcelable {
         this.price = new BigDecimal(parcel.readString());
         this.quantity = parcel.readLong();
         this.minimumQuantity = parcel.readLong();
-        this.administrator = (User)parcel.readValue(User.class.getClassLoader());
+        this.administrator = (Administrator) parcel.readValue(Administrator.class.getClassLoader());
         this.status = parcel.readInt();
     }
 
@@ -55,10 +55,10 @@ public class Product implements Parcelable {
     public void setMinimumQuantity(long minimumQuantity) {
         this.minimumQuantity = minimumQuantity;
     }
-    public User getAdministrator() {
+    public Administrator getAdministrator() {
         return administrator;
     }
-    public void setAdministrator(User administrator) {
+    public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
     public int getStatus() {

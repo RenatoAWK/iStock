@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.UserListAdapter;
@@ -21,7 +22,7 @@ import bsi.mpoo.istock.services.UserServices;
 
 public class UsersFragment extends Fragment {
 
-    private User user;
+    private Object account;
     private Context context;
 
     @Nullable
@@ -33,7 +34,7 @@ public class UsersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        user = Session.getInstance().getUser();
+        account = Session.getInstance().getAccount();
         getActivity().setTitle(getString(R.string.users));
     }
 
@@ -41,11 +42,15 @@ public class UsersFragment extends Fragment {
     public void onStart() {
         super.onStart();
         UserServices userServices = new UserServices(getActivity().getApplicationContext());
-        ArrayList<User> userArrayList = userServices.getUsersAsc(user);
-        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewUser);
-        UserListAdapter adapter = new UserListAdapter(context, userArrayList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ArrayList<User> userArrayList;
+
+        if (account instanceof Administrator){
+            userArrayList = userServices.getUsersAsc(Session.getInstance().getAdministrator());
+            RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewUser);
+            UserListAdapter adapter = new UserListAdapter(context, userArrayList);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 
     @Override

@@ -12,9 +12,11 @@ import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.data.address.AddressDAO;
 import bsi.mpoo.istock.data.user.UserDAO;
 import bsi.mpoo.istock.domain.Address;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.UserServices;
 
 public class ClientDAO {
     private Context context;
@@ -28,7 +30,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
-        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getUser().getId());
         values.put(ContractClient.COLUMN_STATUS, client.getStatus());
         AddressDAO addressDAO = new AddressDAO(context);
         addressDAO.insertAddress(client.getAddress());
@@ -38,7 +40,7 @@ public class ClientDAO {
         db.close();
     }
 
-    public Client getClientByName(Client client) {
+    public Client getClientByName(String name, Administrator administrator) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Client searchedClient = null;
@@ -52,8 +54,8 @@ public class ClientDAO {
         };
         String selection = ContractClient.COLUMN_NAME+" = ?"+" AND "+
                 ContractClient.COLUMN_ID_ADM+" =?";
-        String[] selectionArgs = { client.getName().trim().toUpperCase(),
-                String.valueOf(client.getAdministrator().getId()) };
+        String[] selectionArgs = { name.trim().toUpperCase(),
+                String.valueOf(administrator.getUser().getId()) };
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -72,7 +74,7 @@ public class ClientDAO {
         return searchedClient;
     }
 
-    public Client getClientById(Client client) {
+    public Client getClientById(long id) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Client searchedClient = null;
@@ -85,7 +87,7 @@ public class ClientDAO {
                 ContractClient.COLUMN_STATUS
         };
         String selection = ContractClient._ID+" = ?";
-        String[] selectionArgs = { String.valueOf(client.getId()) };
+        String[] selectionArgs = { String.valueOf(id) };
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -104,7 +106,7 @@ public class ClientDAO {
         return searchedClient;
     }
 
-    public List<Client> getListClientsByAdmId(User user, String order) {
+    public List<Client> getListClientsByAdmId(Administrator administrator, String order) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -118,7 +120,7 @@ public class ClientDAO {
         String sortOrder = ContractClient.COLUMN_NAME +" "+ Contract.ASC;
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId()) };
+        String[] selectionArgs = { String.valueOf(administrator.getUser().getId()) };
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
                 projection,
@@ -139,7 +141,7 @@ public class ClientDAO {
         return clientList;
     }
 
-    public List<Client> getActiveClientsByAdmId(User user, String order) {
+    public List<Client> getActiveClientsByAdmId(Administrator administrator, String order) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -154,7 +156,7 @@ public class ClientDAO {
         List<Client> clientList = new ArrayList<>();
         String selection = ContractClient.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractClient.COLUMN_STATUS+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId()),
+        String[] selectionArgs = { String.valueOf(administrator.getUser().getId()),
                 String.valueOf(Constants.Status.ACTIVE)};
         Cursor cursor = db.query(
                 ContractClient.TABLE_NAME,
@@ -184,7 +186,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
-        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getUser().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
         values.put(ContractClient.COLUMN_STATUS, Constants.Status.INACTIVE);
         String selection = ContractClient._ID+" = ?";
@@ -200,7 +202,7 @@ public class ClientDAO {
         ContentValues values = new ContentValues();
         values.put(ContractClient.COLUMN_NAME, client.getName());
         values.put(ContractClient.COLUMN_PHONE, client.getPhone());
-        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getId());
+        values.put(ContractClient.COLUMN_ID_ADM, client.getAdministrator().getUser().getId());
         values.put(ContractClient.COLUMN_ID_ADDRESS, client.getAddress().getId());
         values.put(ContractClient.COLUMN_STATUS, client.getStatus());
         String selection = ContractClient._ID+" = ?";
@@ -234,8 +236,9 @@ public class ClientDAO {
         UserDAO userDAO = new UserDAO(context);
         User user = new User();
         user.setId(idAdm);
-        User searchedUser = userDAO.getUserById(user);
-        createdClient.setAdministrator(searchedUser);
+        User searchedUser = userDAO.getUserById(user.getId());
+        UserServices userServices = new UserServices(context);
+        createdClient.setAdministrator((Administrator) userServices.getUserInDomainType(searchedUser));
         return createdClient;
 
     }

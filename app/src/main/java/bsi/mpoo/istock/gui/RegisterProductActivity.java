@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import java.math.BigDecimal;
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
@@ -21,6 +23,7 @@ public class RegisterProductActivity extends AppCompatActivity {
     private EditText priceEditText;
     private EditText quantityEditText;
     private EditText minimumEditText;
+    private Object account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,12 @@ public class RegisterProductActivity extends AppCompatActivity {
     public void register(View view) {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)) return;
-        User user = Session.getInstance().getUser();
+        account = Session.getInstance().getAccount();
         ProductServices productServices = new ProductServices(getApplicationContext());
         Product newProduct = new Product();
+        if (account instanceof Administrator || account instanceof Producer){
+            newProduct.setAdministrator(Session.getInstance().getAdministrator());
+        } else { return; }
         newProduct.setName(nameEditText.getText().toString().trim().toUpperCase());
         newProduct.setPrice(new BigDecimal(priceEditText.getText().toString()));
         newProduct.setQuantity(Long.parseLong(quantityEditText.getText().toString()));
@@ -51,16 +57,9 @@ public class RegisterProductActivity extends AppCompatActivity {
         }
 
         newProduct.setStatus(Constants.Status.ACTIVE);
-        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
-            newProduct.setAdministrator(user);
-        } else {
-            User adm = new User();
-            adm.setId(user.getAdministrator());
-            newProduct.setAdministrator(adm);
-        }
 
         try {
-            productServices.registerProduct(newProduct);
+            productServices.registerProduct(newProduct, Session.getInstance().getAdministrator());
             String message = getString(R.string.register_done);
             new AlertDialogGenerator(this, message, true).invoke();
 

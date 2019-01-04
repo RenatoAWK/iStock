@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.product.ProductDAO;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
 
@@ -17,13 +18,13 @@ public class ProductServices {
         this.productDAO = new ProductDAO(context);
     }
 
-    public boolean isProductRegistered(Product product){
-        Product searchedProduct = productDAO.getProductByName(product);
+    public boolean isProductRegistered(String name, Administrator administrator){
+        Product searchedProduct = productDAO.getProductByName(name, administrator);
         return searchedProduct != null;
     }
 
-    public void registerProduct(Product product) throws Exception {
-        if (isProductRegistered(product)){
+    public void registerProduct(Product product, Administrator administrator) throws Exception {
+        if (isProductRegistered(product.getName(), administrator)){
             throw new Exceptions.ProductAlreadyRegistered();
         } else {
             productDAO.insertProduct(product);
@@ -38,20 +39,20 @@ public class ProductServices {
         }
     }
 
-    public void disableProduct(Product product) throws Exception{
+    public void disableProduct(Product product, Administrator administrator) throws Exception{
 
-        if (isProductRegistered(product)){
+        if (isProductRegistered(product.getName(), administrator)){
             productDAO.disableProduct(product);
         } else {
             throw  new Exceptions.ProductNotRegistered();
         }
     }
 
-    public ArrayList<Product> getAcitiveProductsAsc(User user){
-        return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(user,Contract.ASC);
+    public ArrayList<Product> getAcitiveProductsAsc(Administrator administrator){
+        return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(administrator,Contract.ASC);
     }
 
-    public ArrayList<Product> getAcitiveProductsDesc(User user){
-        return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(user,Contract.DESC);
+    public ArrayList<Product> getAcitiveProductsDesc(Administrator administrator){
+        return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(administrator ,Contract.DESC);
     }
 }

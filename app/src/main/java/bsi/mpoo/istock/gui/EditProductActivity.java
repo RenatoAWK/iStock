@@ -16,11 +16,11 @@ import bsi.mpoo.istock.services.Validations;
 
 public class EditProductActivity extends AppCompatActivity {
 
-    EditText nameEditText;
-    EditText priceEditText;
-    EditText quantityEditText;
-    EditText minimumEditText;
-    Product product;
+    private EditText nameEditText;
+    private EditText priceEditText;
+    private EditText quantityEditText;
+    private EditText minimumEditText;
+    private Product product;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

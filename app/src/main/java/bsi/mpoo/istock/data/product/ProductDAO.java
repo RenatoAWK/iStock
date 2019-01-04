@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.data.user.UserDAO;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.UserServices;
 
 public class ProductDAO {
     private Context context;
@@ -28,14 +30,14 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
         values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
-        values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
+        values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getUser().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
         long newRowID = db.insert(ContractProduct.TABLE_NAME, null, values);
         product.setId(newRowID);
         db.close();
     }
 
-    public Product getProductByName(Product product) {
+    public Product getProductByName(String name, Administrator administrator) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Product searchedProduct = null;
@@ -50,8 +52,8 @@ public class ProductDAO {
         };
         String selection = ContractProduct.COLUMN_NAME+" = ?"+" AND "+
                 ContractProduct.COLUMN_ID_ADM+" =?";
-        String[] selectionArgs = { product.getName().trim().toUpperCase(),
-                String.valueOf(product.getAdministrator().getId()) };
+        String[] selectionArgs = { name.trim().toUpperCase(),
+                String.valueOf(administrator.getUser().getId()) };
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -70,7 +72,7 @@ public class ProductDAO {
         return searchedProduct;
     }
 
-    public Product getProductById(Product product) {
+    public Product getProductById(long id) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Product searchedProduct = null;
@@ -84,7 +86,7 @@ public class ProductDAO {
                 ContractProduct.COLUMN_STATUS
         };
         String selection = ContractProduct._ID+" = ?";
-        String[] selectionArgs = { String.valueOf(product.getId()) };
+        String[] selectionArgs = { String.valueOf(id) };
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -102,7 +104,7 @@ public class ProductDAO {
         return searchedProduct;
     }
 
-    public List<Product> getProductsByAdmId(User user, String order) {
+    public List<Product> getProductsByAdmId(Administrator administrator, String order) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -117,7 +119,7 @@ public class ProductDAO {
         String sortOrder = ContractProduct.COLUMN_NAME +" "+ order;
         List<Product> productList = new ArrayList<>();
         String selection = ContractProduct.COLUMN_ID_ADM+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId()) };
+        String[] selectionArgs = { String.valueOf(administrator.getUser().getId()) };
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
                 projection,
@@ -138,7 +140,7 @@ public class ProductDAO {
         return productList;
     }
 
-    public List<Product> getActiveProductsByAdmId(User user, String order) {
+    public List<Product> getActiveProductsByAdmId(Administrator administrator, String order) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -154,7 +156,7 @@ public class ProductDAO {
         List<Product> productList = new ArrayList<>();
         String selection = ContractProduct.COLUMN_ID_ADM+" = ?"+" AND "+
                 ContractProduct.COLUMN_STATUS+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId()),
+        String[] selectionArgs = { String.valueOf(administrator.getUser().getId()),
                 String.valueOf(Constants.Status.ACTIVE)};
         Cursor cursor = db.query(
                 ContractProduct.TABLE_NAME,
@@ -184,7 +186,7 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
         values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
-        values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
+        values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getUser().getId());
         values.put(ContractProduct.COLUMN_STATUS, Constants.Status.INACTIVE);
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
@@ -199,7 +201,7 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_PRICE, product.getPrice().toString());
         values.put(ContractProduct.COLUMN_QUANTITY, product.getQuantity());
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
-        values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getId());
+        values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getUser().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
@@ -233,8 +235,9 @@ public class ProductDAO {
         UserDAO userDAO = new UserDAO(context);
         User user = new User();
         user.setId(idAdm);
-        User searchedUser = userDAO.getUserById(user);
-        createdProduct.setAdministrator(searchedUser);
+        User searchedUser = userDAO.getUserById(user.getId());
+        UserServices userServices = new UserServices(context);
+        createdProduct.setAdministrator((Administrator) userServices.getUserInDomainType(searchedUser));
         return createdProduct;
     }
 }

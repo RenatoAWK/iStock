@@ -11,6 +11,7 @@ import java.util.List;
 
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
 
@@ -41,7 +42,7 @@ public class UserDAO{
         db.close();
     }
 
-    public User getUserByEmail(User user) {
+    public User getUserByEmail(String email) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -59,7 +60,7 @@ public class UserDAO{
         };
 
         String selection = ContractUser.COLUMN_EMAIL+" = ?";
-        String[] selectionArgs = { user.getEmail().trim().toUpperCase()};
+        String[] selectionArgs = { email.trim().toUpperCase()};
 
         Cursor cursor = db.query(
                 ContractUser.TABLE_NAME,
@@ -82,7 +83,7 @@ public class UserDAO{
 
     }
 
-    public User getUserById(User user) {
+    public User getUserById(long id) {
 
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -100,7 +101,7 @@ public class UserDAO{
         };
 
         String selection = ContractUser._ID+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId())};
+        String[] selectionArgs = { String.valueOf(id)};
 
         Cursor cursor = db.query(
                 ContractUser.TABLE_NAME,
@@ -123,7 +124,7 @@ public class UserDAO{
 
     }
 
-    public List<User> getUsersByAdmId(User user, String order){
+    public List<User> getUsersByAdmId(Administrator administrator, String order){
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -140,7 +141,7 @@ public class UserDAO{
         String sortOrder = ContractUser.COLUMN_NAME +" "+ order;
         List<User> userList = new ArrayList<>();
         String selection = ContractUser.COLUMN_ADMINISTRATOR+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId()) };
+        String[] selectionArgs = { String.valueOf(administrator.getUser().getId()) };
         Cursor cursor = db.query(
                 ContractUser.TABLE_NAME,
                 projection,
@@ -161,7 +162,7 @@ public class UserDAO{
         return userList;
     }
 
-    public List<User> getActiveUsersByAdmId(User user, String order){
+    public List<User> getActiveUsersByAdmId(Administrator administrator, String order){
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -179,7 +180,7 @@ public class UserDAO{
         List<User> userList = new ArrayList<>();
         String selection = ContractUser.COLUMN_ADMINISTRATOR+" = ?"+" AND "+
                 ContractUser.COLUMN_STATUS+" = ?";
-        String[] selectionArgs = { String.valueOf(user.getId()),
+        String[] selectionArgs = { String.valueOf(administrator.getUser().getId()),
                 String.valueOf(Constants.Status.ACTIVE)};
         Cursor cursor = db.query(
                 ContractUser.TABLE_NAME,

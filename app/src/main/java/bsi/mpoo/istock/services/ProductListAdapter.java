@@ -15,6 +15,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
@@ -25,12 +26,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     private final ArrayList<Product> productList;
     private LayoutInflater inflater;
     private Context context;
-    private User user;
 
-    public ProductListAdapter(Context context, ArrayList<Product> productList, User user){
+    public ProductListAdapter(Context context, ArrayList<Product> productList){
         inflater = LayoutInflater.from(context);
         this.productList = productList;
-        this.user = user;
         this.context = context;
     }
 
@@ -61,7 +60,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
             if (item.getTitle().toString().equals(deleteOption)){
                 try {
-                    productServices.disableProduct(product);
+                    productServices.disableProduct(product, Session.getInstance().getAdministrator());
                     productList.remove(position);
                     adapter.notifyDataSetChanged();
 

@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
@@ -28,7 +27,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
     private EditText nameEditText;
     private EditText emailEditText;
     private int selectedOption = Constants.UserTypes.ADMINISTRATOR;
-    private User user;
+    private Object account;
     private String tempPassword;
 
     @Override
@@ -37,7 +36,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_register_user);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        user = Session.getInstance().getUser();
+        account = Session.getInstance().getAccount();
         spinner = findViewById(R.id.spinnerRegisterUser);
         spinner.setOnItemSelectedListener(this);
         ArrayList<String> functions = new ArrayList<>();
@@ -77,10 +76,12 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         }
         UserServices userServices = new UserServices(getApplicationContext());
         User newUser = new User();
+        if (account instanceof Administrator){
+            newUser.setAdministrator(Session.getInstance().getAdministrator().getUser().getId());
+        }
         newUser.setName(nameEditText.getText().toString());
-        newUser.setCompany(user.getCompany());
+        newUser.setCompany(Session.getInstance().getAdministrator().getUser().getCompany());
         newUser.setEmail(emailIsEmpty(emailEditText.getText().toString(), newUser.getName(), newUser.getCompany()));
-        newUser.setAdministrator(user.getId());
         newUser.setStatus(Constants.Status.FIRST_ACCESS_FOR_USER);
         tempPassword = RandomPassword.generate();
         newUser.setPassword(tempPassword);

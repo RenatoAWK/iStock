@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Address;
+import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.ClientServices;
@@ -19,15 +21,14 @@ import bsi.mpoo.istock.services.Validations;
 
 public class RegisterClientActivity extends AppCompatActivity {
 
-    EditText nameEditText;
-    EditText streetEditText;
-    EditText numberEditText;
-    EditText districtEditText;
-    EditText cityEditText;
-    EditText stateEditText;
-    EditText phoneEditText;
-    Button registerButton;
-    User user;
+    private EditText nameEditText;
+    private EditText streetEditText;
+    private EditText numberEditText;
+    private EditText districtEditText;
+    private EditText cityEditText;
+    private EditText stateEditText;
+    private EditText phoneEditText;
+    private Object account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,25 +44,20 @@ public class RegisterClientActivity extends AppCompatActivity {
         stateEditText = findViewById(R.id.editTextStateRegisterClient);
         phoneEditText = findViewById(R.id.editTextPhoneRegisterClient);
         MaskGenerator.mask(phoneEditText, Constants.MaskTypes.PHONE);
-        registerButton = findViewById(R.id.buttonRegisterRegisterClient);
     }
 
     public void register(View view) {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)) return;
-        user = Session.getInstance().getUser();
+        account = Session.getInstance().getAccount();
         ClientServices clientServices = new ClientServices(getApplicationContext());
         Client newClient = new Client();
+        if (account instanceof Administrator || account instanceof Salesman){
+            newClient.setAdministrator(Session.getInstance().getAdministrator());
+        } else { return; }
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
         newClient.setPhone(MaskGenerator.unmask(phoneEditText.getText().toString()));
         newClient.setStatus(Constants.Status.ACTIVE);
-        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
-            newClient.setAdministrator(user);
-        } else {
-            User adm = new User();
-            adm.setId(user.getAdministrator());
-            newClient.setAdministrator(adm);
-        }
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
         newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));
@@ -72,7 +68,7 @@ public class RegisterClientActivity extends AppCompatActivity {
         newClient.setAddress(newAddress);
 
         try {
-            clientServices.registerClient(newClient);
+            clientServices.registerClient(newClient, Session.getInstance().getAdministrator());
             String message = getString(R.string.register_done);
             new AlertDialogGenerator(this, message, true ).invoke();
 

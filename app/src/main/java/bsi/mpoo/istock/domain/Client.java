@@ -8,7 +8,7 @@ public class Client implements Parcelable {
     private String name;
     private String phone;
     private Address address;
-    private User administrator;
+    private Administrator administrator;
     private int status;
 
     public Client(){}
@@ -18,7 +18,7 @@ public class Client implements Parcelable {
         this.name = parcel.readString();
         this.phone = parcel.readString();
         this.address = (Address)parcel.readValue(Address.class.getClassLoader());
-        this.administrator = (User)parcel.readValue(User.class.getClassLoader());
+        this.administrator = (Administrator) parcel.readValue(Administrator.class.getClassLoader());
     }
 
     public long getId() {
@@ -45,10 +45,10 @@ public class Client implements Parcelable {
     public void setAddress(Address address) {
         this.address = address;
     }
-    public User getAdministrator() {
+    public Administrator getAdministrator() {
         return administrator;
     }
-    public void setAdministrator(User administrator) {
+    public void setAdministrator(Administrator administrator) {
         this.administrator = administrator;
     }
     public int getStatus() {

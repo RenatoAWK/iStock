@@ -3,9 +3,14 @@ package bsi.mpoo.istock.services;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.user.UserDAO;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
+import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
@@ -18,7 +23,7 @@ public class UserServices {
     }
 
     private boolean isUserRegistered(User user){
-        User searchedUser = userDAO.getUserByEmail(user);
+        User searchedUser = userDAO.getUserByEmail(user.getEmail());
         return searchedUser != null;
     }
 
@@ -33,7 +38,7 @@ public class UserServices {
     }
 
     public User login(User user){
-        User searchedUser = userDAO.getUserByEmail(user);
+        User searchedUser = userDAO.getUserByEmail(user.getEmail());
         if (searchedUser != null){
             if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
                 return searchedUser;
@@ -44,20 +49,68 @@ public class UserServices {
         return null;
     }
 
-    public ArrayList<User> getAcitiveUsersAsc(User user){
-        return (ArrayList<User>) userDAO.getActiveUsersByAdmId(user,Contract.ASC);
+    public ArrayList<User> getAcitiveUsersAsc(Administrator administrator){
+        return (ArrayList<User>) userDAO.getActiveUsersByAdmId(administrator,Contract.ASC);
     }
 
-    public ArrayList<User> getAcitiveUsersDesc(User user){
-        return (ArrayList<User>) userDAO.getActiveUsersByAdmId(user,Contract.DESC);
+    public ArrayList<User> getAcitiveUsersDesc(Administrator administrator){
+        return (ArrayList<User>) userDAO.getActiveUsersByAdmId(administrator,Contract.DESC);
     }
 
-    public ArrayList<User> getUsersAsc(User user){
-        return (ArrayList<User>) userDAO.getUsersByAdmId(user, Contract.ASC);
+    public ArrayList<User> getUsersAsc(Administrator administrator){
+        return (ArrayList<User>) userDAO.getUsersByAdmId(administrator, Contract.ASC);
     }
 
-    public ArrayList<User> getUsersDesc(User user){
-        return (ArrayList<User>) userDAO.getUsersByAdmId(user, Contract.DESC);
+    public ArrayList<User> getUsersDesc(Administrator administrator){
+        return (ArrayList<User>) userDAO.getUsersByAdmId(administrator, Contract.DESC);
     }
 
+    public ArrayList<Object> listUserToDomainTypeList(List<User> userList){
+        ArrayList<Object> arrayList = new ArrayList<>();
+        for (User user: userList ){
+            switch (user.getType()){
+                case Constants.UserTypes.ADMINISTRATOR:
+                    Administrator administrator = new Administrator();
+                    administrator.setUser(user);
+                    arrayList.add(administrator);
+                    break;
+                case Constants.UserTypes.SALESMAN:
+                    Salesman salesman = new Salesman();
+                    salesman.setUser(user);
+                    arrayList.add(salesman);
+                    break;
+                case Constants.UserTypes.PRODUCER:
+                    Producer producer = new Producer();
+                    producer.setUser(user);
+                    arrayList.add(producer);
+                    break;
+            }
+        }
+        return arrayList;
+    }
+
+    public Object getUserInDomainType(User user) {
+        switch (user.getType()) {
+            case Constants.UserTypes.ADMINISTRATOR:
+                Administrator administrator = new Administrator();
+                administrator.setUser(user);
+                return administrator;
+            case Constants.UserTypes.SALESMAN:
+                Salesman salesman = new Salesman();
+                salesman.setUser(user);
+                return salesman;
+            case Constants.UserTypes.PRODUCER:
+                Producer producer = new Producer();
+                producer.setUser(user);
+                return producer;
+        }
+        return null;
+    }
+
+    public User getUserById(long id){
+        return userDAO.getUserById(id);
+    }
 }
+
+
+

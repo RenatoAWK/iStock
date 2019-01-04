@@ -18,15 +18,14 @@ import bsi.mpoo.istock.services.Validations;
 
 public class EditClientActivity extends AppCompatActivity {
 
-    EditText nameEditText;
-    EditText streetEditText;
-    EditText numberEditText;
-    EditText districtEditText;
-    EditText cityEditText;
-    EditText stateEditText;
-    EditText phoneEditText;
-    Button registerButton;
-    Client client;
+    private EditText nameEditText;
+    private EditText streetEditText;
+    private EditText numberEditText;
+    private EditText districtEditText;
+    private EditText cityEditText;
+    private EditText stateEditText;
+    private EditText phoneEditText;
+    private Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class EditClientActivity extends AppCompatActivity {
         cityEditText = findViewById(R.id.editTextCityEditClient);
         stateEditText = findViewById(R.id.editTextStateEditClient);
         phoneEditText = findViewById(R.id.editTextPhoneEditClient);
-        registerButton = findViewById(R.id.buttonRegisterEditClient);
         nameEditText.setText(client.getName());
         streetEditText.setText(client.getAddress().getStreet());
         numberEditText.setText(String.valueOf(client.getAddress().getNumber()));
