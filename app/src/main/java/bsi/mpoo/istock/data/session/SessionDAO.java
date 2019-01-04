@@ -97,7 +97,7 @@ public class SessionDAO {
         User user = new User();
         user.setId(idUser);
         User searchedUser = userDAO.getUserById(user.getId());
-        User adminUser = userDAO.getUserById(user.getAdministrator());
+        User adminUser = userDAO.getUserById(searchedUser.getAdministrator());
         UserServices userServices = new UserServices(context);
         searchedSession.setId_user(idUser);
         searchedSession.setRemember(remember);

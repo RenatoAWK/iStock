@@ -26,7 +26,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
     private Spinner spinner;
     private EditText nameEditText;
     private EditText emailEditText;
-    private int selectedOption = Constants.UserTypes.ADMINISTRATOR;
+    private int selectedOption = Constants.UserTypes.SALESMAN;
     private Object account;
     private String tempPassword;
 
@@ -40,7 +40,6 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
         spinner = findViewById(R.id.spinnerRegisterUser);
         spinner.setOnItemSelectedListener(this);
         ArrayList<String> functions = new ArrayList<>();
-        functions.add(getString(R.string.administration));
         functions.add(getString(R.string.sales));
         functions.add(getString(R.string.production));
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(
@@ -54,9 +53,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id){
         String option = parent.getItemAtPosition(position).toString();
-        if (option.equals(getString(R.string.administration).intern())){
-            selectedOption = Constants.UserTypes.ADMINISTRATOR;
-        } else if (option.equals(getString(R.string.production).intern())){
+        if (option.equals(getString(R.string.production).intern())){
             selectedOption = Constants.UserTypes.PRODUCER;
         } else {
             selectedOption = Constants.UserTypes.SALESMAN;
