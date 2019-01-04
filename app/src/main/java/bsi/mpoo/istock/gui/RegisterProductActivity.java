@@ -51,7 +51,14 @@ public class RegisterProductActivity extends AppCompatActivity {
         }
 
         newProduct.setStatus(Constants.Status.ACTIVE);
-        newProduct.setAdministrator(user);
+        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
+            newProduct.setAdministrator(user);
+        } else {
+            User adm = new User();
+            adm.setId(user.getAdministrator());
+            newProduct.setAdministrator(adm);
+        }
+
         try {
             productServices.registerProduct(newProduct);
             String message = getString(R.string.register_done);

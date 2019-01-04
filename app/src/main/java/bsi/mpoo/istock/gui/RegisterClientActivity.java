@@ -55,7 +55,13 @@ public class RegisterClientActivity extends AppCompatActivity {
         newClient.setName(nameEditText.getText().toString().trim().toUpperCase());
         newClient.setPhone(MaskGenerator.unmask(phoneEditText.getText().toString()));
         newClient.setStatus(Constants.Status.ACTIVE);
-        newClient.setAdministrator(user);
+        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
+            newClient.setAdministrator(user);
+        } else {
+            User adm = new User();
+            adm.setId(user.getAdministrator());
+            newClient.setAdministrator(adm);
+        }
         Address newAddress = new Address();
         newAddress.setStreet(streetEditText.getText().toString().trim().toUpperCase());
         newAddress.setNumber(Integer.parseInt(numberEditText.getText().toString()));

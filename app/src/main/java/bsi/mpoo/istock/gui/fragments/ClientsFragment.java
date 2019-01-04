@@ -40,7 +40,14 @@ public class ClientsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         ClientServices clientServices = new ClientServices(getActivity().getApplicationContext());
-        ArrayList<Client> clientArrayList = clientServices.getAcitiveClientsAsc(user);
+        ArrayList<Client> clientArrayList;
+        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
+            clientArrayList = clientServices.getAcitiveClientsAsc(user);
+        } else {
+            User adm = new User();
+            adm.setId(user.getAdministrator());
+            clientArrayList = clientServices.getAcitiveClientsAsc(adm);
+        }
         RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewClient);
         ClientListAdapter adapter = new ClientListAdapter(context, clientArrayList, user);
         recyclerView.setAdapter(adapter);

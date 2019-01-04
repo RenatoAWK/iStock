@@ -41,7 +41,14 @@ public class ProductsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         ProductServices productServices = new ProductServices(getActivity().getApplicationContext());
-        ArrayList<Product> productArrayList = productServices.getAcitiveProductsAsc(user);
+        ArrayList<Product> productArrayList;
+        if (user.getType() == Constants.UserTypes.ADMINISTRATOR) {
+            productArrayList = productServices.getAcitiveProductsAsc(user);
+        } else {
+            User adm = new User();
+            adm.setId(user.getAdministrator());
+            productArrayList = productServices.getAcitiveProductsAsc(adm);
+        }
         RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewProduct);
         ProductListAdapter adapter = new ProductListAdapter(context, productArrayList, user);
         recyclerView.setAdapter(adapter);
