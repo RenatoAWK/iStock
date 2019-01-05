@@ -72,8 +72,10 @@ public class DialogDetails extends AppCompatActivity {
         TextView emailTextView = view.findViewById(R.id.emailDetailsDialogUser);
         TextView statusTextView = view.findViewById(R.id.statusDetailsDialogUser);
         ImageServices imageServices = new ImageServices();
-        imageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if (user.getImage() != null){
+            imageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
         nameTextView.setText(user.getName());
         switch (user.getType()){
             case Constants.UserTypes.ADMINISTRATOR:
@@ -94,7 +96,7 @@ public class DialogDetails extends AppCompatActivity {
                 statusTextView.setText(context.getString(R.string.inactive));
                 break;
             case Constants.Status.FIRST_ACCESS_FOR_USER:
-                statusTextView.setText(context.getString(R.string.first_access));
+                statusTextView.setText(context.getString(R.string.at_first_access));
                 break;
         }
         emailTextView.setText(user.getEmail());

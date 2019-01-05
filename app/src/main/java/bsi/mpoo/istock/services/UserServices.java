@@ -110,6 +110,22 @@ public class UserServices {
     public User getUserById(long id){
         return userDAO.getUserById(id);
     }
+
+    public void updateUser(User user) throws Exception{
+        try {
+            userDAO.updateUser(user);
+        } catch (Exception error){
+            throw new Exceptions.UserNotRegistered();
+        }
+    }
+
+    public void disableUser(User user) throws Exception{
+        if (isUserRegistered(user)){
+            userDAO.disableUser(user);
+        } else {
+            throw new Exceptions.UserNotRegistered();
+        }
+    }
 }
 
 

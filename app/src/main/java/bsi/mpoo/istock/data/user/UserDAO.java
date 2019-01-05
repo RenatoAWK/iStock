@@ -22,10 +22,8 @@ public class UserDAO{
     }
 
     public void insertUser(User user) {
-
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(ContractUser.COLUMN_NAME, user.getName().toUpperCase());
         values.put(ContractUser.COLUMN_EMAIL, user.getEmail().toUpperCase());
@@ -237,6 +235,40 @@ public class UserDAO{
 
         return createdUser;
 
+    }
+
+    public void updateUser(User user){
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ContractUser.COLUMN_NAME, user.getName().toUpperCase());
+        values.put(ContractUser.COLUMN_EMAIL, user.getEmail().toUpperCase());
+        values.put(ContractUser.COLUMN_PASSWORD, user.getPassword());
+        values.put(ContractUser.COLUMN_TYPE, user.getType());
+        values.put(ContractUser.COLUMN_STATUS, user.getStatus());
+        values.put(ContractUser.COLUMN_COMPANY, user.getCompany());
+        values.put(ContractUser.COLUMN_ADMINISTRATOR, user.getAdministrator());
+        values.put(ContractUser.COLUMN_IMAGE, user.getImage());
+        String selection = ContractUser._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(user.getId())};
+        db.update(ContractUser.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void disableUser(User user){
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ContractUser.COLUMN_NAME, user.getName().toUpperCase());
+        values.put(ContractUser.COLUMN_EMAIL, user.getEmail().toUpperCase());
+        values.put(ContractUser.COLUMN_PASSWORD, user.getPassword());
+        values.put(ContractUser.COLUMN_TYPE, user.getType());
+        values.put(ContractUser.COLUMN_STATUS, Constants.Status.INACTIVE);
+        values.put(ContractUser.COLUMN_COMPANY, user.getCompany());
+        values.put(ContractUser.COLUMN_ADMINISTRATOR, user.getAdministrator());
+        values.put(ContractUser.COLUMN_IMAGE, user.getImage());
+        String selection = ContractUser._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(user.getId())};
+        db.update(ContractUser.TABLE_NAME, values, selection, selectionArgs);
     }
 
 

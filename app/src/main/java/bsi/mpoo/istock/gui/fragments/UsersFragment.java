@@ -45,7 +45,7 @@ public class UsersFragment extends Fragment {
         ArrayList<User> userArrayList;
 
         if (account instanceof Administrator){
-            userArrayList = userServices.getUsersAsc(Session.getInstance().getAdministrator());
+            userArrayList = userServices.getAcitiveUsersAsc(Session.getInstance().getAdministrator());
             RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerviewUser);
             UserListAdapter adapter = new UserListAdapter(context, userArrayList);
             recyclerView.setAdapter(adapter);

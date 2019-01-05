@@ -49,9 +49,17 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (session.getAccount() instanceof Salesman){
                     Session.getInstance().setAccount((Salesman) session.getAccount());
                     Session.getInstance().setAdministrator(session.getAdministrator());
+                    if (((Salesman) session.getAccount()).getUser().getStatus() == Constants.Status.FIRST_ACCESS_FOR_USER){
+                        sessionServices.clearSession();
+                        return;
+                    }
                 } else {
                     Session.getInstance().setAccount((Producer) session.getAccount());
                     Session.getInstance().setAdministrator(session.getAdministrator());
+                    if (((Salesman) session.getAccount()).getUser().getStatus() == Constants.Status.FIRST_ACCESS_FOR_USER){
+                        sessionServices.clearSession();
+                        return;
+                    }
                 }
                 Intent intent = new Intent(this, MainActivity.class);
                 finish();
@@ -77,6 +85,13 @@ public class LoginActivity extends AppCompatActivity {
             emailEditText.setError(getString(R.string.invalid_email_or_password));
             passwordEditText.setError(getString(R.string.invalid_email_or_password));
         } else {
+            if (searchedUser.getStatus() == Constants.Status.FIRST_ACCESS_FOR_USER){
+                Intent intent = new Intent(this, FirstAccess.class);
+                intent.putExtra(Constants.BundleKeys.USER, searchedUser);
+                startActivity(intent);
+                finish();
+                return;
+            }
             account = userServices.getUserInDomainType(searchedUser);
             Administrator administrator;
             if (account instanceof Administrator){

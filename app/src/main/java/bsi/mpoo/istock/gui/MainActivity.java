@@ -90,13 +90,13 @@ public class MainActivity extends AppCompatActivity
             image = ((Administrator) Session.getInstance().getAccount()).getUser().getImage();
         } else if (Session.getInstance().getAccount() instanceof Salesman){
             textViewName.setText(((Salesman) Session.getInstance().getAccount()).getUser().getName());
-            textViewCompany.setText(((Salesman) Session.getInstance().getAccount()).getUser().getName());
+            textViewCompany.setText(((Salesman) Session.getInstance().getAccount()).getUser().getCompany());
             image = ((Salesman) Session.getInstance().getAccount()).getUser().getImage();
             nav_Menu.findItem(R.id.nav_users).setVisible(false);
             nav_Menu.findItem(R.id.nav_products).setVisible(false);
         } else {
             textViewName.setText(((Producer) Session.getInstance().getAccount()).getUser().getName());
-            textViewCompany.setText(((Producer) Session.getInstance().getAccount()).getUser().getName());
+            textViewCompany.setText(((Producer) Session.getInstance().getAccount()).getUser().getCompany());
             image = ((Producer) Session.getInstance().getAccount()).getUser().getImage();
             nav_Menu.findItem(R.id.nav_sales).setVisible(false);
             nav_Menu.findItem(R.id.nav_users).setVisible(false);

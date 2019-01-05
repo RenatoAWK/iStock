@@ -91,4 +91,22 @@ public class Exceptions {
             return this.idError;
         }
     }
+
+    public static class UserNotRegistered extends Exception{
+        private ExceptionsEnum error;
+        private int idError;
+
+        public UserNotRegistered(){
+            this.error = ExceptionsEnum.USER_NOT_REGISTERED;
+            this.idError = this.error.getValue();
+        }
+
+        public String getStringError(){
+            return this.error.toString();
+        }
+
+        public int getIdError() {
+            return this.idError;
+        }
+    }
 }
