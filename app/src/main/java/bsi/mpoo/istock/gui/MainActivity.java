@@ -175,6 +175,10 @@ public class MainActivity extends AppCompatActivity
                 sessionServices.clearSession();
                 finish();
                 startActivity(intent);
+                break;
+            case R.id.nav_settings:
+                Intent intent1 = new Intent(this, SettingsActivity.class);
+                startActivity(intent1);
         }
 
         if (fragment != null){

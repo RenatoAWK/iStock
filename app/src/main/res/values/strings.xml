@@ -94,4 +94,8 @@
     <string name="user_not_registered">Usuário não registrado</string>
     <string name="first_access">Primeiro Acesso</string>
     <string name="set_your_new_password_access">Digite sua nova senha de acesso</string>
+    <string name="change">Alterar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_my_account">Excluir minha conta</string>
+    <string name="any_text">TextoQualquer</string>
 </resources>

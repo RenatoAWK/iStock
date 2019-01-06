@@ -28,7 +28,8 @@
         <activity android:name=".gui.EditProductActivity" />
         <activity android:name=".gui.EditUserActivity" />
         <activity android:name=".gui.RegisterUserActivity" />
-        <activity android:name=".gui.FirstAccess"></activity>
+        <activity android:name=".gui.FirstAccess" />
+        <activity android:name=".gui.SettingsActivity"></activity>
     </application>
 
 </manifest>
