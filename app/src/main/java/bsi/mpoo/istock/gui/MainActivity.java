@@ -34,15 +34,19 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     byte[] image;
+    private TextView textViewCompany;
+    private TextView textViewName;
+    private ImageView companyImageView;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private View headerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView textViewCompany;
-        TextView textViewName;
-        ImageView companyImageView;
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -71,18 +75,23 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerView = navigationView.getHeaderView(0);
+        headerView = navigationView.getHeaderView(0);
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);
         companyImageView = headerView.findViewById(R.id.imageViewHeader);
+        displaySelectedScreen(R.id.nav_home);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         Menu nav_Menu = navigationView.getMenu();
         if (Session.getInstance().getAccount() instanceof Administrator){
             textViewName.setText(((Administrator) Session.getInstance().getAccount()).getUser().getName());
@@ -109,7 +118,6 @@ public class MainActivity extends AppCompatActivity
             setImageOnImageView(companyImageView, imageServices);
 
         }
-        displaySelectedScreen(R.id.nav_home);
     }
 
     private void setImageOnImageView(ImageView companyImageView, ImageServices imageServices) {

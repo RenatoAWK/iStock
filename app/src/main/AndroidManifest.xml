@@ -30,7 +30,7 @@
         <activity android:name=".gui.RegisterUserActivity" />
         <activity android:name=".gui.FirstAccess" />
         <activity android:name=".gui.SettingsActivity" />
-        <activity android:name=".SettingsHelperActivity"></activity>
+        <activity android:name=".gui.SettingsHelperActivity"></activity>
     </application>
 
 </manifest>

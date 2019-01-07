@@ -51,4 +51,8 @@ public class Session {
     public void setAdministrator(Administrator administrator) {
         Session.administrator = administrator;
     }
+
+    public static void setInstance(Session session){
+        Session.instance = session;
+    }
 }

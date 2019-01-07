@@ -139,7 +139,7 @@ public class UserServices {
         return producer.getUser();
     }
 
-    public User getUserFromDimainType(Object account){
+    public User getUserFromDomainType(Object account){
         if (account instanceof Administrator){
             return ((Administrator) account).getUser();
         } else if (account instanceof Salesman){

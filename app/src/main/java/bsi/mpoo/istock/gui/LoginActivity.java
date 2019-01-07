@@ -92,6 +92,17 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
                 return;
             }
+            int remember;
+            boolean switchState = switchButton.isChecked();
+            if (switchState){
+                remember = Constants.Session.REMEMBER;
+            } else {
+                remember = Constants.Session.NOT_TO_REMEMBER;
+            }
+            SessionServices sessionServices = new SessionServices(getApplicationContext());
+            account = userServices.getUserInDomainType(searchedUser);
+            sessionServices.updateSession(account,remember );
+            /*
             account = userServices.getUserInDomainType(searchedUser);
             Administrator administrator;
             if (account instanceof Administrator){
@@ -122,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             Session.getInstance().setRemember(remember);
             SessionServices sessionServices = new SessionServices(getApplicationContext());
-            sessionServices.updateSession(Session.getInstance());
+            sessionServices.updateSession(Session.getInstance());*/
             Intent intent = new Intent(this, MainActivity.class);
             finish();
             startActivity(intent);

@@ -35,7 +35,8 @@
                 style="@style/button_primary"
                 android:layout_width="100dp"
                 android:layout_gravity="center"
-                android:text="@string/change" />
+                android:text="@string/change"
+                android:onClick="pickImage"/>
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
