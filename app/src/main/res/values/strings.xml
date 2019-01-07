@@ -98,4 +98,17 @@
     <string name="cancel">Cancelar</string>
     <string name="delete_my_account">Excluir minha conta</string>
     <string name="any_text">TextoQualquer</string>
+    <string name="settings_account">Configurações</string>
+    <string name="currenty_company_name">Nome atual da empresa</string>
+    <string name="new_company_name">Novo nome da empresa</string>
+    <string name="currenty_name">Nome atual</string>
+    <string name="new_name">Novo nome</string>
+    <string name="currenty_email">Email atual</string>
+    <string name="new_email">Novo email</string>
+    <string name="currenty_password">Senha atual</string>
+    <string name="new_password">Nova senha</string>
+    <string name="edition_of_company_name">Edição de nome da empresa</string>
+    <string name="edition_of_email">Edição do email</string>
+    <string name="edition_of_name">Edição de nome</string>
+    <string name="edition_of_password">Edição de senha</string>
 </resources>

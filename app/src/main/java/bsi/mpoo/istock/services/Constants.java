@@ -32,6 +32,7 @@ public class Constants {
         public static final String CLIENT = "client";
         public static final String PRODUCT = "product";
         public static final String EMAIL = "email";
+        public static final String SETTINGS = "settings";
     }
 
     public static class MaskTypes {
@@ -46,6 +47,13 @@ public class Constants {
 
     public static class Activity{
         public static final String TEXT_PLAIN = "text/plain";
+    }
+
+    public static class SettingsHelper{
+        public static final int COMPANY = 1;
+        public static final int NAME = 2;
+        public static final int EMAIL = 3;
+        public static final int PASSWORD = 4;
     }
 
 }

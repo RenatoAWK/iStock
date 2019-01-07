@@ -126,6 +126,31 @@ public class UserServices {
             throw new Exceptions.UserNotRegistered();
         }
     }
+
+    public User getUserFromDomainType(Administrator administrator){
+        return administrator.getUser();
+    }
+
+    public User getUserFromDomainType(Salesman salesman){
+        return salesman.getUser();
+    }
+
+    public User getUserFromDomainType(Producer producer){
+        return producer.getUser();
+    }
+
+    public User getUserFromDimainType(Object account){
+        if (account instanceof Administrator){
+            return ((Administrator) account).getUser();
+        } else if (account instanceof Salesman){
+            return ((Salesman) account).getUser();
+        } else if (account instanceof Producer){
+            return  ((Producer) account).getUser();
+        } else {
+            return null;
+        }
+
+    }
 }
 
 
