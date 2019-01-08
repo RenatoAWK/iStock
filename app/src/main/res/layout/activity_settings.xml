@@ -97,11 +97,12 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
+                android:id="@+id/deleteButtonSettings"
                 style="@style/button_secondary"
                 android:background="@android:color/holo_red_dark"
-                android:textColor="@android:color/white"
+                android:onClick="delete"
                 android:text="@string/delete_my_account"
-                android:id="@+id/deleteButtonSettings"/>
+                android:textColor="@android:color/white" />
 
 
 

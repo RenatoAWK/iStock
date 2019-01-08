@@ -18,7 +18,6 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Producer;
@@ -185,5 +184,16 @@ public class SettingsActivity extends AppCompatActivity {
             new AlertDialogGenerator(this,
                     getString(R.string.unknow_error), false).invoke();
         }
+    }
+
+    public void delete(View view) {
+
+        Intent intent = new Intent(this, SettingsHelperActivity.class);
+        Bundle bundle = new Bundle();
+        int optionSelected = Constants.SettingsHelper.DELETE;
+        bundle.putInt(Constants.BundleKeys.SETTINGS,optionSelected);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
     }
 }

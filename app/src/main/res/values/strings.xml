@@ -112,4 +112,5 @@
     <string name="edition_of_name">Edição de nome</string>
     <string name="edition_of_password">Edição de senha</string>
     <string name="invalid_currenty_password">Senha atual incorreta</string>
+    <string name="delete_account">Deletar conta</string>
 </resources>

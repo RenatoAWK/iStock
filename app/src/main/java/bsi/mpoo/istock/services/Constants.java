@@ -54,6 +54,7 @@ public class Constants {
         public static final int NAME = 2;
         public static final int EMAIL = 3;
         public static final int PASSWORD = 4;
+        public static final int DELETE = 5;
     }
 
 }

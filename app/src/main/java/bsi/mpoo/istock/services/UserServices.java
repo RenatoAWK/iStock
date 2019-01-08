@@ -12,6 +12,7 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
 public class UserServices {
@@ -40,11 +41,15 @@ public class UserServices {
     public User login(User user){
         User searchedUser = userDAO.getUserByEmail(user.getEmail());
         if (searchedUser != null){
-            if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
-                return searchedUser;
-            } else {
-              return null;
+            if (searchedUser.getStatus() == Constants.Status.ACTIVE ||
+                    searchedUser.getStatus() == Constants.Status.FIRST_ACCESS_FOR_USER){
+                if (searchedUser.getPassword().equals(Encryption.encrypt(user.getPassword()))){
+                    return searchedUser;
+                } else {
+                    return null;
+                }
             }
+            return null;
         }
         return null;
     }
@@ -150,6 +155,18 @@ public class UserServices {
             return null;
         }
 
+    }
+
+    public void deleteCompany(User user){
+        Object account = (Administrator) getUserInDomainType(user);
+        if (account instanceof Administrator){
+            Administrator administrator = (Administrator) account;
+            List<User> users = getAcitiveUsersAsc(administrator);
+            for (User userCompany: users){
+                    userDAO.disableUser(userCompany);
+            }
+            userDAO.disableUser(user);
+        }
     }
 }
 

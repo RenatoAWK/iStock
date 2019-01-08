@@ -104,6 +104,12 @@ public class SettingsHelperActivity extends AppCompatActivity {
                         nameTextInputLayout, emailTextInputLayoutShow, emailTextInputLayout);
                 textView.setText(getString(R.string.edition_of_password));
                 break;
+            case Constants.SettingsHelper.DELETE:
+                hideInputLayout(companyTextInputLayoutShow, companyTextInputLayout, nameTextInputLayoutShow,
+                        nameTextInputLayout, emailTextInputLayoutShow, emailTextInputLayout, passwordTextInputLayoutOld);
+                textView.setText(getString(R.string.delete_account));
+                break;
+
         }
     }
 
@@ -144,6 +150,15 @@ public class SettingsHelperActivity extends AppCompatActivity {
                     updateUser();
                 }
                 break;
+            case Constants.SettingsHelper.DELETE:
+                if (isFieldsValid(validations)){
+                    userServices.deleteCompany(user);
+                    SessionServices sessionServices = new SessionServices(getApplicationContext());
+                    sessionServices.clearSession();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
         }
     }
 
@@ -216,6 +231,34 @@ public class SettingsHelperActivity extends AppCompatActivity {
                     }
                 }
                 break;
+            case Constants.SettingsHelper.DELETE:
+                valid = validations.editValidate(passwordEditText,
+                        passwordEditTextConfirmation);
+
+                if (!validations.password(passwordEditText.getText().toString())){
+                    validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password));
+                    valid = false;
+                }
+
+                if (!validations.password(passwordEditTextConfirmation.getText().toString())){
+                    validations.setErrorIfNull(passwordEditTextConfirmation, getString(R.string.invalid_password));
+                    valid = false;
+                }
+
+                if (!validations.passwordEquals(passwordEditText.getText().toString(),
+                        passwordEditTextConfirmation.getText().toString())) {
+                    validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password_not_equals));
+                    validations.setErrorIfNull(passwordEditTextConfirmation, getString(R.string.invalid_password_not_equals));
+                    valid = false;
+                } else {
+                    if (!validations.passwordEquals(Encryption.encrypt(passwordEditText.getText().toString()),
+                            user.getPassword())){
+                        validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_currenty_password));
+                        valid = false;
+                    }
+                }
+                break;
+
         }
         return valid;
     }

@@ -117,7 +117,7 @@
                 <EditText
                     android:id="@+id/editPasswordSettingsHelper"
                     style="@style/edit_text"
-                    android:hint="@string/new_password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"/>
 
             </android.support.design.widget.TextInputLayout>
