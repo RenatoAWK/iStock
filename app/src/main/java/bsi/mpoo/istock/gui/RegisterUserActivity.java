@@ -119,7 +119,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
     private String emailIsEmpty(String email ,String name, String company){
         if (email.isEmpty()){
-            return name+"."+company+getString(R.string.domain_email_istock);
+            return name.replace(" ","_")+"."+company.replace(" ","_")+getString(R.string.domain_email_istock);
         } else {
             return email;
         }
