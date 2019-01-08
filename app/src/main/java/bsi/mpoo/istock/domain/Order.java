@@ -11,19 +11,21 @@ public class Order implements Parcelable{
     private Client client;
     private Administrator administrator;
     private BigDecimal total;
-    private boolean delivered;
+    private int delivered;
     private Date dateDelivery;
+    private int status;
 
     public Order() {}
 
     public Order(Parcel parcel) {
         this.id = parcel.readLong();
         this.dateCreation = (Date)parcel.readValue(Date.class.getClassLoader());
-        this.client = (Client) parcel.readParcelable(Client.class.getClassLoader());
-        this.administrator = (Administrator) parcel.readParcelable(Administrator.class.getClassLoader());
+        this.client = parcel.readParcelable(Client.class.getClassLoader());
+        this.administrator = parcel.readParcelable(Administrator.class.getClassLoader());
         this.total = (BigDecimal)parcel.readValue(BigDecimal.class.getClassLoader());
-        this.delivered = parcel.readByte() != 0;
+        this.delivered = parcel.readInt();
         this.dateDelivery = (Date)parcel.readValue(Date.class.getClassLoader());
+        this.status = parcel.readInt();
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
@@ -68,10 +70,10 @@ public class Order implements Parcelable{
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    public boolean isDelivered() {
+    public int isDelivered() {
         return delivered;
     }
-    public void setDelivered(boolean delivered) {
+    public void setDelivered(int delivered) {
         this.delivered = delivered;
     }
     public Date getDateDelivery() {
@@ -80,18 +82,25 @@ public class Order implements Parcelable{
     public void setDateDelivery(Date dateDelivery) {
         this.dateDelivery = dateDelivery;
     }
+    public int getStatus(){
+        return this.status;
+    }
+    public void setStatus(int status){
+        this.status = status;
+    }
     @Override
     public int describeContents() {
         return 0;
     }
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
+    public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(id);
         parcel.writeValue(dateCreation);
-        parcel.writeParcelable(client, i);
-        parcel.writeParcelable(administrator, i);
+        parcel.writeValue(client);
+        parcel.writeValue(administrator);
         parcel.writeString(total.toString());
-        parcel.writeByte((byte) (delivered ? 1 : 0));
+        parcel.writeInt(delivered);
         parcel.writeValue(dateDelivery);
+        parcel.writeInt(status);
     }
 }

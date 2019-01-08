@@ -14,6 +14,7 @@ import bsi.mpoo.istock.data.user.UserDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.UserServices;
 
 public class OrderDAO {
@@ -36,6 +37,7 @@ public class OrderDAO {
         values.put(ContractOrder.COLUMN_TOTAL, order.getTotal().toString());
         values.put(ContractOrder.COLUMN_DELIVERED, order.isDelivered());
         values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
+        values.put(ContractOrder.COLUMN_STATUS, order.getStatus());
         long newRowID = db.insert(ContractOrder.TABLE_NAME, null, values);
         order.setId(newRowID);
         db.close();
@@ -52,7 +54,8 @@ public class OrderDAO {
                 ContractOrder.COLUMN_ID_ADM,
                 ContractOrder.COLUMN_TOTAL,
                 ContractOrder.COLUMN_DELIVERED,
-                ContractOrder.COLUMN_DATE_DELIVERY
+                ContractOrder.COLUMN_DATE_DELIVERY,
+                ContractOrder.COLUMN_STATUS
         };
         String selection = ContractOrder._ID+" = ?";
         String[] selectionArgs = { String.valueOf(id) };
@@ -84,7 +87,8 @@ public class OrderDAO {
                 ContractOrder.COLUMN_ID_ADM,
                 ContractOrder.COLUMN_TOTAL,
                 ContractOrder.COLUMN_DELIVERED,
-                ContractOrder.COLUMN_DATE_DELIVERY
+                ContractOrder.COLUMN_DATE_DELIVERY,
+                ContractOrder.COLUMN_STATUS
         };
         List<Order> orderList = new ArrayList<Order>();
         String selection = ContractOrder.COLUMN_ID_ADM + " = ?";
@@ -119,6 +123,7 @@ public class OrderDAO {
         values.put(ContractOrder.COLUMN_TOTAL,order.getTotal().toString());
         values.put(ContractOrder.COLUMN_DELIVERED,order.isDelivered());
         values.put(ContractOrder.COLUMN_DATE_DELIVERY,order.getDateDelivery().toString());
+        values.put(ContractOrder.COLUMN_STATUS, order.getStatus());
         String selection = ContractOrder._ID + " = ?";
         String[] selectionArgs = {String.valueOf(order.getId())};
         db.update(ContractOrder.TABLE_NAME,values,selection,selectionArgs);
@@ -143,6 +148,7 @@ public class OrderDAO {
         order.setId(id);
         order.setDateCreation(new Date(dateCreation));
         order.setClient(clientDAO.getClientById(id_client));
+        order.setDelivered(delivered);
         User user = new User();
         user.setId(id_adm);
         User searchedUser = userDAO.getUserById(user.getId());
@@ -151,6 +157,22 @@ public class OrderDAO {
         order.setTotal(new BigDecimal(total));
         order.setDateDelivery(new Date(dateDelivery));
         return order;
+    }
+
+    public void disableOrder(Order order){
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ContractOrder.COLUMN_DATE_CREATION, order.getDateCreation().toString());
+        values.put(ContractOrder.COLUMN_ID_CLIENT, order.getClient().getId());
+        values.put(ContractOrder.COLUMN_ID_ADM, order.getAdministrator().getUser().getId());
+        values.put(ContractOrder.COLUMN_TOTAL, order.getTotal().toString());
+        values.put(ContractOrder.COLUMN_DELIVERED, order.isDelivered());
+        values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
+        values.put(ContractOrder.COLUMN_STATUS, Constants.Status.INACTIVE);
+        String selection = ContractOrder._ID+" = ?";
+        String[] selectionArgs = {String.valueOf(order.getId())};
+        db.update(ContractOrder.TABLE_NAME, values, selection, selectionArgs);
     }
 
 }

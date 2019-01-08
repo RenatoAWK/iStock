@@ -57,4 +57,9 @@ public class Constants {
         public static final int DELETE = 5;
     }
 
+    public static class Order{
+        public static final int DELIVERED = 1;
+        public static final int NOT_DELIVERED = 0;
+    }
+
 }

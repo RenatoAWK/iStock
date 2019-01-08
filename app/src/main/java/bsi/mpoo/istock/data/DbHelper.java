@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import bsi.mpoo.istock.data.address.ContractAddress;
 import bsi.mpoo.istock.data.client.ContractClient;
+import bsi.mpoo.istock.data.order.ContractOrder;
 import bsi.mpoo.istock.data.product.ContractProduct;
 import bsi.mpoo.istock.data.session.ContractSession;
 import bsi.mpoo.istock.data.user.ContractUser;
@@ -22,6 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(ContractAddress.SQL_CREATE_TABLE_ADDRESS);
         db.execSQL(ContractProduct.SQL_CREATE_TABLE_PRODUCT);
         db.execSQL(ContractSession.SQL_CREATE_TABLE_SESSION);
+        db.execSQL(ContractOrder.SQL_CREATE_TABLE_ORDER);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -30,6 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(ContractAddress.SQL_DELETE_ADDRESS);
         db.execSQL(ContractProduct.SQL_DELETE_PRODUCTS);
         db.execSQL(ContractSession.SQL_DELETE_SESSION);
+        db.execSQL(ContractOrder.SQL_DELETE_ORDERS);
         onCreate(db);
     }
 
