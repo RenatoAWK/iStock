@@ -3,18 +3,27 @@ package bsi.mpoo.istock.gui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
+
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.MaskGenerator;
+import bsi.mpoo.istock.services.ProductOrderListAdapter;
 
 public class DialogDetails extends AppCompatActivity {
     private AlertDialog.Builder builder;
@@ -100,6 +109,33 @@ public class DialogDetails extends AppCompatActivity {
                 break;
         }
         emailTextView.setText(user.getEmail());
+        builder.setView(view);
+        builder.show();
+
+    }
+
+    public void invoke(Order order){
+        View view = LayoutInflater.from(context).inflate(R.layout.details_order_dialog, null);
+        TextView nameTextView = view.findViewById(R.id.nameDetailsDialogOrder);
+        TextView creationTextView = view.findViewById(R.id.createdDetailsDialogOrder);
+        TextView deliveryTitleTextView = view.findViewById(R.id.deliveryTitleDetailsDialogOrder);
+        TextView deliveryTextView = view.findViewById(R.id.deliveryDetailsDialogOrder);
+        TextView totalTextView = view.findViewById(R.id.totalDetailsDialogOrder);
+        TextView statusTextView = view.findViewById(R.id.statusDetailsDialogUser);
+        nameTextView.setText(order.getClient().getName());
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT,Locale.getDefault());
+        creationTextView.setText(dateFormat.format(order.getDateCreation()));
+        if (order.getDelivered() == Constants.Order.DELIVERED){
+            deliveryTitleTextView.setVisibility(View.GONE);
+            deliveryTextView.setVisibility(View.GONE);
+        } else {
+            deliveryTextView.setText(dateFormat.format(order.getDateDelivery()));
+        }
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerviewProductsOrder);
+        ProductOrderListAdapter adapter = new ProductOrderListAdapter(context, order.getItems());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        totalTextView.setText(NumberFormat.getCurrencyInstance().format(order.getTotal()));
         builder.setView(view);
         builder.show();
 

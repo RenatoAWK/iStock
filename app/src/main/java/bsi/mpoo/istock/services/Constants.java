@@ -60,6 +60,7 @@ public class Constants {
     public static class Order{
         public static final int DELIVERED = 1;
         public static final int NOT_DELIVERED = 0;
+        public static final String ITEMS = "items";
     }
 
 }

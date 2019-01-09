@@ -1,6 +1,9 @@
 package bsi.mpoo.istock.services;
 
 import android.content.Context;
+
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import bsi.mpoo.istock.data.order.OrderDAO;
 import bsi.mpoo.istock.domain.Administrator;
@@ -14,7 +17,7 @@ public class OrderServices {
         this.orderDAO = new OrderDAO(context);
     }
 
-    public boolean isOrderRegistered(Order order){
+    public boolean isOrderRegistered(Order order) throws JSONException {
         Order searchedOrder = orderDAO.getOrderById(order.getId());
         return searchedOrder != null;
     }
@@ -44,11 +47,11 @@ public class OrderServices {
         }
     }
 
-    public ArrayList<Order> getAcitiveOrders(Administrator administrator){
+    public ArrayList<Order> getAcitiveOrders(Administrator administrator) throws JSONException {
         return (ArrayList<Order>) orderDAO.getActiveOrdersByAdm (administrator);
     }
 
-    public ArrayList<Order> getOrders(Administrator administrator){
+    public ArrayList<Order> getOrders(Administrator administrator) throws JSONException {
         return (ArrayList<Order>) orderDAO.getOrdersByAdm (administrator);
     }
 

@@ -17,6 +17,7 @@ public class ContractOrder implements BaseColumns{
     public static final String COLUMN_DELIVERED = "delivered";
     public static final String COLUMN_DATE_DELIVERY = "date_delivery";
     public static final String COLUMN_STATUS = "status";
+    public static final String COLUMN_ITEMS = "items";
     public static final String SQL_CREATE_TABLE_ORDER =
             "CREATE TABLE " + ContractOrder.TABLE_NAME + " ("+
                     ContractOrder._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
@@ -27,6 +28,7 @@ public class ContractOrder implements BaseColumns{
                     ContractOrder.COLUMN_DELIVERED + " INTEGER,"+
                     ContractOrder.COLUMN_DATE_DELIVERY + " TEXT,"+
                     ContractOrder.COLUMN_STATUS + " INTEGER,"+
+                    ContractOrder.COLUMN_ITEMS + " TEXT,"+
                     "FOREIGN KEY("+ ContractOrder.COLUMN_ID_CLIENT +") REFERENCES "+
                     ContractClient.TABLE_NAME+" ("+ContractUser._ID+"),"+
                     "FOREIGN KEY("+ContractClient.COLUMN_ID_ADM +") REFERENCES "+

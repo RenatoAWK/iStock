@@ -2,6 +2,7 @@ package bsi.mpoo.istock.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Order implements Parcelable{
@@ -14,6 +15,7 @@ public class Order implements Parcelable{
     private int delivered;
     private Date dateDelivery;
     private int status;
+    private ArrayList<Item> items;
 
     public Order() {}
 
@@ -26,6 +28,7 @@ public class Order implements Parcelable{
         this.delivered = parcel.readInt();
         this.dateDelivery = (Date)parcel.readValue(Date.class.getClassLoader());
         this.status = parcel.readInt();
+        this.items = parcel.readArrayList(Item.class.getClassLoader());
     }
 
     public static final Creator<Order> CREATOR = new Creator<Order>() {
@@ -70,11 +73,11 @@ public class Order implements Parcelable{
     public void setTotal(BigDecimal total) {
         this.total = total;
     }
-    public int isDelivered() {
-        return delivered;
-    }
     public void setDelivered(int delivered) {
         this.delivered = delivered;
+    }
+    public int getDelivered() {
+        return delivered;
     }
     public Date getDateDelivery() {
         return dateDelivery;
@@ -88,6 +91,13 @@ public class Order implements Parcelable{
     public void setStatus(int status){
         this.status = status;
     }
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -102,5 +112,6 @@ public class Order implements Parcelable{
         parcel.writeInt(delivered);
         parcel.writeValue(dateDelivery);
         parcel.writeInt(status);
+        parcel.writeArray(new ArrayList[]{items});
     }
 }

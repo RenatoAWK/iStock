@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.fragments.HomeFragment">
+    tools:context=".gui.fragments.HistoricFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerviewOrders"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Tela de Histórico de vendas"
-        android:textAlignment="center"
-        android:textSize="32sp" />
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>
