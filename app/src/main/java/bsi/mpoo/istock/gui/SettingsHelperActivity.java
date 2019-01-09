@@ -156,8 +156,9 @@ public class SettingsHelperActivity extends AppCompatActivity {
                     SessionServices sessionServices = new SessionServices(getApplicationContext());
                     sessionServices.clearSession();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    finishAffinity();
                     startActivity(intent);
-                    finish();
+
                 }
         }
     }
