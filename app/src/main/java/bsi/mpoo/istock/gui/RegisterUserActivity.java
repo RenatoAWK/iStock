@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
@@ -119,7 +120,7 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
 
     private String emailIsEmpty(String email ,String name, String company){
         if (email.isEmpty()){
-            return name.replace(" ","_")+"."+company.replace(" ","_")+getString(R.string.domain_email_istock);
+            return generateUserCompanyEmail(name, company);
         } else {
             return email;
         }
@@ -128,5 +129,9 @@ public class RegisterUserActivity extends AppCompatActivity implements AdapterVi
     private String registeredMessage(String email, String tempPassword){
         return getString(R.string.email)+": "+email+"\n"+
                 getString(R.string.password)+": "+tempPassword;
+    }
+    private String generateUserCompanyEmail(String name, String company) {
+        String newEmail = name.replace(" ","_")+"."+company.replace(" ","_")+getString(R.string.domain_email_istock);
+        return Normalizer.normalize(newEmail, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
 }
