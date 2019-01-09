@@ -158,7 +158,7 @@ public class UserServices {
     }
 
     public void deleteCompany(User user){
-        Object account = (Administrator) getUserInDomainType(user);
+        Object account = getUserInDomainType(user);
         if (account instanceof Administrator){
             Administrator administrator = (Administrator) account;
             List<User> users = getAcitiveUsersAsc(administrator);

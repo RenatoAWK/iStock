@@ -109,4 +109,24 @@ public class Exceptions {
             return this.idError;
         }
     }
+
+    public static class OrderNotRegistered extends Exception {
+
+        private ExceptionsEnum error;
+        private int idError;
+
+        public OrderNotRegistered(){
+            this.error = ExceptionsEnum.ORDER_NOT_REGISTERED;
+            this.idError = this.error.getValue();
+        }
+
+        public String getStringError(){
+            return this.error.toString();
+        }
+
+        public int getIdError() {
+            return this.idError;
+        }
+
+    }
 }

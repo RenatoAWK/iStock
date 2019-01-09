@@ -77,7 +77,7 @@ public class OrderDAO {
         return searchedOrder;
     }
 
-    public List<Order> getOrderByAdm(Administrator administrator){
+    public List<Order> getOrdersByAdm(Administrator administrator){
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -90,9 +90,47 @@ public class OrderDAO {
                 ContractOrder.COLUMN_DATE_DELIVERY,
                 ContractOrder.COLUMN_STATUS
         };
-        List<Order> orderList = new ArrayList<Order>();
+        List<Order> orderList = new ArrayList<>();
         String selection = ContractOrder.COLUMN_ID_ADM + " = ?";
         String[] selectionArgs = {String.valueOf(administrator.getUser().getId())};
+        Cursor cursor = db.query(
+                ContractOrder.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        if (cursor.moveToNext()){
+            do {
+                Order order = createOrder(cursor);
+                orderList.add(order);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return orderList;
+    }
+
+    public List<Order> getActiveOrdersByAdm(Administrator administrator){
+        DbHelper mDbHelper = new DbHelper(context);
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        String[] projection = {
+                BaseColumns._ID,
+                ContractOrder.COLUMN_DATE_CREATION,
+                ContractOrder.COLUMN_ID_CLIENT,
+                ContractOrder.COLUMN_ID_ADM,
+                ContractOrder.COLUMN_TOTAL,
+                ContractOrder.COLUMN_DELIVERED,
+                ContractOrder.COLUMN_DATE_DELIVERY,
+                ContractOrder.COLUMN_STATUS
+        };
+        List<Order> orderList = new ArrayList<>();
+        String selection = ContractOrder.COLUMN_ID_ADM + " = ?"+" AND "+
+                ContractOrder.COLUMN_STATUS + " = ?";
+        String[] selectionArgs = {String.valueOf(administrator.getUser().getId()),
+                String.valueOf(Constants.Status.ACTIVE)};
         Cursor cursor = db.query(
                 ContractOrder.TABLE_NAME,
                 projection,
@@ -174,5 +212,4 @@ public class OrderDAO {
         String[] selectionArgs = {String.valueOf(order.getId())};
         db.update(ContractOrder.TABLE_NAME, values, selection, selectionArgs);
     }
-
 }
