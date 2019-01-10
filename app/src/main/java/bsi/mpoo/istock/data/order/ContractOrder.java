@@ -9,7 +9,7 @@ public class ContractOrder implements BaseColumns{
 
     private ContractOrder(){}
 
-    public static final String TABLE_NAME = "order";
+    public static final String TABLE_NAME = "orders";
     public static final String COLUMN_DATE_CREATION = "date_creation";
     public static final String COLUMN_ID_CLIENT = "id_client";
     public static final String COLUMN_ID_ADM = "id_administrator";
@@ -32,7 +32,6 @@ public class ContractOrder implements BaseColumns{
                     "FOREIGN KEY("+ ContractOrder.COLUMN_ID_CLIENT +") REFERENCES "+
                     ContractClient.TABLE_NAME+" ("+ContractUser._ID+"),"+
                     "FOREIGN KEY("+ContractClient.COLUMN_ID_ADM +") REFERENCES "+
-                    ContractUser.TABLE_NAME+" ("+ContractUser._ID+")"+
                     ")";
     public static  final String SQL_DELETE_ORDERS =
             "DROP TABLE IF EXISTS "+ ContractOrder.TABLE_NAME;

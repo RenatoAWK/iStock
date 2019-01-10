@@ -117,4 +117,6 @@
     <string name="realized">Realizada</string>
     <string name="delivery">Entrega</string>
     <string name="created">Criação</string>
+    <string name="finalization_sale">Finalização de Venda</string>
+    <string name="add">Adicionar</string>
 </resources>

@@ -55,4 +55,8 @@ public class ProductServices {
     public ArrayList<Product> getAcitiveProductsDesc(Administrator administrator){
         return (ArrayList<Product>) productDAO.getActiveProductsByAdmId(administrator ,Contract.DESC);
     }
+
+    public Product getProductById(long id){
+        return productDAO.getProductById(id);
+    }
 }

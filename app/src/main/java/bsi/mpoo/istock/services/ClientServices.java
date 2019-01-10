@@ -54,4 +54,8 @@ public class ClientServices {
     public ArrayList<Client> getAcitiveClientsDesc(Administrator administrator){
         return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(administrator,Contract.DESC);
     }
+
+    public Client getClientById(long id_client) {
+        return clientDAO.getClientById(id_client);
+    }
 }

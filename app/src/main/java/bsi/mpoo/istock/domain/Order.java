@@ -2,18 +2,19 @@ package bsi.mpoo.istock.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class Order implements Parcelable{
 
     private long id;
-    private Date dateCreation;
+    private LocalDate dateCreation;
     private Client client;
     private Administrator administrator;
     private BigDecimal total;
     private int delivered;
-    private Date dateDelivery;
+    private LocalDate dateDelivery;
     private int status;
     private ArrayList<Item> items;
 
@@ -21,12 +22,12 @@ public class Order implements Parcelable{
 
     public Order(Parcel parcel) {
         this.id = parcel.readLong();
-        this.dateCreation = (Date)parcel.readValue(Date.class.getClassLoader());
+        this.dateCreation = (LocalDate) parcel.readValue(LocalDate.class.getClassLoader());
         this.client = parcel.readParcelable(Client.class.getClassLoader());
         this.administrator = parcel.readParcelable(Administrator.class.getClassLoader());
         this.total = (BigDecimal)parcel.readValue(BigDecimal.class.getClassLoader());
         this.delivered = parcel.readInt();
-        this.dateDelivery = (Date)parcel.readValue(Date.class.getClassLoader());
+        this.dateDelivery = (LocalDate) parcel.readValue(LocalDate.class.getClassLoader());
         this.status = parcel.readInt();
         this.items = parcel.readArrayList(Item.class.getClassLoader());
     }
@@ -49,10 +50,10 @@ public class Order implements Parcelable{
     public void setId(long id) {
         this.id = id;
     }
-    public Date getDateCreation() {
+    public LocalDate getDateCreation() {
         return dateCreation;
     }
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(LocalDate dateCreation) {
         this.dateCreation = dateCreation;
     }
     public Client getClient() {
@@ -79,10 +80,10 @@ public class Order implements Parcelable{
     public int getDelivered() {
         return delivered;
     }
-    public Date getDateDelivery() {
+    public LocalDate getDateDelivery() {
         return dateDelivery;
     }
-    public void setDateDelivery(Date dateDelivery) {
+    public void setDateDelivery(LocalDate dateDelivery) {
         this.dateDelivery = dateDelivery;
     }
     public int getStatus(){

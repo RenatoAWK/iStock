@@ -3,17 +3,28 @@ package bsi.mpoo.istock.domain;
 import java.math.BigDecimal;
 
 public class Item {
-    private String name;
+    private long id;
+    private Product product;
     private BigDecimal price;
     private long quantity;
-    private int id_order;
+    private long idOrder;
+    private long idAdministrator;
+    private int status;
 
-    public String getName() {
-        return name;
+    public long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public BigDecimal getPrice() {
@@ -32,11 +43,27 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public int getId_order() {
-        return id_order;
+    public long getIdOrder() {
+        return idOrder;
     }
 
-    public void setId_order(int id_order) {
-        this.id_order = id_order;
+    public void setIdOrder(long id_order) {
+        this.idOrder = id_order;
+    }
+
+    public long getIdAdministrator() {
+        return idAdministrator;
+    }
+
+    public void setIdAdministrator(long idAdministrator) {
+        this.idAdministrator = idAdministrator;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

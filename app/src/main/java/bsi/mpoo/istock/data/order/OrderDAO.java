@@ -4,43 +4,39 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.provider.BaseColumns;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-
-import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
-import bsi.mpoo.istock.data.client.ClientDAO;
-import bsi.mpoo.istock.data.user.UserDAO;
+import bsi.mpoo.istock.data.item.ItemDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.ClientServices;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.ItemServices;
 import bsi.mpoo.istock.services.UserServices;
 
 public class OrderDAO {
     private Context context;
-    private ClientDAO clientDAO;
     private UserServices userServices;
-    private UserDAO userDAO;
+    private ItemServices itemServices;
+    private ClientServices clientServices;
 
     public OrderDAO(Context context){
         this.context = context;
+        this.clientServices = new ClientServices(context);
+        this.userServices = new UserServices(context);
+        this.itemServices = new ItemServices(context);
     }
 
-    public void insertOrder(Order order) throws JSONException {
+    public void insertOrder(Order order) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        itemServices.insertItem(order.getItems());
         values.put(ContractOrder.COLUMN_DATE_CREATION, order.getDateCreation().toString());
         values.put(ContractOrder.COLUMN_ID_CLIENT, order.getClient().getId());
         values.put(ContractOrder.COLUMN_ID_ADM, order.getAdministrator().getUser().getId());
@@ -48,13 +44,31 @@ public class OrderDAO {
         values.put(ContractOrder.COLUMN_DELIVERED, order.getDelivered());
         values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
         values.put(ContractOrder.COLUMN_STATUS, order.getStatus());
-        values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToJSONinSring(order.getItems()));
+        values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToIdString(order.getItems()));
         long newRowID = db.insert(ContractOrder.TABLE_NAME, null, values);
         order.setId(newRowID);
         db.close();
     }
 
-    public Order getOrderById(long id) throws JSONException {
+    private String convertArrayItemToIdString(ArrayList<Item> items) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Item item:items) {
+            stringBuilder.append(" ").append(item.getId());
+        }
+        return stringBuilder.toString().trim();
+    }
+
+    private ArrayList<Item> arrayItemStringIdToArrayItem(String string){
+        String[] itemsId = string.split(" ");
+        ArrayList<Item> arrayList = new ArrayList<>();
+        for (String id:itemsId) {
+            arrayList.add(itemServices.getItemById(Long.parseLong(id)));
+        }
+        return arrayList;
+
+    }
+
+    public Order getOrderById(long id) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         Order searchedOrder = null;
@@ -89,7 +103,7 @@ public class OrderDAO {
         return searchedOrder;
     }
 
-    public List<Order> getOrdersByAdm(Administrator administrator) throws JSONException {
+    public List<Order> getOrdersByAdm(Administrator administrator){
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -126,7 +140,7 @@ public class OrderDAO {
         return orderList;
     }
 
-    public List<Order> getActiveOrdersByAdm(Administrator administrator) throws JSONException {
+    public List<Order> getActiveOrdersByAdm(Administrator administrator) {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
         String[] projection = {
@@ -165,7 +179,7 @@ public class OrderDAO {
         return orderList;
     }
 
-    public void updateOrder(Order order) throws JSONException {
+    public void updateOrder(Order order){
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -176,13 +190,13 @@ public class OrderDAO {
         values.put(ContractOrder.COLUMN_DELIVERED,order.getDelivered());
         values.put(ContractOrder.COLUMN_DATE_DELIVERY,order.getDateDelivery().toString());
         values.put(ContractOrder.COLUMN_STATUS, order.getStatus());
-        values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToJSONinSring(order.getItems()));
+        values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToIdString(order.getItems()));
         String selection = ContractOrder._ID + " = ?";
         String[] selectionArgs = {String.valueOf(order.getId())};
         db.update(ContractOrder.TABLE_NAME,values,selection,selectionArgs);
     }
 
-    public Order createOrder(Cursor cursor) throws JSONException {
+    public Order createOrder(Cursor cursor) {
         int idIndex = cursor.getColumnIndexOrThrow(ContractOrder._ID);
         int dateCreationIndex = cursor.getColumnIndexOrThrow(ContractOrder.COLUMN_DATE_CREATION);
         int idClientIndex = cursor.getColumnIndexOrThrow(ContractOrder.COLUMN_ID_CLIENT);
@@ -200,21 +214,21 @@ public class OrderDAO {
         int delivered = cursor.getInt(deliveredIndex);
         String dateDelivery = cursor.getString(dateDeliveryIndex);
         int status = cursor.getInt(statusIndex);
-        ArrayList<Item> items = convertJSONStringToArrayItem(cursor.getString(itemsIndex));
+        String itemsString = cursor.getString(itemsIndex);
+        ArrayList<Item> items = arrayItemStringIdToArrayItem(itemsString);
         Order order = new Order();
         order.setId(id);
-        order.setDateCreation(new Date(dateCreation));
-        order.setClient(clientDAO.getClientById(id_client));
+        order.setDateCreation(stringLocalDateToLocalDate(dateCreation));
+        order.setClient(clientServices.getClientById(id_client));
         order.setDelivered(delivered);
         order.setStatus(status);
         order.setItems(items);
         User user = new User();
         user.setId(id_adm);
-        User searchedUser = userDAO.getUserById(user.getId());
-        UserServices userServices = new UserServices(context);
+        User searchedUser = userServices.getUserById(user.getId());
         order.setAdministrator((Administrator) userServices.getUserInDomainType(searchedUser));
         order.setTotal(new BigDecimal(total));
-        order.setDateDelivery(new Date(dateDelivery));
+        order.setDateDelivery(stringLocalDateToLocalDate(dateDelivery));
         return order;
     }
 
@@ -234,17 +248,12 @@ public class OrderDAO {
         db.update(ContractOrder.TABLE_NAME, values, selection, selectionArgs);
     }
 
-    private String convertArrayItemToJSONinSring(ArrayList<Item> items) throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(Constants.Order.ITEMS, new JSONArray(items));
-        return jsonObject.toString();
-        //Se der problema, passar o order.getItems() direto
-    }
-
-    private ArrayList<Item> convertJSONStringToArrayItem(String string) throws JSONException {
-        JSONObject json = new JSONObject(string);
-        JSONArray items = json.optJSONArray(Constants.Order.ITEMS);
-        ArrayList<Item> newArrayItems = new ArrayList<>((Collection<? extends Item>) items.opt(0));
-        return newArrayItems;
+    private LocalDate stringLocalDateToLocalDate(String text){
+        String dateCreationList[] = text.split("-");
+        int dateCreationDay = Integer.parseInt(dateCreationList[2]);
+        int dateCreationMonth = Integer.parseInt(dateCreationList[1]);
+        int dateCreationYear = Integer.parseInt(dateCreationList[0]);
+        LocalDate localDate = LocalDate.of(dateCreationYear, dateCreationMonth, dateCreationDay);
+        return localDate;
     }
 }

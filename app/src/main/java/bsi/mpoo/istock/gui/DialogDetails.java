@@ -115,13 +115,15 @@ public class DialogDetails extends AppCompatActivity {
     }
 
     public void invoke(Order order){
+        /*
+
+        Fazer o adapter daqui
         View view = LayoutInflater.from(context).inflate(R.layout.details_order_dialog, null);
         TextView nameTextView = view.findViewById(R.id.nameDetailsDialogOrder);
         TextView creationTextView = view.findViewById(R.id.createdDetailsDialogOrder);
         TextView deliveryTitleTextView = view.findViewById(R.id.deliveryTitleDetailsDialogOrder);
         TextView deliveryTextView = view.findViewById(R.id.deliveryDetailsDialogOrder);
         TextView totalTextView = view.findViewById(R.id.totalDetailsDialogOrder);
-        TextView statusTextView = view.findViewById(R.id.statusDetailsDialogUser);
         nameTextView.setText(order.getClient().getName());
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT,Locale.getDefault());
         creationTextView.setText(dateFormat.format(order.getDateCreation()));
@@ -138,6 +140,7 @@ public class DialogDetails extends AppCompatActivity {
         totalTextView.setText(NumberFormat.getCurrencyInstance().format(order.getTotal()));
         builder.setView(view);
         builder.show();
+        */
 
     }
 }

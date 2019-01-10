@@ -33,6 +33,8 @@ public class Constants {
         public static final String PRODUCT = "product";
         public static final String EMAIL = "email";
         public static final String SETTINGS = "settings";
+        public static final String ITEMS = "items";
+        public static final String ORDER = "order";
     }
 
     public static class MaskTypes {

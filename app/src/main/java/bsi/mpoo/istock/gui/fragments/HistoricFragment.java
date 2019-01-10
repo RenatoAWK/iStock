@@ -13,15 +13,20 @@ import android.view.ViewGroup;
 
 import org.json.JSONException;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.data.order.OrderDAO;
 import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
+import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.OrderListAdapter;
 import bsi.mpoo.istock.services.OrderServices;
 
@@ -46,6 +51,37 @@ public class HistoricFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        //////
+        OrderDAO orderDAO = new OrderDAO(context);
+        Order order = new Order();
+        order.setStatus(Constants.Status.ACTIVE);
+        order.setAdministrator(Session.getInstance().getAdministrator());
+        Client client = new Client();
+        client.setId(10);
+        order.setClient(client);
+        order.setDateCreation(LocalDate.now());
+        order.setDateDelivery(LocalDate.now());
+        order.setTotal(new BigDecimal("2000"));
+        Item item = new Item();
+        item.setId_order(2);
+        item.setName("produto1");
+        item.setPrice(new BigDecimal("100"));
+        item.setQuantity(1);
+        Item item2 = new Item();
+        item2.setId_order(2);
+        item2.setName("produto2");
+        item2.setPrice(new BigDecimal("200"));
+        item2.setQuantity(1);
+        ArrayList<Item> arrayList = new ArrayList<>();
+        arrayList.add(item);
+        arrayList.add(item2);
+        order.setItems(arrayList);
+        try {
+            orderDAO.insertOrder(order);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<Order> ordersArrayList;
         OrderServices orderServices = new OrderServices(getActivity().getApplicationContext());
         if (account instanceof Administrator || account instanceof Salesman){
@@ -60,5 +96,11 @@ public class HistoricFragment extends Fragment {
             }
 
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        this.context = context;
+        super.onAttach(context);
     }
 }
