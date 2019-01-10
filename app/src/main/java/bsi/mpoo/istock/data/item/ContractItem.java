@@ -29,7 +29,7 @@ public class ContractItem implements BaseColumns {
                     "FOREIGN KEY("+ContractItem.COLUMN_ID_ORDER+") REFERENCES "+
                     ContractOrder.TABLE_NAME+" ("+ContractOrder._ID+"),"+
                     "FOREIGN KEY("+ContractItem.COLUMN_ID_ADM+") REFERENCES "+
-                    ContractUser.TABLE_NAME+" ("+ContractUser._ID+"),"+
+                    ContractUser.TABLE_NAME+" ("+ContractUser._ID+")"+
                     ")";
     public static  final String SQL_DELETE_ITEMS =
             "DROP TABLE IF EXISTS "+ ContractItem.TABLE_NAME;

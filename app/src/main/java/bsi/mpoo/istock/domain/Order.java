@@ -16,7 +16,7 @@ public class Order implements Parcelable{
     private int delivered;
     private LocalDate dateDelivery;
     private int status;
-    private ArrayList<Item> items;
+    private ArrayList items;
 
     public Order() {}
 
@@ -92,7 +92,7 @@ public class Order implements Parcelable{
     public void setStatus(int status){
         this.status = status;
     }
-    public ArrayList<Item> getItems() {
+    public ArrayList getItems() {
         return items;
     }
     public void setItems(ArrayList<Item> items) {

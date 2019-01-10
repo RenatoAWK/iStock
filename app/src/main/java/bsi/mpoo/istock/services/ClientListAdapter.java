@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.EditClientActivity;

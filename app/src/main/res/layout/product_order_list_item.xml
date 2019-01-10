@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="10dp">
+    android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,6 +38,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/priceProductOrderItemList"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:layout_weight="2"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/quantity_subtitle"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/quantityProductOrderItemList"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"
                     android:textSize="12sp"

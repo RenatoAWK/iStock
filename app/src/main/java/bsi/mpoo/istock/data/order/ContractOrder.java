@@ -30,8 +30,9 @@ public class ContractOrder implements BaseColumns{
                     ContractOrder.COLUMN_STATUS + " INTEGER,"+
                     ContractOrder.COLUMN_ITEMS + " TEXT,"+
                     "FOREIGN KEY("+ ContractOrder.COLUMN_ID_CLIENT +") REFERENCES "+
-                    ContractClient.TABLE_NAME+" ("+ContractUser._ID+"),"+
+                    ContractClient.TABLE_NAME+" ("+ContractClient._ID+"),"+
                     "FOREIGN KEY("+ContractClient.COLUMN_ID_ADM +") REFERENCES "+
+                    ContractUser.TABLE_NAME+" ("+ContractUser._ID+")"+
                     ")";
     public static  final String SQL_DELETE_ORDERS =
             "DROP TABLE IF EXISTS "+ ContractOrder.TABLE_NAME;

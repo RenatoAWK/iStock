@@ -33,6 +33,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
     class ProductOrderViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         TextView nameItemView;
         TextView totalItemView;
+        TextView quantityItemView;
         LinearLayout linearLayout;
         ProductOrderListAdapter adapter;
 
@@ -62,12 +63,19 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem addItem = menu.add(context.getApplicationContext().getString(R.string.add));
             MenuItem detailsItem = menu.add(context.getApplicationContext().getString(R.string.details));
-            MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
-            addItem.setOnMenuItemClickListener(this);
+
+            int position = getLayoutPosition();
+            Product product = productList.get(position);
+
+            if (!Cart.getInstance().getProducts().contains(product)){
+                MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
+                deleteItem.setOnMenuItemClickListener(this);
+            } else{
+                MenuItem addItem = menu.add(context.getApplicationContext().getString(R.string.add));
+                addItem.setOnMenuItemClickListener(this);
+            }
             detailsItem.setOnMenuItemClickListener(this);
-            deleteItem.setOnMenuItemClickListener(this);
         }
 
 
@@ -76,9 +84,9 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
             itemView.setOnCreateContextMenuListener(this);
             nameItemView = itemView.findViewById(R.id.nameProductOrderItemList);
             totalItemView = itemView.findViewById(R.id.priceProductOrderItemList);
+            quantityItemView = itemView.findViewById(R.id.quantityProductOrderItemList);
             linearLayout = itemView.findViewById(R.id.linearLayoutProductOrderListItem);
             this.adapter = adapter;
-
         }
     }
 
@@ -93,8 +101,10 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
     public void onBindViewHolder(@NonNull ProductOrderViewHolder orderViewHolder, int position) {
         String currentName = productList.get(position).getName();
         String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
+        String currentQuantity = String.valueOf(productList.get(position).getQuantity());
         orderViewHolder.nameItemView.setText(currentName);
         orderViewHolder.totalItemView.setText(currentPrice);
+        orderViewHolder.quantityItemView.setText(currentQuantity);
     }
 
     @Override
