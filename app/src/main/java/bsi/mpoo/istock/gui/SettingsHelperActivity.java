@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
@@ -40,6 +42,7 @@ public class SettingsHelperActivity extends AppCompatActivity {
     private TextInputLayout passwordTextInputLayoutOld;
     private TextInputLayout passwordTextInputLayout;
     private TextInputLayout passwordTextInputLayoutConfirmation;
+    private ArrayList<TextInputLayout> textInputLayouts;
     private User user;
     private int editOption;
     private UserServices userServices;
@@ -76,46 +79,68 @@ public class SettingsHelperActivity extends AppCompatActivity {
         passwordTextInputLayoutConfirmation = findViewById(R.id.passwordInputLayoutSettingsHelperConfirmation);
         UserServices userServices = new UserServices(getApplicationContext());
         user = userServices.getUserFromDomainType(Session.getInstance().getAccount());
+
+        textInputLayouts = new ArrayList<>();
+        textInputLayouts.add(nameTextInputLayoutShow);
+        textInputLayouts.add(nameTextInputLayout);
+        textInputLayouts.add(emailTextInputLayoutShow);
+        textInputLayouts.add(emailTextInputLayout);
+        textInputLayouts.add(passwordTextInputLayoutOld);
+        textInputLayouts.add(passwordTextInputLayout);
+        textInputLayouts.add(passwordTextInputLayoutConfirmation);
+        textInputLayouts.add(companyTextInputLayoutShow);
+        textInputLayouts.add(companyTextInputLayout);
+
         switch (editOption){
             case Constants.SettingsHelper.COMPANY:
-                hideInputLayout(nameTextInputLayoutShow, nameTextInputLayout,
-                        emailTextInputLayoutShow, emailTextInputLayout, passwordTextInputLayoutOld,
-                        passwordTextInputLayout, passwordTextInputLayoutConfirmation);
+                hideInputLayout(companyTextInputLayoutShow, companyTextInputLayout);
                 textView.setText(getString(R.string.edition_of_company_name));
                 companyEditTextShow.setText(user.getCompany());
                 break;
             case Constants.SettingsHelper.EMAIL:
-                hideInputLayout(companyTextInputLayoutShow, companyTextInputLayout, nameTextInputLayoutShow,
-                        nameTextInputLayout, passwordTextInputLayoutOld, passwordTextInputLayout,
-                        passwordTextInputLayoutConfirmation);
+                hideInputLayout(emailTextInputLayoutShow, emailTextInputLayout);
                 textView.setText(getString(R.string.edition_of_email));
                 emailEditTextShow.setText(user.getEmail());
                 break;
 
             case Constants.SettingsHelper.NAME:
-                hideInputLayout(companyTextInputLayoutShow, companyTextInputLayout, passwordTextInputLayoutOld,
-                        emailTextInputLayoutShow, emailTextInputLayout, passwordTextInputLayout,
-                        passwordTextInputLayoutConfirmation);
+                hideInputLayout(nameTextInputLayoutShow, nameTextInputLayout);
                 textView.setText(getString(R.string.edition_of_name));
                 nameEditTextShow.setText(user.getName());
                 break;
             case Constants.SettingsHelper.PASSWORD:
-                hideInputLayout(companyTextInputLayoutShow, companyTextInputLayout, nameTextInputLayoutShow,
-                        nameTextInputLayout, emailTextInputLayoutShow, emailTextInputLayout);
+                hideInputLayout(passwordTextInputLayoutOld, passwordTextInputLayout, passwordTextInputLayoutConfirmation);
                 textView.setText(getString(R.string.edition_of_password));
                 break;
             case Constants.SettingsHelper.DELETE:
-                hideInputLayout(companyTextInputLayoutShow, companyTextInputLayout, nameTextInputLayoutShow,
-                        nameTextInputLayout, emailTextInputLayoutShow, emailTextInputLayout, passwordTextInputLayoutOld);
+                hideInputLayout();
                 textView.setText(getString(R.string.delete_account));
                 break;
 
         }
     }
 
-    private void hideInputLayout(TextInputLayout...textInputLayouts){
+    private void hideInputLayout(){
         for (TextInputLayout textInputLayout: textInputLayouts){
             textInputLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void hideInputLayout(TextInputLayout textInputLayoutParameter1, TextInputLayout textInputLayoutParameter2){
+        for (TextInputLayout textInputLayout: textInputLayouts){
+            if(textInputLayout != textInputLayoutParameter1 && textInputLayout != textInputLayoutParameter2){
+                textInputLayout.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    private void hideInputLayout(TextInputLayout textInputLayoutParameter1, TextInputLayout textInputLayoutParameter2,
+                                 TextInputLayout textInputLayoutParameter3){
+        for (TextInputLayout textInputLayout: textInputLayouts){
+            if(textInputLayout != textInputLayoutParameter1 && textInputLayout != textInputLayoutParameter2
+                    && textInputLayout != textInputLayoutParameter3){
+                textInputLayout.setVisibility(View.GONE);
+            }
         }
     }
 
