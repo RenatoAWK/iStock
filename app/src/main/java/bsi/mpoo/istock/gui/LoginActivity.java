@@ -102,38 +102,6 @@ public class LoginActivity extends AppCompatActivity {
             SessionServices sessionServices = new SessionServices(getApplicationContext());
             account = userServices.getUserInDomainType(searchedUser);
             sessionServices.updateSession(account,remember );
-            /*
-            account = userServices.getUserInDomainType(searchedUser);
-            Administrator administrator;
-            if (account instanceof Administrator){
-                administrator = (Administrator) account;
-            } else {
-                User adminUser = userServices.getUserById(searchedUser.getAdministrator());
-                administrator = (Administrator) userServices.getUserInDomainType(adminUser);
-            }
-
-
-            if (account instanceof Administrator){
-                Session.getInstance().setAdministrator((Administrator) account);
-                Session.getInstance().setAccount((Administrator) account);
-            } else if (account instanceof Salesman){
-                Session.getInstance().setAdministrator((administrator));
-                Session.getInstance().setAccount((Salesman) account);
-            } else {
-                Session.getInstance().setAdministrator((administrator));
-                Session.getInstance().setAccount((Producer) account);
-            }
-            Session.getInstance().setId_user(searchedUser.getId());
-            boolean switchState = switchButton.isChecked();
-            int remember;
-            if (switchState){
-                remember = Constants.Session.REMEMBER;
-            } else {
-                remember = Constants.Session.NOT_TO_REMEMBER;
-            }
-            Session.getInstance().setRemember(remember);
-            SessionServices sessionServices = new SessionServices(getApplicationContext());
-            sessionServices.updateSession(Session.getInstance());*/
             Intent intent = new Intent(this, MainActivity.class);
             finish();
             startActivity(intent);
