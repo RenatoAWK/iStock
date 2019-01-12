@@ -32,7 +32,8 @@
         <activity android:name=".gui.SettingsActivity" />
         <activity android:name=".gui.SettingsHelperActivity" />
         <activity android:name=".gui.EditOrderActivity" />
-        <activity android:name=".gui.RegisterOrderActivity"></activity>
+        <activity android:name=".gui.RegisterOrderActivity" />
+        <activity android:name=".gui.ProductsActivity"></activity>
     </application>
 
 </manifest>

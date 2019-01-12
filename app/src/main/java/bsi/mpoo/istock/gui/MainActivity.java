@@ -24,7 +24,6 @@ import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.fragments.ClientsFragment;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
 import bsi.mpoo.istock.gui.fragments.HomeFragment;
-import bsi.mpoo.istock.gui.fragments.ProductsFragment;
 import bsi.mpoo.istock.gui.fragments.SalesFragment;
 import bsi.mpoo.istock.gui.fragments.UsersFragment;
 import bsi.mpoo.istock.services.ImageServices;
@@ -57,10 +56,6 @@ public class MainActivity extends AppCompatActivity
                 if (fragment instanceof HomeFragment){
 
                 } else if (fragment instanceof SalesFragment){
-
-                } else if (fragment instanceof ProductsFragment){
-                    Intent intent = new Intent(getApplicationContext(), RegisterProductActivity.class);
-                    startActivity(intent);
 
                 } else if (fragment instanceof ClientsFragment){
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
@@ -151,42 +146,33 @@ public class MainActivity extends AppCompatActivity
     public void displaySelectedScreen(int id){
         Fragment fragment = null;
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
-
-        switch (id){
-            case R.id.nav_home:
-                fragment = new HomeFragment();
-                floatingActionButton.hide();
-                break;
-            case R.id.nav_sales:
-                fragment = new SalesFragment();
-                floatingActionButton.show();
-                break;
-            case R.id.nav_products:
-                fragment = new ProductsFragment();
-                floatingActionButton.show();
-                break;
-            case R.id.nav_clients:
-                fragment = new ClientsFragment();
-                floatingActionButton.show();
-                break;
-            case R.id.nav_users:
-                fragment = new UsersFragment();
-                floatingActionButton.show();
-                break;
-            case R.id.nav_historic:
-                fragment = new HistoricFragment();
-                floatingActionButton.show();
-                break;
-            case R.id.nav_logout:
-                Intent intent = new Intent(this, LoginActivity.class);
-                SessionServices sessionServices = new SessionServices(getApplicationContext());
-                sessionServices.clearSession();
-                finish();
-                startActivity(intent);
-                break;
-            case R.id.nav_settings:
-                Intent intent1 = new Intent(this, SettingsActivity.class);
-                startActivity(intent1);
+        if (id == R.id.nav_home){
+            fragment = new HomeFragment();
+            floatingActionButton.hide();
+        } else if (id == R.id.nav_sales){
+            fragment = new SalesFragment();
+            floatingActionButton.show();
+        } else if (id == R.id.nav_products){
+            Intent intent = new Intent(this, ProductsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_clients) {
+            fragment = new ClientsFragment();
+            floatingActionButton.show();
+        } else if (id == R.id.nav_users) {
+            fragment = new UsersFragment();
+            floatingActionButton.show();
+        } else if (id == R.id.nav_historic) {
+            fragment = new HistoricFragment();
+            floatingActionButton.show();
+        } else if (id == R.id.nav_logout) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            SessionServices sessionServices = new SessionServices(getApplicationContext());
+            sessionServices.clearSession();
+            finish();
+            startActivity(intent);
+        } else if (id == R.id.nav_settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         if (fragment != null){
