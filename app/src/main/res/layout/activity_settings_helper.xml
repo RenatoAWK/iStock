@@ -22,7 +22,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/companyInputLayoutSettingsHelperShow">
+                android:id="@+id/companyInputLayoutSettingsHelperShow"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/editCompanyNameSettingsHelperShow"
@@ -35,7 +36,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/companyInputLayoutSettingsHelper">
+                android:id="@+id/companyInputLayoutSettingsHelper"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/editCompanyNameSettingsHelper"
@@ -47,7 +49,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/nameInputLayoutSettingsHelperShow">
+                android:id="@+id/nameInputLayoutSettingsHelperShow"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/editFullNameSettingsHelperShow"
@@ -60,7 +63,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/nameInputLayoutSettingsHelper">
+                android:id="@+id/nameInputLayoutSettingsHelper"
+                android:visibility="gone">
 
                 <EditText
                         android:id="@+id/editFullNameSettingsHelper"
@@ -72,7 +76,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/emailInputLayoutSettingsHelperShow">
+                android:id="@+id/emailInputLayoutSettingsHelperShow"
+                android:visibility="gone">
 
 
                 <EditText
@@ -86,7 +91,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/emailInputLayoutSettingsHelper">
+                android:id="@+id/emailInputLayoutSettingsHelper"
+                android:visibility="gone">
 
 
                 <EditText
@@ -99,7 +105,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/passwordInputLayoutSettingsHelperOld">
+                android:id="@+id/passwordInputLayoutSettingsHelperOld"
+                android:visibility="gone">
 
 
                 <EditText
@@ -112,7 +119,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/passwordInputLayoutSettingsHelper">
+                android:id="@+id/passwordInputLayoutSettingsHelper"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/editPasswordSettingsHelper"
@@ -124,7 +132,8 @@
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout"
-                android:id="@+id/passwordInputLayoutSettingsHelperConfirmation">
+                android:id="@+id/passwordInputLayoutSettingsHelperConfirmation"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/editPasswordSettingsHelperConfirmation"
