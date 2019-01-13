@@ -69,7 +69,7 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     private void close(){
-        finish();
+        finishAffinity();
     }
 
     @Override

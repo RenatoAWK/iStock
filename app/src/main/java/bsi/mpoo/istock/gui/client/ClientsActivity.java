@@ -58,6 +58,7 @@ public class ClientsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                close();
             }
         });
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -68,7 +69,7 @@ public class ClientsActivity extends AppCompatActivity {
     }
 
     private void close(){
-        finish();
+        finishAffinity();
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.text.NumberFormat;
@@ -17,18 +18,21 @@ import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.gui.DialogDetails;
+import bsi.mpoo.istock.gui.DialogQuantity;
 
 public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderListAdapter.ProductOrderViewHolder> {
 
     private final ArrayList<Product> productList;
     private LayoutInflater inflater;
     private Context context;
+    private ImageView cart;
 
 
-    public ProductOrderListAdapter(Context context,ArrayList<Product> productList){
+    public ProductOrderListAdapter(Context context, ArrayList<Product> productList, ImageView cart){
         inflater = LayoutInflater.from(context);
         this.productList = productList;
         this.context = context;
+        this.cart = cart;
     }
 
     class ProductOrderViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
@@ -47,8 +51,9 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
             final String removeOtion = context.getApplicationContext().getString(R.string.delete);
 
             if (item.getTitle().toString().equals(addOption)){
-                Cart.getInstance().addItem(convertProductToItem(product));
-                linearLayout.setBackgroundColor(context.getColor(R.color.greenLight));
+                Item itemConverted = convertProductToItem(product);
+                new DialogQuantity(context, linearLayout, cart).invokeQuantity(product.getQuantity(), itemConverted);
+
 
 
             } else if (item.getTitle().equals(detailOption)){
@@ -57,6 +62,9 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
 
             } else if (item.getTitle().equals(removeOtion)){
                 Cart.getInstance().removeItem(convertProductToItem(product));
+                if (Cart.getInstance().getItems().size() == 0){
+                    cart.setBackgroundResource(R.drawable.ic_sales_before);
+                }
                 linearLayout.setBackgroundColor(0x00000000);
             }
             return false;
@@ -106,6 +114,9 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
         orderViewHolder.nameItemView.setText(currentName);
         orderViewHolder.totalItemView.setText(currentPrice);
         orderViewHolder.quantityItemView.setText(currentQuantity);
+        if (Cart.getInstance().getItems().contains(convertProductToItem(productList.get(position)))){
+            orderViewHolder.linearLayout.setBackgroundColor(context.getColor(R.color.greenLight));
+        }
     }
 
     @Override

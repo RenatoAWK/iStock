@@ -68,7 +68,7 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void close(){
-        finish();
+        finishAffinity();
     }
 
     @Override
