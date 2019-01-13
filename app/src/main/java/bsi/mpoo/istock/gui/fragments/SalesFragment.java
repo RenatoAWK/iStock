@@ -10,20 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.data.product.ProductDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.services.Constants;
-import bsi.mpoo.istock.services.ProductOrderListAdapter;
-import bsi.mpoo.istock.services.ProductServices;
+import bsi.mpoo.istock.services.product.ProductOrderListAdapter;
+import bsi.mpoo.istock.services.product.ProductServices;
 
 public class SalesFragment extends Fragment {
     private Object account;

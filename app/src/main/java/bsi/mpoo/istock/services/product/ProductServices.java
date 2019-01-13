@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.product;
 
 import android.content.Context;
 
@@ -9,6 +9,7 @@ import bsi.mpoo.istock.data.product.ProductDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Exceptions;
 
 public class ProductServices {
 

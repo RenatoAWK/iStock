@@ -12,7 +12,7 @@ import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.services.Constants;
-import bsi.mpoo.istock.services.ProductServices;
+import bsi.mpoo.istock.services.product.ProductServices;
 
 public class ItemDAO {
 

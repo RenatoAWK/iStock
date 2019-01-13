@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.product;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,8 +16,9 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.services.ProductListAdapter;
-import bsi.mpoo.istock.services.ProductServices;
+import bsi.mpoo.istock.gui.MainActivity;
+import bsi.mpoo.istock.services.product.ProductListAdapter;
+import bsi.mpoo.istock.services.product.ProductServices;
 
 public class ProductsActivity extends AppCompatActivity {
 
@@ -62,7 +62,8 @@ public class ProductsActivity extends AppCompatActivity {
 
         if (account instanceof Administrator || account instanceof Salesman || account instanceof Producer){
             productArrayList = productServices.getAcitiveProductsAsc(Session.getInstance().getAdministrator());
-            RecyclerView recyclerView = findViewById(R.id.recyclerviewProductT);
+            RecyclerView recyclerView;
+            recyclerView = findViewById(R.id.recyclerviewProduct);
             adapter = new ProductListAdapter(this, productArrayList);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));

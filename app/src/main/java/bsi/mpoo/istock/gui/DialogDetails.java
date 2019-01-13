@@ -3,17 +3,12 @@ package bsi.mpoo.istock.gui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.util.Locale;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
@@ -23,7 +18,6 @@ import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.MaskGenerator;
-import bsi.mpoo.istock.services.ProductOrderListAdapter;
 
 public class DialogDetails extends AppCompatActivity {
     private AlertDialog.Builder builder;

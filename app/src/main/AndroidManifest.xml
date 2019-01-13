@@ -16,24 +16,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".gui.RegisterActivity" />
+        <activity android:name=".gui.user.RegisterActivity" />
         <activity android:name=".gui.ForgotActivity" />
-        <activity android:name=".gui.RegisterClientActivity" />
+        <activity android:name=".gui.client.RegisterClientActivity" />
         <activity
             android:name=".gui.MainActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".gui.EditClientActivity" />
-        <activity android:name=".gui.RegisterProductActivity" />
-        <activity android:name=".gui.EditProductActivity" />
-        <activity android:name=".gui.EditUserActivity" />
-        <activity android:name=".gui.RegisterUserActivity" />
-        <activity android:name=".gui.FirstAccess" />
-        <activity android:name=".gui.SettingsActivity" />
-        <activity android:name=".gui.SettingsHelperActivity" />
+        <activity android:name=".gui.client.EditClientActivity" />
+        <activity android:name=".gui.product.RegisterProductActivity" />
+        <activity android:name=".gui.product.EditProductActivity" />
+        <activity android:name=".gui.user.EditUserActivity" />
+        <activity android:name=".gui.user.RegisterUserActivity" />
+        <activity android:name=".gui.user.FirstAccess" />
+        <activity android:name=".gui.user.SettingsActivity" />
+        <activity android:name=".gui.user.SettingsHelperActivity" />
         <activity android:name=".gui.EditOrderActivity" />
         <activity android:name=".gui.RegisterOrderActivity" />
-        <activity android:name=".gui.ProductsActivity"></activity>
+        <activity android:name=".gui.product.ProductsActivity" />
+        <activity android:name=".gui.user.UsersActivity"></activity>
     </application>
 
 </manifest>

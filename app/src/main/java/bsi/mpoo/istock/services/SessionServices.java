@@ -7,6 +7,7 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class SessionServices {
     private SessionDAO sessionDAO;

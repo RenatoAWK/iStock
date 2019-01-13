@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.client;
 
 import android.content.Context;
 

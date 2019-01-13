@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.product;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

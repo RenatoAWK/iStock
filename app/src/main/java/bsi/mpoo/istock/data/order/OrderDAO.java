@@ -9,15 +9,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import bsi.mpoo.istock.data.DbHelper;
-import bsi.mpoo.istock.data.item.ItemDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.ClientServices;
+import bsi.mpoo.istock.services.client.ClientServices;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ItemServices;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class OrderDAO {
     private Context context;

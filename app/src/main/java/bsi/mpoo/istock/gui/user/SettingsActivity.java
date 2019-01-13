@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.user;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -24,11 +24,12 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.SessionServices;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class SettingsActivity extends AppCompatActivity {
 

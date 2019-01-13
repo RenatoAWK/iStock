@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.user;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +16,11 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.RandomPassword;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 import bsi.mpoo.istock.services.Validations;
 
 public class RegisterUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {

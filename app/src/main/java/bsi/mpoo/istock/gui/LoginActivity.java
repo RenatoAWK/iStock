@@ -14,9 +14,11 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.user.FirstAccess;
+import bsi.mpoo.istock.gui.user.RegisterActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.SessionServices;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 import bsi.mpoo.istock.services.Validations;
 
 public class LoginActivity extends AppCompatActivity {

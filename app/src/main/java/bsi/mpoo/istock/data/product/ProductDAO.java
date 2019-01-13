@@ -14,7 +14,7 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class ProductDAO {
     private Context context;

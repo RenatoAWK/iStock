@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    tools:context=".gui.EditProductActivity">
+    tools:context=".gui.product.EditProductActivity">
 
     <ScrollView
         android:layout_width="match_parent"

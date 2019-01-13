@@ -1,126 +1,98 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.user;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.media.ExifInterface;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
+import bsi.mpoo.istock.gui.LoginActivity;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.Encryption;
+import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.ImageServices;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 import bsi.mpoo.istock.services.Validations;
-import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
-public class RegisterActivity extends AppCompatActivity {
-
-    private EditText nameEditText;
-    private EditText emailEditText;
-    private EditText passwordEditText;
-    private EditText passwordConfirmationEditText;
-    private EditText companyEditText;
+public class FirstAccess extends AppCompatActivity {
     private ImageView imageRegister;
     private Bitmap reducedImageProfile;
+    private User user;
+    private EditText passwordEditText;
+    private EditText passwordConfirmationEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_first_access);
         ActionBar actionBar = getSupportActionBar();
+        passwordEditText = findViewById(R.id.editPasswordFirstAccess);
+        passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmFirstAccess);
         actionBar.hide();
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        String email = bundle.getString(Constants.BundleKeys.EMAIL);
-        emailEditText = findViewById(R.id.editEmailRegister);
-        passwordEditText = findViewById(R.id.editPasswordRegister);
-        passwordConfirmationEditText = findViewById(R.id.editPasswordConfirmRegister);
-        nameEditText = findViewById(R.id.editFullNameRegister);
-        companyEditText = findViewById(R.id.editCompanyNameRegister);
-        imageRegister = findViewById(R.id.editImageRegister);
-        emailEditText.setText(email);
+        user = intent.getParcelableExtra(Constants.BundleKeys.USER);
+
     }
 
-    public void register(View view) {
+    public void confirm(View view) {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)){
             return;
         }
-        UserServices userServices = new UserServices(this);
-        User newUser = new User();
-        newUser.setName(nameEditText.getText().toString());
-        newUser.setEmail(emailEditText.getText().toString().trim().toUpperCase());
-        newUser.setPassword(passwordEditText.getText().toString());
-        newUser.setType(Constants.UserTypes.ADMINISTRATOR);
-        newUser.setStatus(Constants.Status.ACTIVE);
-        newUser.setCompany(companyEditText.getText().toString().trim());
-        newUser.setAdministrator(Constants.UserTypes.IS_THE_ADMINISTRATOR);
+        user.setPassword(Encryption.encrypt(passwordEditText.getText().toString()));
         ImageServices imageServices = new ImageServices();
-        newUser.setImage(imageServices.imageToByte(reducedImageProfile));
-
+        user.setImage(imageServices.imageToByte(reducedImageProfile));
+        user.setStatus(Constants.Status.ACTIVE);
+        UserServices userServices = new UserServices(getApplicationContext());
         try {
-            userServices.registerUser(newUser);
-            String message = getString(R.string.register_done);
-            new AlertDialogGenerator(this, message, true).invoke();
-
-        } catch (EmailAlreadyRegistered error){
-            String message = getString(R.string.email_already_registered);
+            userServices.updateUser(user);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } catch (Exceptions.UserNotRegistered error){
+            String message = getString(R.string.user_not_registered);
             new AlertDialogGenerator(this, message, false).invoke();
-            validations.clearFields(emailEditText, passwordEditText,
-                    passwordConfirmationEditText, emailEditText);
-            emailEditText.requestFocus();
 
         } catch (Exception error){
             String message = getString(R.string.unknow_error);
             new AlertDialogGenerator(this, message, false).invoke();
-            validations.clearFields(emailEditText, passwordEditText,
-                    passwordConfirmationEditText);
-            emailEditText.requestFocus();
-
         }
+
     }
 
     private boolean isAllFieldsValid(Validations validations) {
-        boolean valid = validations.editValidate(nameEditText, companyEditText,
-                emailEditText, passwordEditText, passwordConfirmationEditText);
-
-        if (!validations.name(nameEditText.getText().toString())){
-            validations.setErrorIfNull(nameEditText, getString(R.string.invalid_Name));
-            valid = false;
-        }
-
-        if (!validations.email(emailEditText.getText().toString())){
-            validations.setErrorIfNull(emailEditText,getString(R.string.invalid_email));
-            valid = false;
-        }
-
+        boolean valid = validations.editValidate(passwordEditText, passwordConfirmationEditText);
         if (!validations.password(passwordEditText.getText().toString())){
             validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password_weak));
             valid = false;
         }
-
         if (!validations.password(passwordConfirmationEditText.getText().toString())){
-            validations.setErrorIfNull(passwordConfirmationEditText,getString(R.string.invalid_password_weak));
+            validations.setErrorIfNull(passwordConfirmationEditText, getString(R.string.invalid_password_weak));
             valid = false;
         }
-
         if (!validations.passwordEquals(
                 passwordEditText.getText().toString(),
                 passwordConfirmationEditText.getText().toString())){
-                validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password_not_equals));
-                validations.setErrorIfNull(passwordConfirmationEditText, getString(R.string.invalid_password_not_equals));
-                valid = false;
+            validations.setErrorIfNull(passwordEditText, getString(R.string.invalid_password_not_equals));
+            validations.setErrorIfNull(passwordConfirmationEditText, getString(R.string.invalid_password_not_equals));
+            valid = false;
         }
+
+
         return valid;
     }
 
@@ -131,7 +103,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
         if (resultCode == Activity.RESULT_OK){
 
             if (requestCode == Constants.Image.REQUEST_CODE){

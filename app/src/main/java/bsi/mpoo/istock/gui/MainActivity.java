@@ -21,11 +21,14 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
+import bsi.mpoo.istock.gui.client.RegisterClientActivity;
 import bsi.mpoo.istock.gui.fragments.ClientsFragment;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
 import bsi.mpoo.istock.gui.fragments.HomeFragment;
 import bsi.mpoo.istock.gui.fragments.SalesFragment;
-import bsi.mpoo.istock.gui.fragments.UsersFragment;
+import bsi.mpoo.istock.gui.product.ProductsActivity;
+import bsi.mpoo.istock.gui.user.SettingsActivity;
+import bsi.mpoo.istock.gui.user.UsersActivity;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.SessionServices;
 
@@ -61,11 +64,7 @@ public class MainActivity extends AppCompatActivity
                     Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
                     startActivity(intent);
 
-                } else if (fragment instanceof  UsersFragment){
-                    Intent intent = new Intent(getApplicationContext(), RegisterUserActivity.class);
-                    startActivity(intent);
-
-                } else if (fragment instanceof HistoricFragment){
+                }  else if (fragment instanceof HistoricFragment){
 
                 }
             }
@@ -143,6 +142,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void startAActivity(Class Activity){
+        Intent intent = new Intent(getApplicationContext(), Activity );
+        startActivity(intent);
+
+    }
+
     public void displaySelectedScreen(int id){
         Fragment fragment = null;
         FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
@@ -153,14 +158,12 @@ public class MainActivity extends AppCompatActivity
             fragment = new SalesFragment();
             floatingActionButton.show();
         } else if (id == R.id.nav_products){
-            Intent intent = new Intent(this, ProductsActivity.class);
-            startActivity(intent);
+            startAActivity(ProductsActivity.class);
         } else if (id == R.id.nav_clients) {
             fragment = new ClientsFragment();
             floatingActionButton.show();
         } else if (id == R.id.nav_users) {
-            fragment = new UsersFragment();
-            floatingActionButton.show();
+            startAActivity(UsersActivity.class);
         } else if (id == R.id.nav_historic) {
             fragment = new HistoricFragment();
             floatingActionButton.show();

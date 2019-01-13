@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.product;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,73 +13,72 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
-import bsi.mpoo.istock.gui.EditClientActivity;
+import bsi.mpoo.istock.gui.product.EditProductActivity;
+import bsi.mpoo.istock.services.Constants;
 
-public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder> implements Filterable{
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>  implements Filterable{
 
-    private final ArrayList<Client> clientList;
-    private  ArrayList<Client> clientListFull;
+    private final ArrayList<Product> productList;
+    private ArrayList<Product> productListFull;
     private LayoutInflater inflater;
     private Context context;
 
-    public ClientListAdapter(Context context, ArrayList<Client> clientList){
+    public ProductListAdapter(Context context, ArrayList<Product> productList){
         inflater = LayoutInflater.from(context);
-        this.clientList = clientList;
-        clientListFull = new ArrayList<>(clientList);
+        this.productList = productList;
         this.context = context;
-
     }
 
-    class ClientViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         final TextView nameItemView;
-        final TextView phoneItemView;
-        final ClientListAdapter adapter;
+        final TextView quantityItemView;
+        final TextView priceItemView;
+        final ProductListAdapter adapter;
 
-        private ClientViewHolder(View itemView, ClientListAdapter adapter ){
+        private ProductViewHolder(View itemView, ProductListAdapter adapter ){
             super(itemView);
             itemView.setOnCreateContextMenuListener(this);
-            nameItemView = itemView.findViewById(R.id.nameClientItemList);
-            phoneItemView = itemView.findViewById(R.id.phoneClientItemList);
+            nameItemView = itemView.findViewById(R.id.nameProductItemList);
+            quantityItemView = itemView.findViewById(R.id.quantityProductItemList);
+            priceItemView = itemView.findViewById(R.id.priceProductItemList);
             this.adapter = adapter;
 
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item){
-            ClientServices clientServices = new ClientServices(context);
+            ProductServices productServices = new ProductServices(context);
             int position = getLayoutPosition();
-            Client client = clientList.get(position);
+            Product product = productList.get(position);
             final String detailOption = context.getApplicationContext().getString(R.string.details);
             final String deleteOption = context.getApplicationContext().getString(R.string.delete);
             final String editOption = context.getApplicationContext().getString(R.string.edit);
 
             if (item.getTitle().toString().equals(deleteOption)){
-
                 try {
-                    clientServices.disableClient(client, Session.getInstance().getAdministrator());
-                    clientList.remove(position);
+                    productServices.disableProduct(product, Session.getInstance().getAdministrator());
+                    productList.remove(position);
                     adapter.notifyDataSetChanged();
 
-                } catch (Exception error) {
+                }
+                catch (Exception error) {
                     new AlertDialogGenerator((Activity) context, error.getMessage(),false).invoke();
-
                 }
 
             } else if (item.getTitle().equals(editOption)){
-                Intent intent = new Intent(context, EditClientActivity.class);
-                intent.putExtra(Constants.BundleKeys.CLIENT, client);
+                Intent intent = new Intent(context, EditProductActivity.class);
+                intent.putExtra(Constants.BundleKeys.PRODUCT, product);
                 context.startActivity(intent);
-
             } else if (item.getTitle().equals(detailOption)){
                 DialogDetails dialogDetails = new DialogDetails(context);
-                dialogDetails.invoke(client);
-
+                dialogDetails.invoke(product);
             }
             return false;
         }
@@ -97,41 +96,43 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
     @NonNull
     @Override
-    public ClientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.client_list_item, parent, false);
-        return new ClientViewHolder(itemView, this);
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = inflater.inflate(R.layout.product_list_item, parent, false);
+        return new ProductViewHolder(itemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ClientViewHolder clientViewHolder, int position) {
-        String currentName = clientList.get(position).getName();
-        String currentPhone = MaskGenerator.unmaskedTextToStringMasked(clientList.get(position).getPhone(), Constants.MaskTypes.PHONE);
-        clientViewHolder.nameItemView.setText(currentName);
-        clientViewHolder.phoneItemView.setText(currentPhone);
+    public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
+        String currentName = productList.get(position).getName();
+        String currentQuantity = String.valueOf(productList.get(position).getQuantity());
+        String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
+        productViewHolder.nameItemView.setText(currentName);
+        productViewHolder.quantityItemView.setText(currentQuantity);
+        productViewHolder.priceItemView.setText(currentPrice);
     }
 
     @Override
     public int getItemCount() {
-        return clientList.size();
+        return productList.size();
     }
 
     @Override
     public Filter getFilter() {
-        return clientFilter;
+        return productFilter;
     }
 
-    private Filter clientFilter = new Filter() {
+    private Filter productFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Client> filteredList = new ArrayList<>();
+            ArrayList<Product> filteredList = new ArrayList<>();
 
             if(constraint == null || constraint.length() == 0){
-                filteredList.addAll(clientListFull);
+                filteredList.addAll(productListFull);
             } else {
-                String filteredPattern = constraint.toString().toLowerCase().trim();
-                for(Client client : clientListFull){
-                    if(client.getName().toLowerCase().contains(filteredPattern)){
-                        filteredList.add(client);
+                String filtedPattern = constraint.toString().toLowerCase().trim();
+                for(Product product : productListFull){
+                    if(product.getName().toLowerCase().contains(filtedPattern)){
+                        filteredList.add(product);
                     }
                 }
             }
@@ -144,8 +145,8 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            clientList.clear();
-            clientList.addAll((ArrayList) results.values);
+            productList.clear();
+            productList.addAll((ArrayList) results.values);
             notifyDataSetChanged();
         }
     };

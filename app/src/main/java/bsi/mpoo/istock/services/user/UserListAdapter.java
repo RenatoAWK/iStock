@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.user;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +15,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import bsi.mpoo.istock.gui.EditUserActivity;
+import bsi.mpoo.istock.gui.user.EditUserActivity;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.DialogDetails;
+import bsi.mpoo.istock.services.Constants;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder> implements Filterable{
     private final ArrayList<User> userList;

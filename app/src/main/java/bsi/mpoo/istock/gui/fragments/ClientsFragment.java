@@ -20,10 +20,8 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.ClientListAdapter;
-import bsi.mpoo.istock.services.ClientServices;
-import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.client.ClientListAdapter;
+import bsi.mpoo.istock.services.client.ClientServices;
 
 public class ClientsFragment extends Fragment {
     private Object account;

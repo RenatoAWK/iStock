@@ -21,8 +21,8 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.services.UserListAdapter;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserListAdapter;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class UsersFragment extends Fragment {
 

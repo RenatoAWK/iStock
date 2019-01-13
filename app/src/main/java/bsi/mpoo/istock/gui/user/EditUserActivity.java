@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.user;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -13,12 +13,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.data.user.UserDAO;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class EditUserActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

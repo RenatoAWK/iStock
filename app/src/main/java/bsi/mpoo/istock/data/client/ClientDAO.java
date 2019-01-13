@@ -16,7 +16,7 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
-import bsi.mpoo.istock.services.UserServices;
+import bsi.mpoo.istock.services.user.UserServices;
 
 public class ClientDAO {
     private Context context;

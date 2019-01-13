@@ -1,6 +1,5 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.product;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,48 +7,44 @@ import android.view.View;
 import android.widget.EditText;
 import java.math.BigDecimal;
 import bsi.mpoo.istock.R;
+import bsi.mpoo.istock.domain.Administrator;
+import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.services.Constants;
-import bsi.mpoo.istock.services.Exceptions.ProductNotRegistered;
-import bsi.mpoo.istock.services.ProductServices;
+import bsi.mpoo.istock.services.Exceptions.ProductAlreadyRegistered;
+import bsi.mpoo.istock.services.product.ProductServices;
 import bsi.mpoo.istock.services.Validations;
 
-public class EditProductActivity extends AppCompatActivity {
+public class RegisterProductActivity extends AppCompatActivity {
 
     private EditText nameEditText;
     private EditText priceEditText;
     private EditText quantityEditText;
     private EditText minimumEditText;
-    private Product product;
+    private Object account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_product);
+        setContentView(R.layout.activity_register_product);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        this.product = bundle.getParcelable(Constants.BundleKeys.PRODUCT);
-        nameEditText = findViewById(R.id.editTextNameEditProduct);
-        priceEditText = findViewById(R.id.editTextPriceEditProduct);
-        quantityEditText = findViewById(R.id.editTextQuantityEditProduct);
-        minimumEditText = findViewById(R.id.editTextMinimumEditProduct);
-        nameEditText.setText(product.getName());
-        priceEditText.setText(String.valueOf(product.getPrice()));
-        quantityEditText.setText(String.valueOf(product.getQuantity()));
-
-        if (product.getMinimumQuantity() > 0){
-            minimumEditText.setText(String.valueOf(product.getMinimumQuantity()));
-        }
+        nameEditText = findViewById(R.id.editTextNameRegisterProduct);
+        priceEditText = findViewById(R.id.editTextPriceRegisterProduct);
+        quantityEditText = findViewById(R.id.editTextQuantityRegisterProduct);
+        minimumEditText = findViewById(R.id.editTextMinimumRegisterProduct);
     }
 
-    public void edit(View view) {
-
+    public void register(View view) {
         Validations validations = new Validations(getApplicationContext());
         if (!isAllFieldsValid(validations)) return;
+        account = Session.getInstance().getAccount();
         ProductServices productServices = new ProductServices(getApplicationContext());
         Product newProduct = new Product();
+        if (account instanceof Administrator || account instanceof Producer){
+            newProduct.setAdministrator(Session.getInstance().getAdministrator());
+        } else { return; }
         newProduct.setName(nameEditText.getText().toString().trim().toUpperCase());
         newProduct.setPrice(new BigDecimal(priceEditText.getText().toString()));
         newProduct.setQuantity(Long.parseLong(quantityEditText.getText().toString()));
@@ -59,18 +54,18 @@ public class EditProductActivity extends AppCompatActivity {
         } else {
             newProduct.setMinimumQuantity(Long.parseLong(minimumEditText.getText().toString()));
         }
-        newProduct.setStatus(product.getStatus());
-        newProduct.setAdministrator(product.getAdministrator());
-        newProduct.setId(product.getId());
+
+        newProduct.setStatus(Constants.Status.ACTIVE);
 
         try {
-            productServices.updateProduct(newProduct);
-            String message = getString(R.string.edit_successful);
+            productServices.registerProduct(newProduct, Session.getInstance().getAdministrator());
+            String message = getString(R.string.register_done);
             new AlertDialogGenerator(this, message, true).invoke();
 
-        } catch (ProductNotRegistered error){
-            String message = getString(R.string.product_not_registered);
+        } catch (ProductAlreadyRegistered error){
+            String message = getString(R.string.product_already_registered);
             new AlertDialogGenerator(this, message, false).invoke();
+            validations.clearFields(nameEditText);
 
         } catch (Exception error){
             String message = getString(R.string.unknow_error);
@@ -81,8 +76,9 @@ public class EditProductActivity extends AppCompatActivity {
 
     private boolean isAllFieldsValid(Validations validations){
         boolean valid = validations.editValidate(nameEditText, quantityEditText, priceEditText);
+
         if (!validations.name(nameEditText.getText().toString())){
-            validations.setErrorIfNull(nameEditText,getString(R.string.invalid_Name) );
+            validations.setErrorIfNull(nameEditText, getString(R.string.invalid_Name));
             valid = false;
         }
 
