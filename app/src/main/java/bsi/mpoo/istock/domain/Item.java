@@ -66,4 +66,14 @@ public class Item {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Item){
+            if (getProduct().equals(((Item) obj).getProduct()) ){
+                return true;
+            }
+        }
+        return false;
+    }
 }

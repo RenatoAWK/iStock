@@ -14,6 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Cart;
+import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.gui.DialogDetails;
 
@@ -46,7 +47,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
             final String removeOtion = context.getApplicationContext().getString(R.string.delete);
 
             if (item.getTitle().toString().equals(addOption)){
-                Cart.getInstance().addProduct(product);
+                Cart.getInstance().addItem(convertProductToItem(product));
                 linearLayout.setBackgroundColor(context.getColor(R.color.greenLight));
 
 
@@ -55,7 +56,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
                 dialogDetails.invoke(product);
 
             } else if (item.getTitle().equals(removeOtion)){
-                Cart.getInstance().removeProduct(product);
+                Cart.getInstance().removeItem(convertProductToItem(product));
                 linearLayout.setBackgroundColor(0x00000000);
             }
             return false;
@@ -68,7 +69,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
             int position = getLayoutPosition();
             Product product = productList.get(position);
 
-            if (!Cart.getInstance().getProducts().contains(product)){
+            if (Cart.getInstance().getItems().contains(convertProductToItem(product))){
                 MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
                 deleteItem.setOnMenuItemClickListener(this);
             } else{
@@ -110,5 +111,14 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    public Item convertProductToItem(Product product){
+        Item item = new Item();
+        item.setPrice(product.getPrice());
+        item.setIdAdministrator(product.getAdministrator().getUser().getId());
+        item.setStatus(product.getStatus());
+        item.setProduct(product);
+        return item;
     }
 }

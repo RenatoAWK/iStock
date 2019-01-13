@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Cart {
     private static Cart instance = new Cart();
-    private static ArrayList<Product> products = new ArrayList<>();
+    private static ArrayList<Item> items = new ArrayList<>();
     private static BigDecimal total;
 
     public static Cart getInstance() {
@@ -16,12 +16,12 @@ public class Cart {
         Cart.instance = instance;
     }
 
-    public ArrayList<Product> getProducts() {
-        return Cart.products;
+    public ArrayList<Item> getItems() {
+        return Cart.items;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        Cart.products = products;
+    public void setItems(ArrayList<Item> items) {
+        Cart.items = items;
     }
 
     public BigDecimal getTotal() {
@@ -32,15 +32,15 @@ public class Cart {
         Cart.total = total;
     }
 
-    public void addProduct(Product product){
-        Cart.products.add(product);
+    public void addItem(Item item){
+        Cart.items.add(item);
     }
 
-    public void removeProduct(Product product){
-        Cart.products.remove(product);
+    public void removeItem(Item item){
+        Cart.items.remove(item);
     }
 
-    public void removeAllProducts(){
-        Cart.products.clear();
+    public void removeAllItems(){
+        Cart.items.clear();
     }
 }

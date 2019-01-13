@@ -22,11 +22,10 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.client.ClientsActivity;
-import bsi.mpoo.istock.gui.client.RegisterClientActivity;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
 import bsi.mpoo.istock.gui.fragments.HomeFragment;
-import bsi.mpoo.istock.gui.fragments.SalesFragment;
 import bsi.mpoo.istock.gui.product.ProductsActivity;
+import bsi.mpoo.istock.gui.sales.ProductsOrderActivity;
 import bsi.mpoo.istock.gui.user.SettingsActivity;
 import bsi.mpoo.istock.gui.user.UsersActivity;
 import bsi.mpoo.istock.services.ImageServices;
@@ -56,9 +55,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
 
                 Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_main);
-                if (fragment instanceof HomeFragment){
-
-                } else if (fragment instanceof SalesFragment){
+                if (fragment instanceof HomeFragment) {
 
                 } else if (fragment instanceof HistoricFragment){
 
@@ -151,8 +148,7 @@ public class MainActivity extends AppCompatActivity
             fragment = new HomeFragment();
             floatingActionButton.hide();
         } else if (id == R.id.nav_sales){
-            fragment = new SalesFragment();
-            floatingActionButton.show();
+            startAActivity(ProductsOrderActivity.class);
         } else if (id == R.id.nav_products){
             startAActivity(ProductsActivity.class);
         } else if (id == R.id.nav_clients) {

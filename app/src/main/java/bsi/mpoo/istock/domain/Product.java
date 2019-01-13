@@ -95,4 +95,14 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Product){
+            if (getId() == ((Product) obj).getId()){
+                return true;
+            }
+        }
+        return false;
+    }
 }
