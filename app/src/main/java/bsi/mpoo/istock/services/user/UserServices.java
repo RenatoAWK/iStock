@@ -13,6 +13,9 @@ import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
+import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.Encryption;
+import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.Exceptions.EmailAlreadyRegistered;
 
 public class UserServices {

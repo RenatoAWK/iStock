@@ -21,8 +21,8 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
+import bsi.mpoo.istock.gui.client.ClientsActivity;
 import bsi.mpoo.istock.gui.client.RegisterClientActivity;
-import bsi.mpoo.istock.gui.fragments.ClientsFragment;
 import bsi.mpoo.istock.gui.fragments.HistoricFragment;
 import bsi.mpoo.istock.gui.fragments.HomeFragment;
 import bsi.mpoo.istock.gui.fragments.SalesFragment;
@@ -60,11 +60,7 @@ public class MainActivity extends AppCompatActivity
 
                 } else if (fragment instanceof SalesFragment){
 
-                } else if (fragment instanceof ClientsFragment){
-                    Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
-                    startActivity(intent);
-
-                }  else if (fragment instanceof HistoricFragment){
+                } else if (fragment instanceof HistoricFragment){
 
                 }
             }
@@ -160,8 +156,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_products){
             startAActivity(ProductsActivity.class);
         } else if (id == R.id.nav_clients) {
-            fragment = new ClientsFragment();
-            floatingActionButton.show();
+            startAActivity(ClientsActivity.class);
         } else if (id == R.id.nav_users) {
             startAActivity(UsersActivity.class);
         } else if (id == R.id.nav_historic) {

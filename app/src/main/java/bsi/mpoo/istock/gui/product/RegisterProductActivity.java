@@ -11,6 +11,7 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Session;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions.ProductAlreadyRegistered;
 import bsi.mpoo.istock.services.product.ProductServices;
