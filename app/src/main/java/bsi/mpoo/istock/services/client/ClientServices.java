@@ -55,6 +55,15 @@ public class ClientServices {
         return (ArrayList<Client>) clientDAO.getActiveClientsByAdmId(administrator,Contract.DESC);
     }
 
+    public ArrayList<String> getActiveClientsName(Administrator administrator){
+        ArrayList<Client> clients = getAcitiveClientsAsc(administrator);
+        ArrayList<String> clientsName = new ArrayList<>();
+        for (Client client: clients){
+            clientsName.add(client.getName());
+        }
+        return clientsName;
+    }
+
     public Client getClientById(long id_client) {
         return clientDAO.getClientById(id_client);
     }

@@ -65,4 +65,8 @@ public class Constants {
         public static final String ITEMS = "items";
     }
 
+    public static class Date{
+        public static final String FORMAT_DATE = "dd/MM/yyyy";
+    }
+
 }

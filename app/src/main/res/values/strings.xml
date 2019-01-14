@@ -119,4 +119,5 @@
     <string name="created">Criação</string>
     <string name="finalization_sale">Finalização de Venda</string>
     <string name="add">Adicionar</string>
+    <string name="delivery_date">Data de entrega</string>
 </resources>

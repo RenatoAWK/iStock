@@ -23,10 +23,9 @@ import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.product.EditProductActivity;
 import bsi.mpoo.istock.services.Constants;
 
-public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>  implements Filterable{
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>{
 
     private final ArrayList<Product> productList;
-    private ArrayList<Product> productListFull;
     private LayoutInflater inflater;
     private Context context;
 
@@ -116,38 +115,4 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         return productList.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return productFilter;
-    }
-
-    private Filter productFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Product> filteredList = new ArrayList<>();
-
-            if(constraint == null || constraint.length() == 0){
-                filteredList.addAll(productListFull);
-            } else {
-                String filtedPattern = constraint.toString().toLowerCase().trim();
-                for(Product product : productListFull){
-                    if(product.getName().toLowerCase().contains(filtedPattern)){
-                        filteredList.add(product);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            productList.clear();
-            productList.addAll((ArrayList) results.values);
-            notifyDataSetChanged();
-        }
-    };
 }

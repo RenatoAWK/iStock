@@ -40,7 +40,6 @@ public class ClientsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RegisterClientActivity.class);
                 startActivity(intent);
-                close();
             }
         });
     }
