@@ -76,4 +76,9 @@ public class Item {
         }
         return false;
     }
+
+    public BigDecimal getTotalPrice(){
+        BigDecimal qtd = new BigDecimal(getQuantity());
+        return qtd.multiply(getPrice());
+    }
 }

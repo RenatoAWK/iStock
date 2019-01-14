@@ -39,7 +39,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerviewCart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="300dp">
                 </android.support.v7.widget.RecyclerView>
 
             </ScrollView>
@@ -66,7 +66,30 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    style="@style/switch_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    style="@style/switch_button"
+                    android:id="@+id/totalOrderCart"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"/>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,21 +97,21 @@
                 android:orientation="horizontal">
 
                 <Button
-                    style="@style/button_primary"
                     android:id="@+id/saveCart"
+                    style="@style/button_primary"
                     android:layout_weight="1"
-                    android:text="@string/save"/>
+                    android:onClick="save"
+                    android:text="@string/save" />
 
                 <Button
-                    style="@style/button_secondary"
                     android:id="@+id/cancelCart"
+                    style="@style/button_secondary"
                     android:layout_weight="1"
-                    android:text="@string/cancel"/>
+                    android:onClick="cancel"
+                    android:text="@string/cancel" />
 
 
             </LinearLayout>
-
-
         </LinearLayout>
 
     </ScrollView>

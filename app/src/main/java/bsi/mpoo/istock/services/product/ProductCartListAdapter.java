@@ -18,11 +18,13 @@ public class ProductCartListAdapter  extends RecyclerView.Adapter<ProductCartLis
 
     private LayoutInflater inflater;
     private Context context;
+    private TextView total;
 
 
-    public ProductCartListAdapter(Context context){
+    public ProductCartListAdapter(Context context, TextView total){
         inflater = LayoutInflater.from(context);
         this.context = context;
+        this.total = total;
     }
 
     class ProductCartViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
@@ -40,6 +42,7 @@ public class ProductCartListAdapter  extends RecyclerView.Adapter<ProductCartLis
              if (item.getTitle().equals(removeOtion)){
                 Cart.getInstance().removeItem(itemCart);
                 adapter.notifyDataSetChanged();
+                total.setText(NumberFormat.getCurrencyInstance().format(Cart.getInstance().getTotal()));
             }
             return false;
         }

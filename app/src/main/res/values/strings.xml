@@ -120,4 +120,6 @@
     <string name="finalization_sale">Finalização de Venda</string>
     <string name="add">Adicionar</string>
     <string name="delivery_date">Data de entrega</string>
+    <string name="invalid">Inválido</string>
+    <string name="sale_done">Registrado</string>
 </resources>

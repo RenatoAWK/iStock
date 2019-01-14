@@ -22,12 +22,8 @@ public class OrderServices {
         return searchedOrder != null;
     }
 
-    public void registerOrder(Order order, Administrator administrator) throws Exception {
-        try {
+    public void registerOrder(Order order) throws Exception {
             orderDAO.insertOrder(order);
-        } catch (Exception error){
-            throw new Exception();
-        }
     }
 
     public void updateOrder(Order order) throws Exception{

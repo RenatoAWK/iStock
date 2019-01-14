@@ -25,7 +25,11 @@ public class Cart {
     }
 
     public BigDecimal getTotal() {
-        return total;
+        BigDecimal newTotal = new BigDecimal("0");
+        for (Item item: getItems()){
+            newTotal = newTotal.add(item.getTotalPrice());
+        }
+        return newTotal;
     }
 
     public void setTotal(BigDecimal total) {

@@ -9,13 +9,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import bsi.mpoo.istock.data.DbHelper;
+import bsi.mpoo.istock.data.product.ProductDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.client.ClientServices;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ItemServices;
+import bsi.mpoo.istock.services.product.ProductServices;
 import bsi.mpoo.istock.services.user.UserServices;
 
 public class OrderDAO {
@@ -31,7 +34,7 @@ public class OrderDAO {
         this.itemServices = new ItemServices(context);
     }
 
-    public void insertOrder(Order order) {
+    public void insertOrder(Order order) throws Exception {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -43,10 +46,20 @@ public class OrderDAO {
         values.put(ContractOrder.COLUMN_DELIVERED, order.getDelivered());
         values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
         values.put(ContractOrder.COLUMN_STATUS, order.getStatus());
+        updateProducts(order.getItems());
         values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToIdString(order.getItems()));
         long newRowID = db.insert(ContractOrder.TABLE_NAME, null, values);
         order.setId(newRowID);
         db.close();
+    }
+
+    private void updateProducts(ArrayList<Item> items) throws Exception{
+        ProductServices productServices = new ProductServices(context);
+        for (Item item: items){
+            item.getProduct().setQuantity(item.getProduct().getQuantity()-item.getQuantity());
+            productServices.updateProduct(item.getProduct());
+
+        }
     }
 
     private String convertArrayItemToIdString(ArrayList<Item> items) {

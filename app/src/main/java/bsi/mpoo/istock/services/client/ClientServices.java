@@ -9,6 +9,7 @@ import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 import bsi.mpoo.istock.services.Exceptions.ClientNotRegistered;
 public class ClientServices {
@@ -67,4 +68,14 @@ public class ClientServices {
     public Client getClientById(long id_client) {
         return clientDAO.getClientById(id_client);
     }
+
+    public Client getClientByName(String name, Administrator administrator) throws ClientNotRegistered {
+        Client client = clientDAO.getClientByName(name, administrator);
+        if (client == null){
+            throw new Exceptions.ClientNotRegistered();
+        } else {
+            return client;
+        }
+    }
+
 }
