@@ -49,10 +49,16 @@ public class OrderDAO {
         }
         values.put(ContractOrder.COLUMN_STATUS, Constants.Status.ACTIVE);
         updateProducts(order.getItems());
+        registerItems(order.getItems());
         values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToIdString(order.getItems()));
         long newRowID = db.insert(ContractOrder.TABLE_NAME, null, values);
         order.setId(newRowID);
         db.close();
+    }
+
+    private void registerItems(ArrayList items) {
+        ItemServices itemServices = new ItemServices(context);
+        itemServices.insertItem(items);
     }
 
     private void updateProducts(ArrayList<Item> items) throws Exception{
@@ -242,7 +248,9 @@ public class OrderDAO {
         User searchedUser = userServices.getUserById(user.getId());
         order.setAdministrator((Administrator) userServices.getUserInDomainType(searchedUser));
         order.setTotal(new BigDecimal(total));
-        order.setDateDelivery(stringLocalDateToLocalDate(dateDelivery));
+        if (delivered == Constants.Order.NOT_DELIVERED && !dateDelivery.isEmpty()){
+            order.setDateDelivery(stringLocalDateToLocalDate(dateDelivery));
+        }
         return order;
     }
 

@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.sales;
 
 import android.content.Context;
 import android.content.DialogInterface;

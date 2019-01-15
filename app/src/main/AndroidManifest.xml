@@ -31,12 +31,13 @@
         <activity android:name=".gui.user.FirstAccess" />
         <activity android:name=".gui.user.SettingsActivity" />
         <activity android:name=".gui.user.SettingsHelperActivity" />
-        <activity android:name=".gui.EditOrderActivity" />
-        <activity android:name=".gui.RegisterOrderActivity" />
+        <activity android:name=".gui.historic.EditOrderActivity" />
+        <activity android:name=".gui.sales.RegisterOrderActivity" />
         <activity android:name=".gui.product.ProductsActivity" />
         <activity android:name=".gui.user.UsersActivity" />
         <activity android:name=".gui.client.ClientsActivity" />
-        <activity android:name=".gui.sales.ProductsOrderActivity"></activity>
+        <activity android:name=".gui.sales.ProductsOrderActivity" />
+        <activity android:name=".gui.historic.HistoricActivity"></activity>
     </application>
 
 </manifest>

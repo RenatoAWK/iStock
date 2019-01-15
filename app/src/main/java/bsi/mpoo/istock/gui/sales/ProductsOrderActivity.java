@@ -1,8 +1,6 @@
 package bsi.mpoo.istock.gui.sales;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,14 +16,9 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.MainActivity;
-import bsi.mpoo.istock.gui.RegisterOrderActivity;
-import bsi.mpoo.istock.gui.user.RegisterUserActivity;
 import bsi.mpoo.istock.services.product.ProductOrderListAdapter;
 import bsi.mpoo.istock.services.product.ProductServices;
-import bsi.mpoo.istock.services.user.UserListAdapter;
-import bsi.mpoo.istock.services.user.UserServices;
 
 public class ProductsOrderActivity extends AppCompatActivity {
 

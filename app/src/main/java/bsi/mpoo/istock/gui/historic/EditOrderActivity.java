@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.historic;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

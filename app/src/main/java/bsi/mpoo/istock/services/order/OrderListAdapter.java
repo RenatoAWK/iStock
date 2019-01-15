@@ -1,6 +1,5 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.order;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -10,24 +9,29 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Order;
-import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
-import bsi.mpoo.istock.gui.EditOrderActivity;
+import bsi.mpoo.istock.gui.historic.EditOrderActivity;
+import bsi.mpoo.istock.services.Constants;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderViewHolder> {
 
     private final ArrayList<Order> orderList;
     private LayoutInflater inflater;
     private Context context;
+    private LinearLayout linearLayout;
 
     public OrderListAdapter(Context context, ArrayList<Order> orderList){
         inflater = LayoutInflater.from(context);
@@ -49,31 +53,19 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             totalItemView = itemView.findViewById(R.id.priceOrderItemList);
             typeTitleItemView = itemView.findViewById(R.id.typeTitleOrderItemList);
             dateItemView = itemView.findViewById(R.id.dateOrderItemList);
+            linearLayout = itemView.findViewById(R.id.linearLayoutOrderListItem);
             this.adapter = adapter;
 
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item){
-            OrderServices orderServices = new OrderServices(context);
             int position = getLayoutPosition();
             Order order = orderList.get(position);
             final String detailOption = context.getApplicationContext().getString(R.string.details);
-            final String deleteOption = context.getApplicationContext().getString(R.string.delete);
             final String editOption = context.getApplicationContext().getString(R.string.edit);
 
-            if (item.getTitle().toString().equals(deleteOption)){
-                try {
-                    orderServices.disableOrder(order);
-                    orderList.remove(position);
-                    adapter.notifyDataSetChanged();
-
-                }
-                catch (Exception error) {
-                    new AlertDialogGenerator((Activity) context, error.getMessage(),false).invoke();
-                }
-
-            } else if (item.getTitle().equals(editOption)){
+            if (item.getTitle().equals(editOption)){
                 Intent intent = new Intent(context, EditOrderActivity.class);
                 intent.putExtra(Constants.BundleKeys.PRODUCT, order);
                 context.startActivity(intent);
@@ -88,10 +80,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
             MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
-            MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
             detailItem.setOnMenuItemClickListener(this);
             editItem.setOnMenuItemClickListener(this);
-            deleteItem.setOnMenuItemClickListener(this);
         }
     }
 
@@ -105,18 +95,19 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder orderViewHolder, int position) {
         String currentName = orderList.get(position).getClient().getName();
-        String currentType = null;
-        String currentDate = null;
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT,Locale.getDefault());
-        switch (orderList.get(position).getDelivered()){
-            case Constants.Order.DELIVERED:
-                currentType = context.getString(R.string.realized);
-                currentDate = dateFormat.format(orderList.get(position).getDateCreation());
-                break;
-            case   Constants.Order.NOT_DELIVERED:
-                currentType = context.getString(R.string.delivery);
-                currentDate = dateFormat.format(orderList.get(position).getDateDelivery());
-                break;
+        String currentType;
+        String currentDate;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.Date.FORMAT_DATE, new Locale(Locale.getDefault().toString()));
+        if (orderList.get(position).getDelivered() == Constants.Order.DELIVERED){
+            currentType = context.getString(R.string.realized);
+            Date date = Date.from(orderList.get(position).getDateCreation().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            currentDate = simpleDateFormat.format(date);
+        } else {
+            currentType = context.getString(R.string.delivery);
+            Date date = Date.from(orderList.get(position).getDateDelivery().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            currentDate = simpleDateFormat.format(date);
+            linearLayout.setBackgroundColor(context.getColor(R.color.colorAccent));
+
         }
         String currentTotal = NumberFormat.getCurrencyInstance().format(orderList.get(position).getTotal());
 

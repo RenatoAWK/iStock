@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.services;
+package bsi.mpoo.istock.services.order;
 
 import android.content.Context;
 
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import bsi.mpoo.istock.data.order.OrderDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Order;
+import bsi.mpoo.istock.services.Exceptions;
 
 public class OrderServices {
 
@@ -43,11 +44,11 @@ public class OrderServices {
         }
     }
 
-    public ArrayList<Order> getAcitiveOrders(Administrator administrator) throws JSONException {
+    public ArrayList<Order> getAcitiveOrders(Administrator administrator) {
         return (ArrayList<Order>) orderDAO.getActiveOrdersByAdm (administrator);
     }
 
-    public ArrayList<Order> getOrders(Administrator administrator) throws JSONException {
+    public ArrayList<Order> getOrders(Administrator administrator) {
         return (ArrayList<Order>) orderDAO.getOrdersByAdm (administrator);
     }
 

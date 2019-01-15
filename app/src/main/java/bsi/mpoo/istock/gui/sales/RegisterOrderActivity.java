@@ -1,4 +1,4 @@
-package bsi.mpoo.istock.gui;
+package bsi.mpoo.istock.gui.sales;
 
 import android.app.DatePickerDialog;
 import android.support.design.widget.TextInputLayout;
@@ -28,19 +28,16 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Client;
-import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Producer;
-import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
+import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.Exceptions;
-import bsi.mpoo.istock.services.OrderServices;
+import bsi.mpoo.istock.services.order.OrderServices;
 import bsi.mpoo.istock.services.client.ClientServices;
 import bsi.mpoo.istock.services.product.ProductCartListAdapter;
-import bsi.mpoo.istock.services.product.ProductListAdapter;
-import bsi.mpoo.istock.services.product.ProductServices;
 
 public class RegisterOrderActivity extends AppCompatActivity {
 

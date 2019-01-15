@@ -22,8 +22,8 @@ import bsi.mpoo.istock.domain.Producer;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.client.ClientsActivity;
-import bsi.mpoo.istock.gui.fragments.HistoricFragment;
 import bsi.mpoo.istock.gui.fragments.HomeFragment;
+import bsi.mpoo.istock.gui.historic.HistoricActivity;
 import bsi.mpoo.istock.gui.product.ProductsActivity;
 import bsi.mpoo.istock.gui.sales.ProductsOrderActivity;
 import bsi.mpoo.istock.gui.user.SettingsActivity;
@@ -49,19 +49,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton floatingActionButton = findViewById(R.id.floatingButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_main);
-                if (fragment instanceof HomeFragment) {
-
-                } else if (fragment instanceof HistoricFragment){
-
-                }
-            }
-        });
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -156,8 +143,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_users) {
             startAActivity(UsersActivity.class);
         } else if (id == R.id.nav_historic) {
-            fragment = new HistoricFragment();
-            floatingActionButton.show();
+            startAActivity(HistoricActivity.class);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, LoginActivity.class);
             SessionServices sessionServices = new SessionServices(getApplicationContext());

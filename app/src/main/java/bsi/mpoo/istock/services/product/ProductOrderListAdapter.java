@@ -18,7 +18,7 @@ import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.gui.DialogDetails;
-import bsi.mpoo.istock.gui.DialogQuantity;
+import bsi.mpoo.istock.gui.sales.DialogQuantity;
 
 public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderListAdapter.ProductOrderViewHolder> {
 

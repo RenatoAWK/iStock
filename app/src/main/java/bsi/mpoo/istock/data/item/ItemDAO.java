@@ -66,7 +66,7 @@ public class ItemDAO {
                 null,
                 null
         );
-        if (cursor.getCount()==1){
+        if (cursor.getCount()==1 && cursor.moveToNext()){
             searchedItem = createItem(cursor);
         }
         cursor.close();
@@ -137,7 +137,7 @@ public class ItemDAO {
                 null,
                 sortOrder
         );
-        if (cursor.moveToNext()){
+        if (cursor.moveToFirst()){
             do {
                 Item item = createItem(cursor);
                 itemList.add(item);

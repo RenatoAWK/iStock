@@ -96,7 +96,7 @@ public class ProductDAO {
                 null,
                 null
         );
-        if (cursor.getCount()==1){
+        if (cursor.getCount()==1 && cursor.moveToNext()){
             searchedProduct = createProduct(cursor);
         }
         cursor.close();
