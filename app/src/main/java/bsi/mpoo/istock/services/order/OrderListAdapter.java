@@ -67,7 +67,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
             if (item.getTitle().equals(editOption)){
                 Intent intent = new Intent(context, EditOrderActivity.class);
-                intent.putExtra(Constants.BundleKeys.PRODUCT, order);
+                intent.putExtra(Constants.BundleKeys.ORDER, order);
                 context.startActivity(intent);
             } else if (item.getTitle().equals(detailOption)){
                 DialogDetails dialogDetails = new DialogDetails(context);

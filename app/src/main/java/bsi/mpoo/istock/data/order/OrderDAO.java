@@ -46,9 +46,10 @@ public class OrderDAO {
         values.put(ContractOrder.COLUMN_DELIVERED, order.getDelivered());
         if (order.getDelivered() == Constants.Order.NOT_DELIVERED && order.getDateDelivery() != null){
             values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
+        } else {
+            updateProducts(order.getItems());
         }
         values.put(ContractOrder.COLUMN_STATUS, Constants.Status.ACTIVE);
-        updateProducts(order.getItems());
         registerItems(order.getItems());
         values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToIdString(order.getItems()));
         long newRowID = db.insert(ContractOrder.TABLE_NAME, null, values);
