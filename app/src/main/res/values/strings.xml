@@ -122,4 +122,5 @@
     <string name="delivery_date">Data de entrega</string>
     <string name="invalid">Inválido</string>
     <string name="sale_done">Registrado</string>
+    <string name="at_stock">Em estoque</string>
 </resources>

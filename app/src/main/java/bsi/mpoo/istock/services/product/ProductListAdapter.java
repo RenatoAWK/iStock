@@ -3,6 +3,7 @@ package bsi.mpoo.istock.services.product;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -10,8 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -22,12 +22,14 @@ import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.product.EditProductActivity;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.ImageServices;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder>{
 
     private final ArrayList<Product> productList;
     private LayoutInflater inflater;
     private Context context;
+    private ImageServices imageServices = new ImageServices();
 
     public ProductListAdapter(Context context, ArrayList<Product> productList){
         inflater = LayoutInflater.from(context);
@@ -39,6 +41,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         final TextView nameItemView;
         final TextView quantityItemView;
         final TextView priceItemView;
+        final ImageView imageView;
         final ProductListAdapter adapter;
 
         private ProductViewHolder(View itemView, ProductListAdapter adapter ){
@@ -47,6 +50,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             nameItemView = itemView.findViewById(R.id.nameProductItemList);
             quantityItemView = itemView.findViewById(R.id.quantityProductItemList);
             priceItemView = itemView.findViewById(R.id.priceProductItemList);
+            imageView = itemView.findViewById(R.id.imageViewProduct);
             this.adapter = adapter;
 
         }
@@ -103,11 +107,16 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
         String currentName = productList.get(position).getName();
-        String currentQuantity = String.valueOf(productList.get(position).getQuantity());
-        String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
+        String currentQuantity = context.getString(R.string.at_stock)+":  "+String.valueOf(productList.get(position).getQuantity());
+        String currentPrice = context.getString(R.string.price)+":  "+NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
+        Bitmap currentBitmap = imageServices.byteToImage(productList.get(position).getImage());
         productViewHolder.nameItemView.setText(currentName);
         productViewHolder.quantityItemView.setText(currentQuantity);
         productViewHolder.priceItemView.setText(currentPrice);
+        if (currentBitmap != null){
+            productViewHolder.imageView.setImageBitmap(currentBitmap);
+            productViewHolder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
     }
 
     @Override

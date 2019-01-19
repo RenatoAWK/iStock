@@ -63,6 +63,8 @@ public class RegisterProductActivity extends AppCompatActivity {
         newProduct.setName(nameEditText.getText().toString().trim().toUpperCase());
         newProduct.setPrice(new BigDecimal(priceEditText.getText().toString()));
         newProduct.setQuantity(Long.parseLong(quantityEditText.getText().toString()));
+        ImageServices imageServices = new ImageServices();
+        newProduct.setImage(imageServices.imageToByte(reducedImageProfile));
 
         if (minimumEditText.getText().toString().isEmpty()){
             newProduct.setMinimumQuantity(0);
