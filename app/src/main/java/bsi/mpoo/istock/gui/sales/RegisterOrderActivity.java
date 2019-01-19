@@ -34,6 +34,7 @@ import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.AlertDialogGenerator;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.DateServices;
 import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.order.OrderServices;
 import bsi.mpoo.istock.services.client.ClientServices;
@@ -47,6 +48,7 @@ public class RegisterOrderActivity extends AppCompatActivity {
     private boolean switchState;
     private Switch switchButton;
     private Calendar myCalendar = Calendar.getInstance();
+    LocalDate myLocalDate;
     private Object account;
     private ProductCartListAdapter adapter;
     private ClientServices clientServices;
@@ -97,9 +99,7 @@ public class RegisterOrderActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                myLocalDate = LocalDate.of(year, monthOfYear+1, dayOfMonth);
                 updateLabel();
             }
 
@@ -120,13 +120,8 @@ public class RegisterOrderActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = Constants.Date.FORMAT_DATE;
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, new Locale(Locale.getDefault().toString()));
-        dateTextView.setText(sdf.format(myCalendar.getTime()));
-        LocalDateTime tempDate = LocalDateTime.ofInstant(myCalendar.toInstant(),
-                ZoneId.systemDefault());
-
-        deliveryDate = tempDate.toLocalDate();
+        dateTextView.setText(DateServices.localDateToFormatedToString (myLocalDate));
+        deliveryDate = myLocalDate;
     }
 
     private void setUpSwtich(){

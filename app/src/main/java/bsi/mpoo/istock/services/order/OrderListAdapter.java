@@ -25,6 +25,7 @@ import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.historic.EditOrderActivity;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.DateServices;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderViewHolder> {
 
@@ -97,15 +98,12 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         String currentName = orderList.get(position).getClient().getName();
         String currentType;
         String currentDate;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.Date.FORMAT_DATE, new Locale(Locale.getDefault().toString()));
         if (orderList.get(position).getDelivered() == Constants.Order.DELIVERED){
             currentType = context.getString(R.string.realized);
-            Date date = Date.from(orderList.get(position).getDateCreation().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            currentDate = simpleDateFormat.format(date);
+            currentDate = DateServices.localDateToFormatedToString(orderList.get(position).getDateCreation());
         } else {
             currentType = context.getString(R.string.delivery);
-            Date date = Date.from(orderList.get(position).getDateDelivery().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            currentDate = simpleDateFormat.format(date);
+            currentDate = DateServices.localDateToFormatedToString(orderList.get(position).getDateDelivery());
             linearLayout.setBackgroundColor(context.getColor(R.color.colorAccent));
 
         }

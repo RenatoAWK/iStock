@@ -7,6 +7,7 @@ import android.provider.BaseColumns;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.data.product.ProductDAO;
@@ -14,6 +15,7 @@ import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.services.DateServices;
 import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.client.ClientServices;
 import bsi.mpoo.istock.services.Constants;
@@ -39,13 +41,13 @@ public class OrderDAO {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         itemServices.insertItem(order.getItems());
-        values.put(ContractOrder.COLUMN_DATE_CREATION, order.getDateCreation().toString());
+        values.put(ContractOrder.COLUMN_DATE_CREATION, DateServices.localDateToString(order.getDateCreation()));
         values.put(ContractOrder.COLUMN_ID_CLIENT, order.getClient().getId());
         values.put(ContractOrder.COLUMN_ID_ADM, order.getAdministrator().getUser().getId());
         values.put(ContractOrder.COLUMN_TOTAL, order.getTotal().toString());
         values.put(ContractOrder.COLUMN_DELIVERED, order.getDelivered());
         if (order.getDelivered() == Constants.Order.NOT_DELIVERED && order.getDateDelivery() != null){
-            values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
+            values.put(ContractOrder.COLUMN_DATE_DELIVERY, DateServices.localDateToString(order.getDateDelivery()));
         } else {
             updateProducts(order.getItems());
         }
@@ -204,12 +206,15 @@ public class OrderDAO {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ContractOrder.COLUMN_DATE_CREATION,order.getDateCreation().toString());
+        values.put(ContractOrder.COLUMN_DATE_CREATION, DateServices.localDateToString(order.getDateCreation()));
         values.put(ContractOrder.COLUMN_ID_CLIENT,order.getClient().getId());
         values.put(ContractOrder.COLUMN_ID_ADM,order.getAdministrator().getUser().getId());
         values.put(ContractOrder.COLUMN_TOTAL,order.getTotal().toString());
         values.put(ContractOrder.COLUMN_DELIVERED,order.getDelivered());
-        values.put(ContractOrder.COLUMN_DATE_DELIVERY,order.getDateDelivery().toString());
+        if (order.getDateDelivery() != null && order.getDelivered() == Constants.Order.NOT_DELIVERED){
+            values.put(ContractOrder.COLUMN_DATE_DELIVERY, DateServices.localDateToString(order.getDateDelivery()));
+
+        }
         values.put(ContractOrder.COLUMN_STATUS, order.getStatus());
         values.put(ContractOrder.COLUMN_ITEMS, convertArrayItemToIdString(order.getItems()));
         String selection = ContractOrder._ID + " = ?";
@@ -239,7 +244,7 @@ public class OrderDAO {
         ArrayList<Item> items = arrayItemStringIdToArrayItem(itemsString);
         Order order = new Order();
         order.setId(id);
-        order.setDateCreation(stringLocalDateToLocalDate(dateCreation));
+        order.setDateCreation(DateServices.stringToLocalDate(dateCreation));
         order.setClient(clientServices.getClientById(id_client));
         order.setDelivered(delivered);
         order.setStatus(status);
@@ -249,8 +254,8 @@ public class OrderDAO {
         User searchedUser = userServices.getUserById(user.getId());
         order.setAdministrator((Administrator) userServices.getUserInDomainType(searchedUser));
         order.setTotal(new BigDecimal(total));
-        if (delivered == Constants.Order.NOT_DELIVERED && !dateDelivery.isEmpty()){
-            order.setDateDelivery(stringLocalDateToLocalDate(dateDelivery));
+        if (delivered == Constants.Order.NOT_DELIVERED && dateDelivery != null){
+            order.setDateDelivery(DateServices.stringToLocalDate(dateDelivery));
         }
         return order;
     }
@@ -259,24 +264,18 @@ public class OrderDAO {
         DbHelper mDbHelper = new DbHelper(context);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ContractOrder.COLUMN_DATE_CREATION, order.getDateCreation().toString());
+        values.put(ContractOrder.COLUMN_DATE_CREATION, DateServices.localDateToString(order.getDateCreation()));
         values.put(ContractOrder.COLUMN_ID_CLIENT, order.getClient().getId());
         values.put(ContractOrder.COLUMN_ID_ADM, order.getAdministrator().getUser().getId());
         values.put(ContractOrder.COLUMN_TOTAL, order.getTotal().toString());
         values.put(ContractOrder.COLUMN_DELIVERED, order.getDelivered());
-        values.put(ContractOrder.COLUMN_DATE_DELIVERY, order.getDateDelivery().toString());
+        if (order.getDateDelivery() != null && order.getDelivered() == Constants.Order.NOT_DELIVERED){
+            values.put(ContractOrder.COLUMN_DATE_DELIVERY, DateServices.localDateToString(order.getDateDelivery()));
+
+        }
         values.put(ContractOrder.COLUMN_STATUS, Constants.Status.INACTIVE);
         String selection = ContractOrder._ID+" = ?";
         String[] selectionArgs = {String.valueOf(order.getId())};
         db.update(ContractOrder.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    private LocalDate stringLocalDateToLocalDate(String text){
-        String dateCreationList[] = text.split("-");
-        int dateCreationDay = Integer.parseInt(dateCreationList[2]);
-        int dateCreationMonth = Integer.parseInt(dateCreationList[1]);
-        int dateCreationYear = Integer.parseInt(dateCreationList[0]);
-        LocalDate localDate = LocalDate.of(dateCreationYear, dateCreationMonth, dateCreationDay);
-        return localDate;
     }
 }
