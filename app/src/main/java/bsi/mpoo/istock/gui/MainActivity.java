@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
         headerView = navigationView.getHeaderView(0);
         textViewName = headerView.findViewById(R.id.textViewNameUserHeaderHome);
         textViewCompany = headerView.findViewById(R.id.textViewCompanyHeaderHome);

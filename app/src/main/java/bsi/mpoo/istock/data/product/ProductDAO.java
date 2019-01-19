@@ -32,6 +32,7 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getUser().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
+        values.put(ContractProduct.COLUMN_IMAGE, product.getImage());
         long newRowID = db.insert(ContractProduct.TABLE_NAME, null, values);
         product.setId(newRowID);
         db.close();
@@ -48,7 +49,9 @@ public class ProductDAO {
                 ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
-                ContractProduct.COLUMN_STATUS
+                ContractProduct.COLUMN_STATUS,
+                ContractProduct.COLUMN_IMAGE
+
         };
         String selection = ContractProduct.COLUMN_NAME+" = ?"+" AND "+
                 ContractProduct.COLUMN_ID_ADM+" =?";
@@ -83,7 +86,9 @@ public class ProductDAO {
                 ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
-                ContractProduct.COLUMN_STATUS
+                ContractProduct.COLUMN_STATUS,
+                ContractProduct.COLUMN_IMAGE
+
         };
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = { String.valueOf(id) };
@@ -114,7 +119,9 @@ public class ProductDAO {
                 ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
-                ContractProduct.COLUMN_STATUS
+                ContractProduct.COLUMN_STATUS,
+                ContractProduct.COLUMN_IMAGE
+
         };
         String sortOrder = ContractProduct.COLUMN_NAME +" "+ order;
         List<Product> productList = new ArrayList<>();
@@ -150,7 +157,9 @@ public class ProductDAO {
                 ContractProduct.COLUMN_QUANTITY,
                 ContractProduct.COLUMN_MINIMUM_QUANTITY,
                 ContractProduct.COLUMN_ID_ADM,
-                ContractProduct.COLUMN_STATUS
+                ContractProduct.COLUMN_STATUS,
+                ContractProduct.COLUMN_IMAGE
+
         };
         String sortOrder = ContractProduct.COLUMN_NAME +" "+ order;
         List<Product> productList = new ArrayList<>();
@@ -188,6 +197,7 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getUser().getId());
         values.put(ContractProduct.COLUMN_STATUS, Constants.Status.INACTIVE);
+        values.put(ContractProduct.COLUMN_IMAGE, product.getImage());
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
         db.update(ContractProduct.TABLE_NAME, values, selection, selectionArgs);
@@ -203,6 +213,7 @@ public class ProductDAO {
         values.put(ContractProduct.COLUMN_MINIMUM_QUANTITY, product.getMinimumQuantity());
         values.put(ContractProduct.COLUMN_ID_ADM, product.getAdministrator().getUser().getId());
         values.put(ContractProduct.COLUMN_STATUS, product.getStatus());
+        values.put(ContractProduct.COLUMN_IMAGE, product.getImage());
         String selection = ContractProduct._ID+" = ?";
         String[] selectionArgs = {String.valueOf(product.getId())};
         db.update(ContractProduct.TABLE_NAME, values, selection, selectionArgs);
@@ -218,6 +229,7 @@ public class ProductDAO {
         int idMinimumIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_MINIMUM_QUANTITY);
         int admIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_ID_ADM);
         int statusIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_STATUS);
+        int imageIndex = cursor.getColumnIndexOrThrow(ContractProduct.COLUMN_IMAGE);
         long id = cursor.getLong(idIndex);
         String name = cursor.getString(nameIndex);
         String price = cursor.getString(priceIndex);
@@ -225,6 +237,7 @@ public class ProductDAO {
         long minimum = cursor.getLong(idMinimumIndex);
         long idAdm = cursor.getLong(admIndex);
         int status = cursor.getInt(statusIndex);
+        byte[] image = cursor.getBlob(imageIndex);
         Product createdProduct = new Product();
         createdProduct.setId(id);
         createdProduct.setName(name);
@@ -232,6 +245,7 @@ public class ProductDAO {
         createdProduct.setQuantity(quantity);
         createdProduct.setMinimumQuantity(minimum);
         createdProduct.setStatus(status);
+        createdProduct.setImage(image);
         UserDAO userDAO = new UserDAO(context);
         User user = new User();
         user.setId(idAdm);

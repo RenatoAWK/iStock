@@ -34,7 +34,7 @@
                 android:contentDescription="@string/company_picture"
                 android:focusable="true"
                 android:onClick="pickImage"
-                app:srcCompat="@drawable/ic_user" />
+                app:srcCompat="@drawable/user" />
 
             <TextView
                 android:layout_width="match_parent"

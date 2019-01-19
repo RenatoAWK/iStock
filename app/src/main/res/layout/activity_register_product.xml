@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     tools:context=".gui.product.RegisterProductActivity">
 
@@ -20,6 +21,23 @@
                 android:id="@+id/textViewRegisterProduct"
                 android:text="@string/register_product"
                 style="@style/title_register_or_edit"/>
+
+            <ImageView
+                android:id="@+id/editImageRegisterProduct"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                app:srcCompat="@drawable/product"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:layout_width="100dp"
+                style="@style/button_primary"
+                android:text="@string/change"
+                android:onClick="pickImage"
+                android:layout_gravity="center"/>
 
             <android.support.design.widget.TextInputLayout
                 style="@style/text_input_layout">

@@ -29,7 +29,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                app:srcCompat="@drawable/ic_user"
+                app:srcCompat="@drawable/user"
                 android:layout_gravity="center"
                 android:contentDescription="@string/company_picture"/>
 

@@ -133,36 +133,29 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK && requestCode == Constants.Image.REQUEST_CODE) {
 
-            if (requestCode == Constants.Image.REQUEST_CODE){
+            Uri pickedImage = data.getData();
+            imageRegister = findViewById(R.id.editImageRegister);
 
-                Uri pickedImage = data.getData();
-                imageRegister = findViewById(R.id.editImageRegister);
+            try {
+                ImageServices imageServices = new ImageServices();
+                InputStream inputStream = getContentResolver().openInputStream(pickedImage);
+                ExifInterface exifInterface = new ExifInterface(inputStream);
+                int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                Bitmap imageProfile = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                byte[] imageProfileByte = imageServices.imageToByte(imageProfile);
+                reducedImageProfile = imageServices.byteToImage(imageServices.reduceBitmap(imageProfileByte));
 
-                try {
-                    ImageServices imageServices = new ImageServices();
-                    int orientation = Constants.Image.ORIENTATION_OUT_OF_BOUNDS;
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                        InputStream inputStream = getContentResolver().openInputStream(pickedImage);
-                        ExifInterface exifInterface = new ExifInterface(inputStream);
-                        orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                    }
-                    Bitmap imageProfile = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
-                    byte[] imageProfileByte = imageServices.imageToByte(imageProfile);
-                    reducedImageProfile = imageServices.byteToImage(imageServices.reduceBitmap(imageProfileByte));
-
-                    if (orientation < Constants.Image.ORIENTATION_OUT_OF_BOUNDS){
-                        reducedImageProfile = imageServices.rotate(reducedImageProfile, orientation);
-                    }
-                    setImageOnImageView();
-
-                } catch (IOException error){
-                    String message = getString(R.string.unknow_error);
-                    new AlertDialogGenerator(this,message,false).invoke();
-
+                if (orientation < Constants.Image.ORIENTATION_OUT_OF_BOUNDS) {
+                    reducedImageProfile = imageServices.rotate(reducedImageProfile, orientation);
                 }
+                setImageOnImageView();
+
+            } catch (IOException error) {
+                String message = getString(R.string.unknow_error);
+                new AlertDialogGenerator(this, message, false).invoke();
+
             }
         }
     }

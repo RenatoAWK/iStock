@@ -211,7 +211,6 @@ public class UserDAO{
         int companyIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_COMPANY);
         int administratorIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_ADMINISTRATOR);
         int imageIndex = cursor.getColumnIndexOrThrow(ContractUser.COLUMN_IMAGE);
-
         long id = cursor.getInt(idIndex);
         String name = cursor.getString(nameIndex);
         String email = cursor.getString(emailIndex);
@@ -221,7 +220,6 @@ public class UserDAO{
         String company = cursor.getString(companyIndex);
         long administrator = cursor.getLong(administratorIndex);
         byte[] image = cursor.getBlob(imageIndex);
-
         User createdUser = new User();
         createdUser.setId(id);
         createdUser.setName(name);

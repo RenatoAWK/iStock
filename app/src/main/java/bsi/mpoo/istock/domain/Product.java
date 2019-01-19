@@ -12,6 +12,7 @@ public class Product implements Parcelable {
     private long minimumQuantity;
     private Administrator administrator;
     private int status;
+    private byte[] image;
 
     public Product(){}
 
@@ -23,6 +24,7 @@ public class Product implements Parcelable {
         this.minimumQuantity = parcel.readLong();
         this.administrator = (Administrator) parcel.readValue(Administrator.class.getClassLoader());
         this.status = parcel.readInt();
+        image = (byte[]) parcel.readValue(Byte[].class.getClassLoader());
     }
 
     public long getId() {
@@ -82,6 +84,7 @@ public class Product implements Parcelable {
         dest.writeLong(minimumQuantity);
         dest.writeValue(administrator);
         dest.writeInt(status);
+        dest.writeValue(image);
     }
 
     public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>(){
@@ -104,5 +107,13 @@ public class Product implements Parcelable {
             }
         }
         return false;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

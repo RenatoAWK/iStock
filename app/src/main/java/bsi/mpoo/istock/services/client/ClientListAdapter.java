@@ -23,17 +23,15 @@ import bsi.mpoo.istock.gui.client.EditClientActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.MaskGenerator;
 
-public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder> implements Filterable{
+public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.ClientViewHolder>{
 
     private final ArrayList<Client> clientList;
-    private  ArrayList<Client> clientListFull;
     private LayoutInflater inflater;
     private Context context;
 
     public ClientListAdapter(Context context, ArrayList<Client> clientList){
         inflater = LayoutInflater.from(context);
         this.clientList = clientList;
-        clientListFull = new ArrayList<>(clientList);
         this.context = context;
 
     }
@@ -116,39 +114,4 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Cl
     public int getItemCount() {
         return clientList.size();
     }
-
-    @Override
-    public Filter getFilter() {
-        return clientFilter;
-    }
-
-    private Filter clientFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<Client> filteredList = new ArrayList<>();
-
-            if(constraint == null || constraint.length() == 0){
-                filteredList.addAll(clientListFull);
-            } else {
-                String filteredPattern = constraint.toString().toLowerCase().trim();
-                for(Client client : clientListFull){
-                    if(client.getName().toLowerCase().contains(filteredPattern)){
-                        filteredList.add(client);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            clientList.clear();
-            clientList.addAll((ArrayList) results.values);
-            notifyDataSetChanged();
-        }
-    };
 }
