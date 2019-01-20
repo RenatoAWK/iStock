@@ -2,6 +2,8 @@ package bsi.mpoo.istock.services.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.ImageServices;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder>{
     private final ArrayList<User> userList;
@@ -35,6 +39,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         final TextView nameItemView;
         final TextView functionItemView;
+        final ImageView imageView;
+        final ImageView imageViewSituation;
         final UserListAdapter adapter;
 
         private UserViewHolder(View itemView, UserListAdapter adapter ){
@@ -42,6 +48,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
             itemView.setOnCreateContextMenuListener(this);
             nameItemView = itemView.findViewById(R.id.nameUserItemList);
             functionItemView = itemView.findViewById(R.id.functionUserItemList);
+            imageView = itemView.findViewById(R.id.imageViewUser);
+            imageViewSituation = itemView.findViewById(R.id.imageViewUserSituation);
             this.adapter = adapter;
 
         }
@@ -85,6 +93,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
     public void onBindViewHolder(@NonNull UserListAdapter.UserViewHolder userViewHolder, int position) {
         String currentName = userList.get(position).getName();
         String currentFunction = null;
+        Bitmap currentImage;
+        if (userList.get(position).getImage() != null){
+            ImageServices imageServices = new ImageServices();
+            currentImage = imageServices.byteToImage(userList.get(position).getImage());
+            userViewHolder.imageView.setImageBitmap(currentImage);
+            userViewHolder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
         switch (userList.get(position).getType()){
             case Constants.UserTypes.ADMINISTRATOR:
                 currentFunction = context.getString(R.string.administration);
@@ -98,6 +113,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         }
         userViewHolder.nameItemView.setText(currentName);
         userViewHolder.functionItemView.setText(currentFunction);
+        switch (userList.get(position).getStatus()){
+            case Constants.Status.INACTIVE:
+                userViewHolder.imageViewSituation.setImageResource(R.drawable.user_remove);
+                break;
+            case Constants.Status.FIRST_ACCESS_FOR_USER:
+                userViewHolder.imageViewSituation.setImageResource(R.drawable.user_warning);
+                break;
+        }
     }
 
     @Override

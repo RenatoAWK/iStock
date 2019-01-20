@@ -8,9 +8,8 @@
 
     <ImageView
         android:id="@+id/imageViewProduct"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_above="@+id/nameProductItemList"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/product" />
 
     <LinearLayout
@@ -24,7 +23,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="nomeaaaaaaaaaaaaaaaa"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"/>
@@ -36,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="quantidade"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="12sp"
@@ -48,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="preço"
             android:textColor="@android:color/black"
             android:textSize="12sp"
             android:textStyle="bold"/>

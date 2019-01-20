@@ -15,6 +15,7 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.MainActivity;
 import bsi.mpoo.istock.services.product.ProductOrderListAdapter;
@@ -92,7 +93,7 @@ public class ProductsOrderActivity extends AppCompatActivity {
         ProductServices productServices = new ProductServices(this);
         ArrayList<Product> productArrayList;
 
-        if (account instanceof Administrator){
+        if (account instanceof Administrator || account instanceof Salesman){
             productArrayList = productServices.getAcitiveProductsAsc(Session.getInstance().getAdministrator());
             recyclerView = findViewById(R.id.recyclerviewOrder);
             adapter = new ProductOrderListAdapter(this, productArrayList, cartView);

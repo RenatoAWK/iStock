@@ -79,7 +79,7 @@ public class UsersActivity extends AppCompatActivity {
         ArrayList<User> userArrayList;
 
         if (account instanceof Administrator){
-            userArrayList = userServices.getAcitiveUsersAsc(Session.getInstance().getAdministrator());
+            userArrayList = userServices.getUsersAsc(Session.getInstance().getAdministrator());
             recyclerView = findViewById(R.id.recyclerviewUser);
             adapter = new UserListAdapter(this, userArrayList);
             recyclerView.setAdapter(adapter);
