@@ -11,16 +11,17 @@ import android.widget.TextView;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Item;
+import bsi.mpoo.istock.services.product.ProductOrderListAdapter;
 
 public class DialogQuantity {
     private Context context;
-    private LinearLayout linearLayout;
     private ImageView cart;
+    private ImageView status;
 
-    public DialogQuantity(Context context, LinearLayout linearLayout, ImageView cart) {
+    public DialogQuantity(Context context, ImageView cart, ImageView status) {
         this.context = context;
-        this.linearLayout = linearLayout;
         this.cart = cart;
+        this.status = status;
     }
 
 
@@ -60,8 +61,8 @@ public class DialogQuantity {
                 if (currentValue > 0){
                     item.setQuantity(currentValue);
                     Cart.getInstance().addItem(item);
-                    linearLayout.setBackgroundColor(context.getColor(R.color.greenLight));
                     cart.setBackgroundResource(R.drawable.ic_sales_after);
+                    status.setImageResource(R.drawable.cart_remove);
                 }
 
 

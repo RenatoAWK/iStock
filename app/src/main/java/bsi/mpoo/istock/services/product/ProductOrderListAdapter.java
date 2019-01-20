@@ -19,6 +19,7 @@ import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.sales.DialogQuantity;
+import bsi.mpoo.istock.services.ImageServices;
 
 public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderListAdapter.ProductOrderViewHolder> {
 
@@ -35,66 +36,47 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
         this.cart = cart;
     }
 
-    class ProductOrderViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class ProductOrderViewHolder extends RecyclerView.ViewHolder {
         TextView nameItemView;
         TextView totalItemView;
         TextView quantityItemView;
         LinearLayout linearLayout;
+        ImageView imageView;
+        ImageView imageViewStatus;
         ProductOrderListAdapter adapter;
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item){
-            int position = getLayoutPosition();
-            Product product = productList.get(position);
-            final String detailOption = context.getApplicationContext().getString(R.string.details);
-            final String addOption = context.getApplicationContext().getString(R.string.add);
-            final String removeOtion = context.getApplicationContext().getString(R.string.delete);
-
-            if (item.getTitle().toString().equals(addOption)){
-                Item itemConverted = convertProductToItem(product);
-                new DialogQuantity(context, linearLayout, cart).invokeQuantity(product.getQuantity(), itemConverted);
-
-
-
-            } else if (item.getTitle().equals(detailOption)){
-                DialogDetails dialogDetails = new DialogDetails(context);
-                dialogDetails.invoke(product);
-
-            } else if (item.getTitle().equals(removeOtion)){
-                Cart.getInstance().removeItem(convertProductToItem(product));
-                if (Cart.getInstance().getItems().size() == 0){
-                    cart.setBackgroundResource(R.drawable.ic_sales_before);
-                }
-                linearLayout.setBackgroundColor(0x00000000);
-            }
-            return false;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem detailsItem = menu.add(context.getApplicationContext().getString(R.string.details));
-
-            int position = getLayoutPosition();
-            Product product = productList.get(position);
-
-            if (Cart.getInstance().getItems().contains(convertProductToItem(product))){
-                MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
-                deleteItem.setOnMenuItemClickListener(this);
-            } else{
-                MenuItem addItem = menu.add(context.getApplicationContext().getString(R.string.add));
-                addItem.setOnMenuItemClickListener(this);
-            }
-            detailsItem.setOnMenuItemClickListener(this);
-        }
-
+        Product product;
 
         private ProductOrderViewHolder(View itemView, ProductOrderListAdapter adapter){
             super(itemView);
-            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    product = productList.get(getLayoutPosition());
+                    new DialogDetails(context).invoke(product);
+                }
+            });
             nameItemView = itemView.findViewById(R.id.nameProductOrderItemList);
             totalItemView = itemView.findViewById(R.id.priceProductOrderItemList);
             quantityItemView = itemView.findViewById(R.id.quantityProductOrderItemList);
             linearLayout = itemView.findViewById(R.id.linearLayoutProductOrderListItem);
+            imageView = itemView.findViewById(R.id.imageViewProductOrder);
+            imageViewStatus = itemView.findViewById(R.id.imageViewProductStatus);
+            imageViewStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    product = productList.get(getLayoutPosition());
+                    Item itemConverted = convertProductToItem(product);
+                    if (Cart.getInstance().getItems().contains(convertProductToItem(product))){
+                        Cart.getInstance().removeItem(convertProductToItem(product));
+                        if (Cart.getInstance().getItems().size() == 0){
+                            cart.setBackgroundResource(R.drawable.ic_sales_before);
+                            imageViewStatus.setImageResource(R.drawable.cart_add);
+                        }
+                    } else {
+                        new DialogQuantity(context, cart, imageViewStatus).invokeQuantity(product.getQuantity(), itemConverted);
+                    }
+                }
+            });
             this.adapter = adapter;
         }
     }
@@ -110,12 +92,18 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
     public void onBindViewHolder(@NonNull ProductOrderViewHolder orderViewHolder, int position) {
         String currentName = productList.get(position).getName();
         String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
-        String currentQuantity = String.valueOf(productList.get(position).getQuantity());
+        String currentQuantity = context.getString(R.string.at_stock)+":  "+String.valueOf(productList.get(position).getQuantity());
+        if (productList.get(position).getImage() != null){
+            ImageServices imageServices = new ImageServices();
+            orderViewHolder.imageView.setImageBitmap(imageServices.byteToImage(productList.get(position).getImage()));
+        }
         orderViewHolder.nameItemView.setText(currentName);
         orderViewHolder.totalItemView.setText(currentPrice);
         orderViewHolder.quantityItemView.setText(currentQuantity);
         if (Cart.getInstance().getItems().contains(convertProductToItem(productList.get(position)))){
-            orderViewHolder.linearLayout.setBackgroundColor(context.getColor(R.color.greenLight));
+            orderViewHolder.imageViewStatus.setImageResource(R.drawable.cart_remove);
+        } else {
+            orderViewHolder.imageViewStatus.setImageResource(R.drawable.cart_add);
         }
     }
 

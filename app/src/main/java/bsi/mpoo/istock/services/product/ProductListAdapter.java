@@ -108,7 +108,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
         String currentName = productList.get(position).getName();
         String currentQuantity = context.getString(R.string.at_stock)+":  "+String.valueOf(productList.get(position).getQuantity());
-        String currentPrice = context.getString(R.string.price)+":  "+NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
+        String currentPrice = NumberFormat.getCurrencyInstance().format(productList.get(position).getPrice());
         Bitmap currentBitmap = imageServices.byteToImage(productList.get(position).getImage());
         productViewHolder.nameItemView.setText(currentName);
         productViewHolder.quantityItemView.setText(currentQuantity);
