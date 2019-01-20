@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,7 +34,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     private final ArrayList<Order> orderList;
     private LayoutInflater inflater;
     private Context context;
-    private LinearLayout linearLayout;
 
     public OrderListAdapter(Context context, ArrayList<Order> orderList){
         inflater = LayoutInflater.from(context);
@@ -45,6 +46,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         final TextView totalItemView;
         final TextView typeTitleItemView;
         final TextView dateItemView;
+        final ImageView imageView;
         final OrderListAdapter adapter;
 
         private OrderViewHolder(View itemView, OrderListAdapter adapter ){
@@ -54,7 +56,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             totalItemView = itemView.findViewById(R.id.priceOrderItemList);
             typeTitleItemView = itemView.findViewById(R.id.typeTitleOrderItemList);
             dateItemView = itemView.findViewById(R.id.dateOrderItemList);
-            linearLayout = itemView.findViewById(R.id.linearLayoutOrderListItem);
+            imageView = itemView.findViewById(R.id.imageViewHistoric);
             this.adapter = adapter;
 
         }
@@ -101,11 +103,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         if (orderList.get(position).getDelivered() == Constants.Order.DELIVERED){
             currentType = context.getString(R.string.realized);
             currentDate = DateServices.localDateToFormatedToString(orderList.get(position).getDateCreation());
+            if (orderList.get(position).getDateDelivery() != null){
+                orderViewHolder.imageView.setBackgroundResource(R.drawable.calendar_ok);
+            } else {
+                orderViewHolder.imageView.setBackgroundResource(R.drawable.cart);
+            }
         } else {
             currentType = context.getString(R.string.delivery);
             currentDate = DateServices.localDateToFormatedToString(orderList.get(position).getDateDelivery());
-            linearLayout.setBackgroundColor(context.getColor(R.color.colorAccent));
-
+            orderViewHolder.imageView.setBackgroundResource(R.drawable.calendar_warning);
         }
         String currentTotal = NumberFormat.getCurrencyInstance().format(orderList.get(position).getTotal());
 

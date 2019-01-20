@@ -16,14 +16,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nameClientItemList"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
@@ -32,8 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/phoneClientItemList"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="12sp"/>

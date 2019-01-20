@@ -32,9 +32,14 @@
                 android:layout_weight="1"
                 android:clickable="true"
                 android:contentDescription="@string/company_picture"
-                android:focusable="true"
-                android:onClick="pickImage"
                 app:srcCompat="@drawable/user" />
+
+            <Button
+                style="@style/button_primary"
+                android:layout_width="100dp"
+                android:layout_gravity="center"
+                android:text="@string/change"
+                android:onClick="pickImage"/>
 
             <TextView
                 android:layout_width="match_parent"
