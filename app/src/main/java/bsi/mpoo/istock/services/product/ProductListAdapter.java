@@ -1,14 +1,11 @@
 package bsi.mpoo.istock.services.product;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,10 +14,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Product;
-import bsi.mpoo.istock.domain.Session;
-import bsi.mpoo.istock.gui.AlertDialogGenerator;
-import bsi.mpoo.istock.gui.DialogDetails;
-import bsi.mpoo.istock.gui.product.EditProductActivity;
+import bsi.mpoo.istock.gui.DetailsActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 
@@ -37,7 +31,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         this.context = context;
     }
 
-    class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class ProductViewHolder extends RecyclerView.ViewHolder {
         final TextView nameItemView;
         final TextView quantityItemView;
         final TextView priceItemView;
@@ -46,54 +40,20 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         private ProductViewHolder(View itemView, ProductListAdapter adapter ){
             super(itemView);
-            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailsActivity.class);
+                    intent.putExtra(Constants.BundleKeys.OBJECT, productList.get(getLayoutPosition()));
+                    context.startActivity(intent);
+                }
+            });
             nameItemView = itemView.findViewById(R.id.nameProductItemList);
             quantityItemView = itemView.findViewById(R.id.quantityProductItemList);
             priceItemView = itemView.findViewById(R.id.priceProductItemList);
             imageView = itemView.findViewById(R.id.imageViewProduct);
             this.adapter = adapter;
 
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item){
-            ProductServices productServices = new ProductServices(context);
-            int position = getLayoutPosition();
-            Product product = productList.get(position);
-            final String detailOption = context.getApplicationContext().getString(R.string.details);
-            final String deleteOption = context.getApplicationContext().getString(R.string.delete);
-            final String editOption = context.getApplicationContext().getString(R.string.edit);
-
-            if (item.getTitle().toString().equals(deleteOption)){
-                try {
-                    productServices.disableProduct(product, Session.getInstance().getAdministrator());
-                    productList.remove(position);
-                    adapter.notifyDataSetChanged();
-
-                }
-                catch (Exception error) {
-                    new AlertDialogGenerator((Activity) context, error.getMessage(),false).invoke();
-                }
-
-            } else if (item.getTitle().equals(editOption)){
-                Intent intent = new Intent(context, EditProductActivity.class);
-                intent.putExtra(Constants.BundleKeys.PRODUCT, product);
-                context.startActivity(intent);
-            } else if (item.getTitle().equals(detailOption)){
-                DialogDetails dialogDetails = new DialogDetails(context);
-                dialogDetails.invoke(product);
-            }
-            return false;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
-            MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
-            MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
-            detailItem.setOnMenuItemClickListener(this);
-            editItem.setOnMenuItemClickListener(this);
-            deleteItem.setOnMenuItemClickListener(this);
         }
     }
 

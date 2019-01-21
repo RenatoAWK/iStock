@@ -7,11 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.NumberFormat;
+
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.product.EditProductActivity;
 import bsi.mpoo.istock.gui.user.EditUserActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
@@ -19,26 +23,26 @@ import bsi.mpoo.istock.services.user.UserServices;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    ImageView imageView;
-    ImageView imageViewEdit;
-    ImageView imageViewDelete;
-    TextView nameTextView;
-    TextView title1;
-    TextView title2;
-    TextView title3;
-    TextView title4;
-    TextView title5;
-    TextView title6;
-    TextView subTitle1;
-    TextView subTitle2;
-    TextView subTitle3;
-    TextView subTitle4;
-    TextView subTitle5;
-    TextView subTitle6;
-    RecyclerView recyclerView;
-    ImageServices imageServices;
-    Object object;
-    UserServices userServices;
+    private ImageView imageView;
+    protected ImageView imageViewEdit;
+    private ImageView imageViewDelete;
+    private TextView nameTextView;
+    private TextView title1;
+    private TextView title2;
+    private TextView title3;
+    private TextView title4;
+    private TextView title5;
+    private TextView title6;
+    private TextView subTitle1;
+    private TextView subTitle2;
+    private TextView subTitle3;
+    private TextView subTitle4;
+    private TextView subTitle5;
+    private TextView subTitle6;
+    private RecyclerView recyclerView;
+    private ImageServices imageServices;
+    private Object object;
+    private UserServices userServices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,37 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    private void setUpProduct() {
+
+    private void setUpProduct(final Product product) {
+        imageViewEdit.setImageResource(R.drawable.product_edit);
+        imageViewEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditProductActivity.class);
+                intent.putExtra(Constants.BundleKeys.PRODUCT, product);
+                getApplicationContext().startActivity(intent);
+            }
+        });
+        imageViewDelete.setImageResource(R.drawable.product_remove);
+        imageViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialogGenerator( DetailsActivity.this, getString(R.string.are_you_sure_to_delete_this_item),true).invokeDeleteChoose(object);
+            }
+        });
+        nameTextView.setText(product.getName());
+        title1.setText(getString(R.string.price));
+        subTitle1.setText(NumberFormat.getCurrencyInstance().format(product.getPrice()));
+        title2.setText(getString(R.string.at_stock));
+        subTitle2.setText(String.valueOf(product.getQuantity()));
+        title3.setText(getString(R.string.minimum_quantity));
+        if (product.getMinimumQuantity() == 0){
+            subTitle3.setText(getString(R.string.without_info));
+        } else {
+            subTitle3.setText(String.valueOf(product.getMinimumQuantity()));
+        }
+        setImageIfNotNull(product.getImage(), R.drawable.product);
+        showUsedViews(nameTextView, imageViewEdit, imageViewDelete, title1, subTitle1, title2, subTitle2, title3, subTitle3);
 
     }
 
@@ -92,6 +126,15 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void setImageIfNotNull(byte[] b, int imageId){
+        if (b != null){
+            imageView.setImageBitmap(imageServices.byteToImage(b));
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        } else {
+            imageView.setImageResource(imageId);
+        }
+    }
+
     private void setUpUser(final User user) {
         imageViewEdit.setImageResource(R.drawable.user_edit);
         imageViewEdit.setOnClickListener(new View.OnClickListener() {
@@ -102,13 +145,7 @@ public class DetailsActivity extends AppCompatActivity {
                 getApplicationContext().startActivity(intent);
             }
         });
-        if (user.getImage() != null){
-            imageView.setImageBitmap(imageServices.byteToImage(user.getImage()));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        }
-        else {
-            imageView.setImageResource(R.drawable.user);
-        }
+        setImageIfNotNull(user.getImage(), R.drawable.user);
         nameTextView.setText(user.getName());
         title1.setText(getString(R.string.function));
         String currentFunction;
@@ -162,7 +199,7 @@ public class DetailsActivity extends AppCompatActivity {
         } else if (object instanceof Client){
             setUpClient();
         } else if (object instanceof Product){
-            setUpProduct();
+            setUpProduct((Product) object);
         } else if (object instanceof Order){
             setUpOrder();
         }
@@ -177,7 +214,7 @@ public class DetailsActivity extends AppCompatActivity {
         } else if (object instanceof Client){
             setUpClient();
         } else if (object instanceof Product){
-            setUpProduct();
+            setUpProduct((Product) object);
         } else if (object instanceof Order){
             setUpOrder();
         }
