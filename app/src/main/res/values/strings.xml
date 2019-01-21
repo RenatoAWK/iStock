@@ -123,4 +123,5 @@
     <string name="invalid">Inválido</string>
     <string name="sale_done">Registrado</string>
     <string name="at_stock">Em estoque</string>
+    <string name="activate">Ativar</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -18,10 +19,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import bsi.mpoo.istock.gui.DetailsActivity;
 import bsi.mpoo.istock.gui.user.EditUserActivity;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.DialogDetails;
+import bsi.mpoo.istock.gui.user.RegisterActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 
@@ -36,7 +39,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
         this.context = context;
     }
 
-    class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class UserViewHolder extends RecyclerView.ViewHolder {
         final TextView nameItemView;
         final TextView functionItemView;
         final ImageView imageView;
@@ -45,39 +48,20 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
 
         private UserViewHolder(View itemView, UserListAdapter adapter ){
             super(itemView);
-            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailsActivity.class);
+                    intent.putExtra(Constants.BundleKeys.OBJECT, userList.get(getLayoutPosition()));
+                    context.startActivity(intent);
+                }
+            });
             nameItemView = itemView.findViewById(R.id.nameUserItemList);
             functionItemView = itemView.findViewById(R.id.functionUserItemList);
             imageView = itemView.findViewById(R.id.imageViewUser);
             imageViewSituation = itemView.findViewById(R.id.imageViewUserSituation);
             this.adapter = adapter;
 
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item){
-            int position = getLayoutPosition();
-            User user = userList.get(position);
-            final String detailOption = context.getApplicationContext().getString(R.string.details);
-            final String editOption = context.getApplicationContext().getString(R.string.edit);
-
-            if (item.getTitle().equals(editOption)){
-                Intent intent = new Intent(context, EditUserActivity.class);
-                intent.putExtra(Constants.BundleKeys.USER, user);
-                context.startActivity(intent);
-            } else if (item.getTitle().equals(detailOption)){
-                DialogDetails dialogDetails = new DialogDetails(context);
-                dialogDetails.invoke(user);
-            }
-            return false;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
-            MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
-            detailItem.setOnMenuItemClickListener(this);
-            editItem.setOnMenuItemClickListener(this);
         }
 
     }

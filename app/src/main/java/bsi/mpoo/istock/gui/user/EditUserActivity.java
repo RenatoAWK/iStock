@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class EditUserActivity extends AppCompatActivity implements AdapterView.O
     private Object account;
     private TextView nameTextView;
     private int selectedOption;
+    private Button buttonChangeStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class EditUserActivity extends AppCompatActivity implements AdapterView.O
         Bundle bundle = intent.getExtras();
         user = bundle.getParcelable(Constants.BundleKeys.USER);
         account = Session.getInstance().getAccount();
+        buttonChangeStatus = findViewById(R.id.stateButtonEditUser);
+        if (user.getStatus() == Constants.Status.INACTIVE){
+            buttonChangeStatus.setText(getString(R.string.activate));
+        }
         spinner = findViewById(R.id.spinnerEditUser);
         spinner.setOnItemSelectedListener(this);
         ArrayList<String> functions = new ArrayList<>();
@@ -96,7 +102,12 @@ public class EditUserActivity extends AppCompatActivity implements AdapterView.O
     public void delete(View view) {
         UserServices userServices = new UserServices(getApplicationContext());
         try {
-            userServices.disableUser(user);
+            if (user.getStatus() == Constants.Status.INACTIVE){
+                user.setStatus(Constants.Status.FIRST_ACCESS_FOR_USER);
+                userServices.updateUser(user);
+            } else {
+                userServices.disableUser(user);
+            }
             String message = getString(R.string.edit_successful);
             new AlertDialogGenerator(this, message, true).invoke();
         } catch (Exceptions.UserNotRegistered error){

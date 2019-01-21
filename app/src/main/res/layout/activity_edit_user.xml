@@ -83,7 +83,7 @@
                     android:text="@string/save" />
 
                 <Button
-                    android:id="@+id/deleteButtonEditUser"
+                    android:id="@+id/stateButtonEditUser"
                     style="@style/button_secondary"
                     android:layout_weight="1"
                     android:onClick="delete"

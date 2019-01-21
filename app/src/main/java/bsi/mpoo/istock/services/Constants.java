@@ -35,6 +35,7 @@ public class Constants {
         public static final String SETTINGS = "settings";
         public static final String ITEMS = "items";
         public static final String ORDER = "order";
+        public static final String OBJECT = "object";
     }
 
     public static class MaskTypes {
