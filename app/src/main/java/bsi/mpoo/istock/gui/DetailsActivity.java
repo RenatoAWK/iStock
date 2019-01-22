@@ -3,6 +3,7 @@ package bsi.mpoo.istock.gui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,13 +13,16 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Product;
+import bsi.mpoo.istock.domain.Temp;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.gui.client.EditClientActivity;
 import bsi.mpoo.istock.gui.product.EditProductActivity;
 import bsi.mpoo.istock.gui.user.EditUserActivity;
 import bsi.mpoo.istock.services.Constants;
+import bsi.mpoo.istock.services.DateServices;
 import bsi.mpoo.istock.services.ImageServices;
 import bsi.mpoo.istock.services.MaskGenerator;
+import bsi.mpoo.istock.services.product.ItemOrderListAdapter;
 import bsi.mpoo.istock.services.user.UserServices;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -53,7 +57,12 @@ public class DetailsActivity extends AppCompatActivity {
         imageServices = new ImageServices();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        object = bundle.get(Constants.BundleKeys.OBJECT);
+        try {
+            object = bundle.get(Constants.BundleKeys.OBJECT);
+        } catch (Exception e){
+            object = new Order();
+        }
+
         userServices = new UserServices(this);
         setUpData();
     }
@@ -78,8 +87,37 @@ public class DetailsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerviewDetails);
     }
 
-    private void setUpOrder() {
+    private void setUpOrder(final Order order) {
 
+        byte[] b = null;
+        if (order.getDelivered() == Constants.Order.NOT_DELIVERED){
+            setImageIfNotNull(b, R.drawable.calendar_warning);
+            imageViewEdit.setImageResource(R.drawable.calendar_edit);
+            imageViewEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialogGenerator( DetailsActivity.this, getString(R.string.are_you_sure_for_finish_order),true).invokeDeleteChoose(order);
+
+                }
+            });
+            showUsedViews(imageViewEdit);
+        } else {
+            setImageIfNotNull(b, R.drawable.cart);
+        }
+        nameTextView.setText(order.getClient().getName());
+        if (order.getDateDelivery() != null){
+            title1.setText(getString(R.string.delivery_date));
+            subTitle1.setText(DateServices.localDateToFormatedToString(order.getDateDelivery()));
+            showUsedViews(title1, subTitle1);
+        }
+        title2.setText(getString(R.string.realized));
+        subTitle2.setText(DateServices.localDateToFormatedToString(order.getDateCreation()));
+        title3.setText(getString(R.string.total));
+        subTitle3.setText(NumberFormat.getCurrencyInstance().format(order.getTotal()));
+        ItemOrderListAdapter adapter = new ItemOrderListAdapter(getApplicationContext(), order.getItems());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        showUsedViews(nameTextView, title2, subTitle2, title3, subTitle3, recyclerView);
     }
 
 
@@ -235,7 +273,7 @@ public class DetailsActivity extends AppCompatActivity {
         } else if (object instanceof Product){
             setUpProduct((Product) object);
         } else if (object instanceof Order){
-            setUpOrder();
+            setUpOrder(Temp.getOrder());
         }
     }
 
@@ -250,7 +288,7 @@ public class DetailsActivity extends AppCompatActivity {
         } else if (object instanceof Product){
             setUpProduct((Product) object);
         } else if (object instanceof Order){
-            setUpOrder();
+            setUpOrder(Temp.getOrder());
         }
 
     }

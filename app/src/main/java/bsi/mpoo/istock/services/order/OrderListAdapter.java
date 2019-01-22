@@ -2,30 +2,22 @@ package bsi.mpoo.istock.services.order;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Order;
-import bsi.mpoo.istock.gui.DialogDetails;
-import bsi.mpoo.istock.gui.historic.EditOrderActivity;
+import bsi.mpoo.istock.domain.Temp;
+import bsi.mpoo.istock.gui.DetailsActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.DateServices;
 
@@ -41,7 +33,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         this.context = context;
     }
 
-    class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class OrderViewHolder extends RecyclerView.ViewHolder {
         final TextView nameItemView;
         final TextView totalItemView;
         final TextView typeTitleItemView;
@@ -51,7 +43,14 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
 
         private OrderViewHolder(View itemView, OrderListAdapter adapter ){
             super(itemView);
-            itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DetailsActivity.class);
+                    Temp.setOrder(orderList.get(getLayoutPosition()));
+                    context.startActivity(intent);
+                }
+            });
             nameItemView = itemView.findViewById(R.id.nameClientOrderItemList);
             totalItemView = itemView.findViewById(R.id.priceOrderItemList);
             typeTitleItemView = itemView.findViewById(R.id.typeTitleOrderItemList);
@@ -59,32 +58,6 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             imageView = itemView.findViewById(R.id.imageViewHistoric);
             this.adapter = adapter;
 
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item){
-            int position = getLayoutPosition();
-            Order order = orderList.get(position);
-            final String detailOption = context.getApplicationContext().getString(R.string.details);
-            final String editOption = context.getApplicationContext().getString(R.string.edit);
-
-            if (item.getTitle().equals(editOption)){
-                Intent intent = new Intent(context, EditOrderActivity.class);
-                intent.putExtra(Constants.BundleKeys.ORDER, order);
-                context.startActivity(intent);
-            } else if (item.getTitle().equals(detailOption)){
-                DialogDetails dialogDetails = new DialogDetails(context);
-                dialogDetails.invoke(order);
-            }
-            return false;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem detailItem = menu.add(context.getApplicationContext().getString(R.string.details));
-            MenuItem editItem = menu.add(context.getApplicationContext().getString(R.string.edit));
-            detailItem.setOnMenuItemClickListener(this);
-            editItem.setOnMenuItemClickListener(this);
         }
     }
 

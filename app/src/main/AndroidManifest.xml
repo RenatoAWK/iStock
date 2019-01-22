@@ -31,7 +31,6 @@
         <activity android:name=".gui.user.FirstAccess" />
         <activity android:name=".gui.user.SettingsActivity" />
         <activity android:name=".gui.user.SettingsHelperActivity" />
-        <activity android:name=".gui.historic.EditOrderActivity" />
         <activity android:name=".gui.sales.RegisterOrderActivity" />
         <activity android:name=".gui.product.ProductsActivity" />
         <activity android:name=".gui.user.UsersActivity" />

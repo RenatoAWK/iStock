@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
+import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.client.ClientServices;
+import bsi.mpoo.istock.services.order.OrderServices;
 import bsi.mpoo.istock.services.product.ProductServices;
 import bsi.mpoo.istock.services.user.UserServices;
 
@@ -92,6 +94,14 @@ public class AlertDialogGenerator {
                     ProductServices productServices = new ProductServices(activity.getApplicationContext());
                     try {
                         productServices.disableProduct((Product) object, Session.getInstance().getAdministrator());
+                    } catch (Exception e) {
+                        showUnknowError();
+                    }
+                } else if (object instanceof Order){
+                    OrderServices orderServices = new OrderServices(activity.getApplicationContext());
+                    ((Order) object).setDelivered(Constants.Order.DELIVERED);
+                    try {
+                        orderServices.updateOrder((Order) object);
                     } catch (Exception e) {
                         showUnknowError();
                     }

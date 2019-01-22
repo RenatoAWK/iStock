@@ -125,4 +125,5 @@
     <string name="at_stock">Em estoque</string>
     <string name="activate">Ativar</string>
     <string name="are_you_sure_to_delete_this_item">Deseja deletar este item?</string>
+    <string name="are_you_sure_for_finish_order">Deseja finalizar a encomenda?</string>
 </resources>

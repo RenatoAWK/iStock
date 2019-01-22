@@ -1,8 +1,11 @@
 package bsi.mpoo.istock.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 
-public class Item {
+public class Item  implements Parcelable {
     private long id;
     private Product product;
     private BigDecimal price;
@@ -10,6 +13,8 @@ public class Item {
     private long idOrder;
     private long idAdministrator;
     private int status;
+
+    public Item(){}
 
     public long getId() {
         return id;
@@ -81,4 +86,42 @@ public class Item {
         BigDecimal qtd = new BigDecimal(getQuantity());
         return qtd.multiply(getPrice());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeValue(product);
+        dest.writeValue(price);
+        dest.writeLong(quantity);
+        dest.writeLong(idOrder);
+        dest.writeLong(idAdministrator);
+        dest.writeInt(status);
+    }
+
+    public Item (Parcel parcel){
+        this.id = parcel.readLong();
+        this.product = (Product) parcel.readValue(Product.class.getClassLoader());
+        this.price = (BigDecimal) parcel.readValue(BigDecimal.class.getClassLoader());
+        this.quantity = parcel.readLong();
+        this.idOrder = parcel.readLong();
+        this.idAdministrator = parcel.readLong();
+        this.status = parcel.readInt();
+    }
+
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 }
