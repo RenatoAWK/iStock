@@ -7,18 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.text.NumberFormat;
-
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.User;
+import bsi.mpoo.istock.gui.client.EditClientActivity;
 import bsi.mpoo.istock.gui.product.EditProductActivity;
 import bsi.mpoo.istock.gui.user.EditUserActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
+import bsi.mpoo.istock.services.MaskGenerator;
 import bsi.mpoo.istock.services.user.UserServices;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -116,7 +116,41 @@ public class DetailsActivity extends AppCompatActivity {
 
     }
 
-    private void setUpClient() {
+    private void setUpClient(final Client client) {
+        imageViewEdit.setImageResource(R.drawable.user_edit);
+        imageViewEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EditClientActivity.class);
+                intent.putExtra(Constants.BundleKeys.CLIENT, client);
+                getApplicationContext().startActivity(intent);
+            }
+        });
+        imageViewDelete.setImageResource(R.drawable.user_remove);
+        imageViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialogGenerator( DetailsActivity.this, getString(R.string.are_you_sure_to_delete_this_item),true).invokeDeleteChoose(object);
+            }
+        });
+        byte[] b = null;
+        setImageIfNotNull(b, R.drawable.user);
+        nameTextView.setText(client.getName());
+        title1.setText(getString(R.string.street));
+        subTitle1.setText(client.getAddress().getStreet());
+        title2.setText(getString(R.string.number));
+        subTitle2.setText(String.valueOf(client.getAddress().getNumber()));
+        title3.setText(getString(R.string.district));
+        subTitle3.setText(client.getAddress().getDistrict());
+        title4.setText(getString(R.string.city));
+        subTitle4.setText(client.getAddress().getCity());
+        title5.setText(getString(R.string.state));
+        subTitle5.setText(client.getAddress().getState());
+        title6.setText(getString(R.string.phone));
+        subTitle6.setText(MaskGenerator.unmaskedTextToStringMasked(client.getPhone(), Constants.MaskTypes.PHONE));
+        showUsedViews(imageViewEdit, imageViewDelete, nameTextView, title1, subTitle1,
+                title2, subTitle2, title3, subTitle3, title4, subTitle4, title5, subTitle5,
+                title6, subTitle6);
 
     }
 
@@ -197,7 +231,7 @@ public class DetailsActivity extends AppCompatActivity {
         if (object instanceof User){
             setUpUser((User) object);
         } else if (object instanceof Client){
-            setUpClient();
+            setUpClient((Client) object);
         } else if (object instanceof Product){
             setUpProduct((Product) object);
         } else if (object instanceof Order){
@@ -212,7 +246,7 @@ public class DetailsActivity extends AppCompatActivity {
             object = userServices.getUserById(((User) object).getId());
             setUpData();
         } else if (object instanceof Client){
-            setUpClient();
+            setUpClient((Client) object);
         } else if (object instanceof Product){
             setUpProduct((Product) object);
         } else if (object instanceof Order){
