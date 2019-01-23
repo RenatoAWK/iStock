@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Cart {
     private static Cart instance = new Cart();
     private static ArrayList<Item> items = new ArrayList<>();
+    private static ArrayList<Item> predictItems = new ArrayList<>();
     private static BigDecimal total;
 
     public static Cart getInstance() {
@@ -46,5 +47,17 @@ public class Cart {
 
     public void removeAllItems(){
         Cart.items.clear();
+    }
+
+    public ArrayList<Item> getPredictItems() {
+        return predictItems;
+    }
+
+    public void setPredictItems(ArrayList<Item> predictItems) {
+        Cart.predictItems = predictItems;
+    }
+
+    public void removePredictItem(Item item){
+        Cart.predictItems.remove(item);
     }
 }

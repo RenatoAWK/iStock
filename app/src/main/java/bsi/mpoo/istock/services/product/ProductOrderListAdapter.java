@@ -20,6 +20,7 @@ import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.gui.DialogDetails;
 import bsi.mpoo.istock.gui.sales.DialogQuantity;
 import bsi.mpoo.istock.services.ImageServices;
+import bsi.mpoo.istock.services.ItemServices;
 
 public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderListAdapter.ProductOrderViewHolder> {
 
@@ -27,10 +28,12 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
     private LayoutInflater inflater;
     private Context context;
     private ImageView cart;
+    private ItemServices itemServices;
 
 
     public ProductOrderListAdapter(Context context, ArrayList<Product> productList, ImageView cart){
         inflater = LayoutInflater.from(context);
+        this.itemServices = new ItemServices(context);
         this.productList = productList;
         this.context = context;
         this.cart = cart;
@@ -65,9 +68,9 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
                 @Override
                 public void onClick(View v) {
                     product = productList.get(getLayoutPosition());
-                    Item itemConverted = convertProductToItem(product);
-                    if (Cart.getInstance().getItems().contains(convertProductToItem(product))){
-                        Cart.getInstance().removeItem(convertProductToItem(product));
+                    Item itemConverted = itemServices.convertProductToItem(product);
+                    if (Cart.getInstance().getItems().contains(itemServices.convertProductToItem(product))){
+                        Cart.getInstance().removeItem(itemServices.convertProductToItem(product));
                         if (Cart.getInstance().getItems().size() == 0){
                             cart.setBackgroundResource(R.drawable.ic_sales_before);
                             imageViewStatus.setImageResource(R.drawable.cart_add);
@@ -100,7 +103,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
         orderViewHolder.nameItemView.setText(currentName);
         orderViewHolder.totalItemView.setText(currentPrice);
         orderViewHolder.quantityItemView.setText(currentQuantity);
-        if (Cart.getInstance().getItems().contains(convertProductToItem(productList.get(position)))){
+        if (Cart.getInstance().getItems().contains(itemServices.convertProductToItem(productList.get(position)))){
             orderViewHolder.imageViewStatus.setImageResource(R.drawable.cart_remove);
         } else {
             orderViewHolder.imageViewStatus.setImageResource(R.drawable.cart_add);
@@ -112,12 +115,5 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
         return productList.size();
     }
 
-    public Item convertProductToItem(Product product){
-        Item item = new Item();
-        item.setPrice(product.getPrice());
-        item.setIdAdministrator(product.getAdministrator().getUser().getId());
-        item.setStatus(product.getStatus());
-        item.setProduct(product);
-        return item;
-    }
+
 }

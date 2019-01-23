@@ -39,6 +39,7 @@ import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.order.OrderServices;
 import bsi.mpoo.istock.services.client.ClientServices;
 import bsi.mpoo.istock.services.product.ProductCartListAdapter;
+import bsi.mpoo.istock.services.product.ProductCartPredictListAdapter;
 
 public class RegisterOrderActivity extends AppCompatActivity {
 
@@ -48,13 +49,17 @@ public class RegisterOrderActivity extends AppCompatActivity {
     private boolean switchState;
     private Switch switchButton;
     private Calendar myCalendar = Calendar.getInstance();
-    LocalDate myLocalDate;
+    private LocalDate myLocalDate;
     private Object account;
     private ProductCartListAdapter adapter;
     private ClientServices clientServices;
     private TextView totalTextView;
     private ArrayList<String> clientsName;
     private LocalDate deliveryDate;
+    private RecyclerView recyclerView;
+    private RecyclerView recyclerViewPredict;
+    private ProductCartPredictListAdapter adapterPredict;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,12 +86,16 @@ public class RegisterOrderActivity extends AppCompatActivity {
             clientsName = clientServices.getActiveClientsName(Session.getInstance().getAdministrator());
             ArrayAdapter<String> adapterComplete = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, clientsName);
             nameTextView.setAdapter(adapterComplete);
-            RecyclerView recyclerView;
             recyclerView = findViewById(R.id.recyclerviewCart);
+            recyclerViewPredict = findViewById(R.id.recyclerviewCartPredict);
             adapter = new ProductCartListAdapter(this, totalTextView);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             totalTextView.setText(NumberFormat.getCurrencyInstance().format(Cart.getInstance().getTotal()));
+            adapterPredict = new ProductCartPredictListAdapter(this, totalTextView, adapter);
+            recyclerViewPredict.setAdapter(adapterPredict);
+            recyclerViewPredict.setLayoutManager(new LinearLayoutManager(this));
+
 
         }
     }

@@ -66,6 +66,18 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerviewCartPredict"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp">
+                </android.support.v7.widget.RecyclerView>
+
+            </ScrollView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -7,6 +7,7 @@ import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.item.ItemDAO;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
+import bsi.mpoo.istock.domain.Product;
 
 public class ItemServices {
 
@@ -44,5 +45,12 @@ public class ItemServices {
         itemDAO.updateItem(item);
     }
 
-
+    public Item convertProductToItem(Product product){
+        Item item = new Item();
+        item.setPrice(product.getPrice());
+        item.setIdAdministrator(product.getAdministrator().getUser().getId());
+        item.setStatus(product.getStatus());
+        item.setProduct(product);
+        return item;
+    }
 }

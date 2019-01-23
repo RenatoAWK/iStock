@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.text.NumberFormat;
 import bsi.mpoo.istock.R;
@@ -27,37 +28,27 @@ public class ProductCartListAdapter  extends RecyclerView.Adapter<ProductCartLis
         this.total = total;
     }
 
-    class ProductCartViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+    class ProductCartViewHolder extends RecyclerView.ViewHolder {
         TextView nameItemView;
         TextView totalItemView;
         TextView quantityItemView;
+        ImageView imageView;
         ProductCartListAdapter adapter;
 
-        @Override
-        public boolean onMenuItemClick(MenuItem item){
-            int position = getLayoutPosition();
-            Item itemCart = Cart.getInstance().getItems().get(position);
-            final String removeOtion = context.getApplicationContext().getString(R.string.delete);
-
-             if (item.getTitle().equals(removeOtion)){
-                Cart.getInstance().removeItem(itemCart);
-                adapter.notifyDataSetChanged();
-                total.setText(NumberFormat.getCurrencyInstance().format(Cart.getInstance().getTotal()));
-            }
-            return false;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem deleteItem = menu.add(context.getApplicationContext().getString(R.string.delete));
-            deleteItem.setOnMenuItemClickListener(this);
-        }
-        private ProductCartViewHolder(View itemView, ProductCartListAdapter adapter){
+        private ProductCartViewHolder(View itemView, final ProductCartListAdapter adapter){
             super(itemView);
-            itemView.setOnCreateContextMenuListener(this);
             nameItemView = itemView.findViewById(R.id.nameProductCartItemList);
             totalItemView = itemView.findViewById(R.id.priceProductCartItemList);
             quantityItemView = itemView.findViewById(R.id.quantityProductCartItemList);
+            imageView = itemView.findViewById(R.id.imageViewProductRemove);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cart.getInstance().removeItem(Cart.getInstance().getItems().get(getLayoutPosition()));
+                    adapter.notifyDataSetChanged();
+                    total.setText(NumberFormat.getCurrencyInstance().format(Cart.getInstance().getTotal()));
+                }
+            });
             this.adapter = adapter;
         }
     }

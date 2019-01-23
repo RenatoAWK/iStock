@@ -64,6 +64,7 @@ public class Constants {
         public static final int DELIVERED = 1;
         public static final int NOT_DELIVERED = 0;
         public static final String ITEMS = "items";
+        public static final int KEY_PREDICT = -10;
     }
 
     public static class Date{
