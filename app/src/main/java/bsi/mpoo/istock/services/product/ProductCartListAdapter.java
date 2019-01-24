@@ -3,9 +3,7 @@ package bsi.mpoo.istock.services.product;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,7 +11,6 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Cart;
-import bsi.mpoo.istock.domain.Item;
 
 public class ProductCartListAdapter  extends RecyclerView.Adapter<ProductCartListAdapter.ProductCartViewHolder>{
 

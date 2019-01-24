@@ -2,29 +2,20 @@ package bsi.mpoo.istock.services.user;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import bsi.mpoo.istock.gui.DetailsActivity;
-import bsi.mpoo.istock.gui.user.EditUserActivity;
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.User;
-import bsi.mpoo.istock.gui.DialogDetails;
-import bsi.mpoo.istock.gui.user.RegisterActivity;
 import bsi.mpoo.istock.services.Constants;
 import bsi.mpoo.istock.services.ImageServices;
 

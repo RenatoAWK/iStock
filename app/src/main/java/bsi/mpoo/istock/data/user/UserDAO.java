@@ -9,7 +9,6 @@ import android.provider.BaseColumns;
 import java.util.ArrayList;
 import java.util.List;
 
-import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.DbHelper;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.User;

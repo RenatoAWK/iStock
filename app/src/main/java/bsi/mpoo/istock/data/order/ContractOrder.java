@@ -1,7 +1,6 @@
 package bsi.mpoo.istock.data.order;
 import android.provider.BaseColumns;
 
-import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.client.ContractClient;
 import bsi.mpoo.istock.data.user.ContractUser;
 

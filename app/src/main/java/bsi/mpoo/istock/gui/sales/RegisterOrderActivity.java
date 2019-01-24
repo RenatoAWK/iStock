@@ -16,13 +16,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;

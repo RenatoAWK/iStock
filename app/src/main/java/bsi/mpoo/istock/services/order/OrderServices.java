@@ -18,7 +18,7 @@ public class OrderServices {
         this.orderDAO = new OrderDAO(context);
     }
 
-    public boolean isOrderRegistered(Order order) throws JSONException {
+    public boolean isOrderRegistered(Order order) {
         Order searchedOrder = orderDAO.getOrderById(order.getId());
         return searchedOrder != null;
     }

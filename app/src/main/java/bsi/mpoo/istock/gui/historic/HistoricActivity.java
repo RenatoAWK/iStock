@@ -1,7 +1,6 @@
 package bsi.mpoo.istock.gui.historic;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,15 +15,11 @@ import bsi.mpoo.istock.R;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Producer;
-import bsi.mpoo.istock.domain.Product;
 import bsi.mpoo.istock.domain.Salesman;
 import bsi.mpoo.istock.domain.Session;
 import bsi.mpoo.istock.gui.MainActivity;
-import bsi.mpoo.istock.gui.product.RegisterProductActivity;
 import bsi.mpoo.istock.services.order.OrderListAdapter;
 import bsi.mpoo.istock.services.order.OrderServices;
-import bsi.mpoo.istock.services.product.ProductListAdapter;
-import bsi.mpoo.istock.services.product.ProductServices;
 
 public class HistoricActivity extends AppCompatActivity {
 

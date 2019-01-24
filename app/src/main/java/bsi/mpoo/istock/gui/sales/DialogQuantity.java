@@ -6,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -16,7 +15,6 @@ import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.services.product.ProductCartListAdapter;
 import bsi.mpoo.istock.services.product.ProductCartPredictListAdapter;
-import bsi.mpoo.istock.services.product.ProductOrderListAdapter;
 
 public class DialogQuantity {
     private Context context;

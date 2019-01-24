@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import bsi.mpoo.istock.R;
-import bsi.mpoo.istock.domain.Cart;
 import bsi.mpoo.istock.domain.Item;
 
     public class ItemOrderListAdapter  extends RecyclerView.Adapter<ItemOrderListAdapter.ItemOrderViewHolder>{

@@ -8,7 +8,6 @@ import bsi.mpoo.istock.data.client.ClientDAO;
 import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Client;
-import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Exceptions;
 import bsi.mpoo.istock.services.Exceptions.ClientAlreadyRegistered;
 import bsi.mpoo.istock.services.Exceptions.ClientNotRegistered;

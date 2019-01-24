@@ -108,7 +108,4 @@ public class DialogDetails extends AppCompatActivity {
 
     }
 
-    public void invoke(Order order){
-
-    }
 }

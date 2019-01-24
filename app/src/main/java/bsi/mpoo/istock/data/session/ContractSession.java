@@ -2,8 +2,6 @@ package bsi.mpoo.istock.data.session;
 
 import android.provider.BaseColumns;
 
-import bsi.mpoo.istock.data.user.ContractUser;
-
 public class ContractSession implements BaseColumns {
 
     private ContractSession(){}

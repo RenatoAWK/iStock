@@ -8,7 +8,6 @@ import bsi.mpoo.istock.data.Contract;
 import bsi.mpoo.istock.data.product.ProductDAO;
 import bsi.mpoo.istock.domain.Administrator;
 import bsi.mpoo.istock.domain.Product;
-import bsi.mpoo.istock.domain.User;
 import bsi.mpoo.istock.services.Exceptions;
 
 public class ProductServices {
