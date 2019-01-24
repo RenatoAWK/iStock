@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,23 +45,23 @@ public class SlopeOne {
         currentOrder.setId(Constants.Order.KEY_PREDICT);
         orders.add(currentOrder);
         Map<String, Map<String, Double>> data = new HashMap<>();
-        HashMap<String, Double> currentUser = new HashMap<>();
-        Set<String> set = new HashSet<>();
+        HashMap<String, Double> currentCaseTest = new HashMap<>();
+        Set<String> set = new LinkedHashSet<>();
         for (Order order : orders) {
-            HashMap<String, Double> user = new HashMap<>();
+            HashMap<String, Double> caseTeste = new HashMap<>();
             for (Item item : order.getItems()) {
-                user.put(item.getProduct().getName(), (double) item.getQuantity());
+                caseTeste.put(item.getProduct().getName(), (double) item.getQuantity());
                 set.add(item.getProduct().getName());
             }
-            data.put(String.valueOf(order.getId()), user);
+            data.put(String.valueOf(order.getId()), caseTeste);
             if (order.getId() == Constants.Order.KEY_PREDICT) {
-                currentUser = user;
+                currentCaseTest = caseTeste;
             }
         }
         mAllItems = set.toArray(new String[set.size()]);
         mData = data;
         buildDiffMatrix();
-        Map<String, Double> predict = predict(currentUser);
+        Map<String, Double> predict = predict(currentCaseTest);
         ArrayList<Item> items = new ArrayList<>();
         for (String nameProduct:predict.keySet()) {
             Product product = productDAO.getProductByName(nameProduct, Session.getInstance().getAdministrator());

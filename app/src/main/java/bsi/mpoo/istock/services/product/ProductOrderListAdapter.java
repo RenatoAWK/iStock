@@ -49,7 +49,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
         ProductOrderListAdapter adapter;
         Product product;
 
-        private ProductOrderViewHolder(View itemView, ProductOrderListAdapter adapter){
+        private ProductOrderViewHolder(View itemView, final ProductOrderListAdapter adapter){
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,6 +71,7 @@ public class ProductOrderListAdapter extends RecyclerView.Adapter<ProductOrderLi
                     Item itemConverted = itemServices.convertProductToItem(product);
                     if (Cart.getInstance().getItems().contains(itemServices.convertProductToItem(product))){
                         Cart.getInstance().removeItem(itemServices.convertProductToItem(product));
+                        adapter.notifyDataSetChanged();
                         if (Cart.getInstance().getItems().size() == 0){
                             cart.setBackgroundResource(R.drawable.ic_sales_before);
                             imageViewStatus.setImageResource(R.drawable.cart_add);

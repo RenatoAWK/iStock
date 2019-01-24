@@ -2,6 +2,7 @@ package bsi.mpoo.istock.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Cart {
     private static Cart instance = new Cart();
@@ -54,7 +55,22 @@ public class Cart {
     }
 
     public void setPredictItems(ArrayList<Item> predictItems) {
-        Cart.predictItems = predictItems;
+        Cart.predictItems.clear();
+        for (Iterator<Item> iterator = predictItems.iterator(); iterator.hasNext();){
+            Item itereted = iterator.next();
+            if (!Cart.items.contains(itereted)){
+                if (itereted.getProduct().getQuantity() > 0){
+                    Cart.predictItems.add(itereted);
+                }
+            }
+        }
+
+        /*
+        for (Item item:predictItems) {
+            if (!items.contains(item)){
+                predictItems.add(item);
+            }
+        }*/
     }
 
     public void removePredictItem(Item item){
