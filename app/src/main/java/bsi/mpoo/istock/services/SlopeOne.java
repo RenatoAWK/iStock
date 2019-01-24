@@ -1,20 +1,14 @@
 package bsi.mpoo.istock.services;
 
 import android.content.Context;
-import android.widget.SeekBar;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-
 import bsi.mpoo.istock.data.order.OrderDAO;
 import bsi.mpoo.istock.data.product.ProductDAO;
 import bsi.mpoo.istock.domain.Cart;
-import bsi.mpoo.istock.domain.Client;
 import bsi.mpoo.istock.domain.Item;
 import bsi.mpoo.istock.domain.Order;
 import bsi.mpoo.istock.domain.Product;
@@ -63,7 +57,7 @@ public class SlopeOne {
         buildDiffMatrix();
         Map<String, Double> predict = predict(currentCaseTest);
         ArrayList<Item> items = new ArrayList<>();
-        for (String nameProduct:predict.keySet()) {
+        for (String nameProduct : predict.keySet()) {
             Product product = productDAO.getProductByName(nameProduct, Session.getInstance().getAdministrator());
             items.add(itemServices.convertProductToItem(product));
         }
@@ -104,43 +98,34 @@ public class SlopeOne {
         return cleanpredictions;
     }
 
-    private void buildDiffMatrix()
-    {
+    private void buildDiffMatrix() {
         diffMatrix = new HashMap<>();
         freqMatrix = new HashMap<>();
-        for (Map<String, Double> user : mData.values())
-        {
-            for (Map.Entry<String, Double> entry : user.entrySet())
-            {
+        for (Map<String, Double> user : mData.values()) {
+            for (Map.Entry<String, Double> entry : user.entrySet()) {
                 String i1 = entry.getKey();
                 double r1 = entry.getValue();
 
-                if (!diffMatrix.containsKey(i1))
-                {
+                if (!diffMatrix.containsKey(i1)) {
                     diffMatrix.put(i1, new HashMap<String, Double>());
                     freqMatrix.put(i1, new HashMap<String, Integer>());
                 }
 
-                for (Map.Entry<String, Double> entry2 : user.entrySet())
-                {
+                for (Map.Entry<String, Double> entry2 : user.entrySet()) {
                     String i2 = entry2.getKey();
                     double r2 = entry2.getValue();
-
                     int cnt = 0;
                     if (freqMatrix.get(i1).containsKey(i2)) cnt = freqMatrix.get(i1).get(i2);
                     double diff = 0.0;
                     if (diffMatrix.get(i1).containsKey(i2)) diff = diffMatrix.get(i1).get(i2);
                     double new_diff = r1 - r2;
-
                     freqMatrix.get(i1).put(i2, cnt + 1);
                     diffMatrix.get(i1).put(i2, diff + new_diff);
                 }
             }
         }
-        for (String j : diffMatrix.keySet())
-        {
-            for (String i : diffMatrix.get(j).keySet())
-            {
+        for (String j : diffMatrix.keySet()) {
+            for (String i : diffMatrix.get(j).keySet()) {
                 Double oldvalue = diffMatrix.get(j).get(i);
                 int count = freqMatrix.get(j).get(i).intValue();
                 diffMatrix.get(j).put(i, oldvalue / count);
