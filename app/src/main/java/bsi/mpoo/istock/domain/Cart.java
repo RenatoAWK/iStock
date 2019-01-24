@@ -57,6 +57,9 @@ public class Cart {
     public void setPredictItems(ArrayList<Item> predictItems) {
         Cart.predictItems.clear();
         for (Iterator<Item> iterator = predictItems.iterator(); iterator.hasNext();){
+            if (Cart.predictItems.size() >= 3){
+                break;
+            }
             Item itereted = iterator.next();
             if (!Cart.items.contains(itereted)){
                 if (itereted.getProduct().getQuantity() > 0){
@@ -64,16 +67,11 @@ public class Cart {
                 }
             }
         }
-
-        /*
-        for (Item item:predictItems) {
-            if (!items.contains(item)){
-                predictItems.add(item);
-            }
-        }*/
     }
 
     public void removePredictItem(Item item){
         Cart.predictItems.remove(item);
     }
+
+
 }

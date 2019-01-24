@@ -3,9 +3,14 @@ package bsi.mpoo.istock.services;
 import android.content.Context;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import bsi.mpoo.istock.data.order.OrderDAO;
 import bsi.mpoo.istock.data.product.ProductDAO;
 import bsi.mpoo.istock.domain.Cart;
@@ -56,12 +61,23 @@ public class SlopeOne {
         mData = data;
         buildDiffMatrix();
         Map<String, Double> predict = predict(currentCaseTest);
+        Map<String, Double> sortedPredict = sortMap(predict);
         ArrayList<Item> items = new ArrayList<>();
-        for (String nameProduct : predict.keySet()) {
+        for (String nameProduct : sortedPredict.keySet()) {
             Product product = productDAO.getProductByName(nameProduct, Session.getInstance().getAdministrator());
             items.add(itemServices.convertProductToItem(product));
         }
         Cart.getInstance().setPredictItems(items);
+    }
+
+    private Map<String, Double> sortMap(Map<String, Double> predict) {
+        List<Map.Entry<String, Double>> list = new LinkedList<>(predict.entrySet());
+        list.sort((o1, o2) -> false ? o1.getValue().compareTo(o2.getValue()) == 0
+                ? o1.getKey().compareTo(o2.getKey())
+                : o1.getValue().compareTo(o2.getValue()) : o2.getValue().compareTo(o1.getValue()) == 0
+                ? o2.getKey().compareTo(o1.getKey())
+                : o2.getValue().compareTo(o1.getValue()));
+        return list.stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> b, LinkedHashMap::new));
     }
 
     Map<String, Map<String, Double>> mData;
